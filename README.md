@@ -11,3 +11,9 @@
 		https://nafuka.hatenablog.com/entry/2021/12/06/014200
 		https://www.slideshare.net/HEXADRIVE/c-c98stlc11
 
+## Git Guidelines
+	- Keep it short (less than 100 characters total)
+	- Specify what changes have been made([add],[fix],[rm],[update],[move],[rename],[improve])
+	- Append the issue number to the prefix
+	- Clearly state in the body why the change was made
+	example) #X(what is the issue number) [add (what did you do change)] :[body (why did you change)]
