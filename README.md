@@ -11,3 +11,5 @@
 		https://nafuka.hatenablog.com/entry/2021/12/06/014200
 		https://www.slideshare.net/HEXADRIVE/c-c98stlc11
 
+## Git Guidelines
+	- 
