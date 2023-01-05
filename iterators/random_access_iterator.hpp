@@ -8,12 +8,12 @@ namespace ft {
 	template <class Iterator>
 	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, Iterator> {
 		public:
-			typedef Iterator iterator_type;
-			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::value_type value_type;
-			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::difference_diff difference_diff;
-			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::pointer pointer;
-			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::reference reference;
-			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::iterator_category iterator_category;
+			typedef Iterator iterator_type; // What type of information this iterator has
+			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::value_type value_type; // not pointer or reference
+			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::difference_diff difference_diff; // Signed integer type for the difference of iterators
+			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::pointer pointer; // pointer type
+			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::reference reference; // reference type
+			typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::iterator_category iterator_category; // iterator category (random, forward ...etc)
 
 			/* Constructor & Destructor */
 			random_access_iterator(): current_pos_(NULL) {};
@@ -32,11 +32,53 @@ namespace ft {
 			}
 
 			reference operator*() const { return *current_pos_; }
+			pointer operator->() const { return current_pos_; } // What is this?
+			reference operator[](difference_diff n) { return current_pos_ + n; }
+			random_access_iterator &operator++() { //prefix increment
+				current_pos_++;
+				return *this;
+			}
+			random_access_iterator operator++(int) { //postfix increment
+				random_access_iterator tmp(*this);
+				current_pos_++;
+				return *tmp;
+			}
+		random_access_iterator &operator--() {
+				current_pos_--;
+				return *this;
+		}
+		random_access_iterator operator--(int) {
+				random_access_iterator tmp(*this);
+				current_pos_--;
+				return tmp;
+		}
+		random_access_iterator &operator+=(difference_diff n) {
+				current_pos_ += n;
+				return *this;
+		}
+		random_access_iterator operator+(difference_diff n) {
+				random_access_iterator tmp(*this);
+				tmp.current_pos_ += n;
+				return tmp;
+		}
+		random_access_iterator &operator-=(difference_diff n) {
+				current_pos_ -= n;
+				return *this;
+		}
+		random_access_iterator operator-(difference_diff n) {
+				random_access_iterator tmp(*this);
+				tmp.current_pos_ -= n;
+				return tmp;
+		}
+		bool operator==(const random_access_iterator &rhs) const { return this->current_pos_ == rhs.current_pos_;}
+		bool operator!=(const random_access_iterator &rhs) const { return !(this == rhs) ;}
+		bool operator>(const random_access_iterator &rhs) const {return this->current_pos_ > rhs.current_pos_};
+		bool operator<(const random_access_iterator &rhs) const {return !(this > rhs)};
+		bool operator>=(const random_access_iterator &rhs) const {return this->current_pos_ >= rhs.current_pos_};
+		bool operator<=(const random_access_iterator &rhs) const {return !(this >= rhs)};
 
-			pointer operator->() { return current_pos_; }
-
-		private:
-			iterator_type current_pos_;
+	private:
+		iterator_type current_pos_;
 
 	};
 };
