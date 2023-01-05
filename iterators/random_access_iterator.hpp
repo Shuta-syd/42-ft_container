@@ -16,7 +16,7 @@ namespace ft {
 
 		/* Constructor & Destructor */
 		random_access_iterator() : current_pos_(NULL){};
-		random_access_iterator(iterator_type pos) : current_pos_(pos){};
+		explict random_access_iterator(iterator_type pos) : current_pos_(pos){};
 		~random_access_iterator(){};
 		random_access_iterator(const random_access_iterator &rhs) {
 			*this = rhs;
@@ -39,7 +39,7 @@ namespace ft {
 		}
 		random_access_iterator operator++(int) { // postfix increment
 			random_access_iterator tmp(*this);
-			current_pos_++;
+			++(*this);
 			return *tmp;
 		}
 		random_access_iterator &operator--() {
@@ -48,7 +48,7 @@ namespace ft {
 		}
 		random_access_iterator operator--(int) {
 			random_access_iterator tmp(*this);
-			current_pos_--;
+			--(*this);
 			return tmp;
 		}
 		random_access_iterator &operator+=(difference_type n) {
