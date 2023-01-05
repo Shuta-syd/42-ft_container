@@ -32,7 +32,7 @@ namespace ft {
 			}
 
 			reference operator*() const { return *current_pos_; }
-			pointer operator->() const { return current_pos_; } // What is this?
+			pointer operator->() const { return &(*current_pos_); }
 			reference operator[](difference_diff n) { return current_pos_ + n; }
 			random_access_iterator &operator++() { //prefix increment
 				current_pos_++;
@@ -70,6 +70,23 @@ namespace ft {
 				tmp.current_pos_ -= n;
 				return tmp;
 		}
+		difference_diff operator-(const random_access_iterator &rhs) {
+				random_access_iterator tmp(*this);
+				difference_diff diff = 0;
+				if (tmp > rhs) {
+					while (rhs != tmp) {
+						tmp--;
+						diff++;
+					}
+				} else {
+					while (rhs != tmp) {
+						tmp++;
+						diff++;
+					}
+				}
+				return diff;
+		}
+
 		bool operator==(const random_access_iterator &rhs) const { return this->current_pos_ == rhs.current_pos_;}
 		bool operator!=(const random_access_iterator &rhs) const { return !(this == rhs) ;}
 		bool operator>(const random_access_iterator &rhs) const {return this->current_pos_ > rhs.current_pos_};
@@ -79,7 +96,6 @@ namespace ft {
 
 	private:
 		iterator_type current_pos_;
-
 	};
 };
 
