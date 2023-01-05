@@ -16,7 +16,7 @@ namespace ft {
 
 		/* Constructor & Destructor */
 		random_access_iterator() : current_pos_(NULL){};
-		explict random_access_iterator(iterator_type pos) : current_pos_(pos){};
+		explicit random_access_iterator(iterator_type pos) : current_pos_(pos){};
 		~random_access_iterator(){};
 		random_access_iterator(const random_access_iterator &rhs) {
 			*this = rhs;
@@ -29,6 +29,8 @@ namespace ft {
 			this->current_pos_ = rhs.current_pos_;
 			return *this;
 		}
+
+	iterator_type base() const { return current_pos_; };
 
 		reference operator*() const { return *current_pos_; }
 		pointer operator->() const { return &(*current_pos_); }
@@ -89,28 +91,29 @@ namespace ft {
 
 		bool operator==(const random_access_iterator &rhs) const { return this->current_pos_ == rhs.current_pos_; }
 		bool operator!=(const random_access_iterator &rhs) const { return !(this == rhs); }
-		bool operator>(const random_access_iterator &rhs) const {return this->current_pos_ > rhs.current_pos_};
-		bool operator<(const random_access_iterator &rhs) const {return !(this > rhs)};
-		bool operator>=(const random_access_iterator &rhs) const {return this->current_pos_ >= rhs.current_pos_};
-		bool operator<=(const random_access_iterator &rhs) const {return !(this >= rhs)};
+		bool operator>(const random_access_iterator &rhs) const { return this->current_pos_ > rhs.current_pos_; }
+		bool operator<(const random_access_iterator &rhs) const { return !(this > rhs); }
+		bool operator>=(const random_access_iterator &rhs) const { return this->current_pos_ >= rhs.current_pos_; }
+		bool operator<=(const random_access_iterator &rhs) const { return !(this >= rhs); }
 
 	private:
 		iterator_type current_pos_;
 	};
 
 	template <class Iterator>
-	random_access_iterator<Iterator> operator+ (typename random_access_iterator<Iterator>::difference_type n, const random_access_iterator<Iterator>& rev_it) {
-		random_access_iterator tmp(rev_it);
+	typename ft::random_access_iterator<Iterator>::difference_type operator+ (typename ft::random_access_iterator<Iterator>::difference_type n, const ft::random_access_iterator<Iterator>& rev_it) {
+		ft::random_access_iterator<Iterator> tmp(rev_it);
 			tmp.current_pos_ += n;
 			return tmp;
-	};
+	}
 
 	template <class Iterator>
-	random_access_iterator<Iterator> operator- (typename random_access_iterator<Iterator>::difference_type n, const random_access_iterator<Iterator>& rev_it) {
-		random_access_iterator tmp(rev_it);
-			tmp.current_pos_ -= n;
-			return tmp;
-	};
+	typename ft::random_access_iterator<Iterator>::difference_type operator- (const ft::random_access_iterator<Iterator>& lhs,    const ft::random_access_iterator<Iterator>& rhs) {
+		if (lhs.base() > rhs.base())
+			return lhs.base() - rhs.base();
+		else
+			return rhs.base() - lhs.base();
+	}
 };
 
 #endif

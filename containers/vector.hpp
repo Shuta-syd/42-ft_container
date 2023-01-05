@@ -6,15 +6,15 @@
 #include <reverse_iterator.hpp>
 
 namespace ft {
-	template <typename T, typename Allocator = std::allocator<T>>
+	template <typename T, typename Allocator = std::allocator<T> >
 	class vector {
 	public:
 		typedef T value_type;							// The first template parameter (T)
 		typedef Allocator allocator_type; // The second template parameter (Alloc)
-		typedef allocator_type::reference reference; // for the default allocator: value_type&
-		typedef allocator_type::const_reference const_reference; // for the default allocator: const value_type&
-		typedef allocator_type::pointer pointer;		 // for the default allocator: value_type*
-		typedef allocator_type::const_pointer const_pointer; // for the default allocator: const value_type*
+		typedef typename allocator_type::reference reference; // for the default allocator: value_type&
+		typedef typename allocator_type::const_reference const_reference; // for the default allocator: const value_type&
+		typedef typename allocator_type::pointer pointer;		 // for the default allocator: value_type*
+		typedef typename allocator_type::const_pointer const_pointer; // for the default allocator: const value_type*
 		typedef ft::random_access_iterator<pointer> iterator;
 		typedef ft::random_access_iterator<const_pointer> const_iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
@@ -36,11 +36,11 @@ namespace ft {
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
 		: alloc_(alloc), first_(NULL), last_(NULL), reserved_last_(NULL) {
 			first_ = alloc_.allocate(n);
-			end_ = first_;
+			last_ = first_;
 			reserved_last_ = first_ + n;
 			for (size_t i = 0; i < n; i++) {
-				alloc_.construct(end_, val);
-				end_++;
+				alloc_.construct(last_, val);
+				last_++;
 			}
 		}
 
