@@ -21,7 +21,6 @@ objs_dir := $(addprefix objs/, $(objs_dir))
 deps_dir := $(addprefix deps/, $(deps_dir))
 
 ############# basic rules ##############
-.PHONY: all clean fclean re
 all: $(NAME)
 
 -include $(deps)
@@ -44,13 +43,11 @@ $(deps_dir):
 	@mkdir -p $@
 
 clean:
-	$(RM) $(objs)
-	$(RM) $(deps)
+	$(RM) ./objs
+	$(RM) ./deps
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) ./objs
-	$(RM) ./deps
 
 re: fclean all
 
