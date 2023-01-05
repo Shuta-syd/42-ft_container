@@ -97,6 +97,20 @@ namespace ft {
 	private:
 		iterator_type current_pos_;
 	};
+
+	template <class Iterator>
+	random_access_iterator<Iterator> operator+ (typename random_access_iterator<Iterator>::difference_type n, const random_access_iterator<Iterator>& rev_it) {
+		random_access_iterator tmp(rev_it);
+			tmp.current_pos_ += n;
+			return tmp;
+	};
+
+	template <class Iterator>
+	random_access_iterator<Iterator> operator- (typename random_access_iterator<Iterator>::difference_type n, const random_access_iterator<Iterator>& rev_it) {
+		random_access_iterator tmp(rev_it);
+			tmp.current_pos_ -= n;
+			return tmp;
+	};
 };
 
 #endif

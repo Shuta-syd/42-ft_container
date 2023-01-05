@@ -79,6 +79,39 @@ namespace ft {
 		private:
 			iterator_type current_pos_;
 	};
+
+	template <class Iterator>
+	bool operator== (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) { return lhs.base() == rhs.base(); };
+
+	template <class Iterator>
+	bool operator!= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) { return !(lhs.base() == rhs.base()); };
+
+	template <class Iterator>
+	bool operator< (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) { return lhs.base() < rhs.base(); };
+
+	template <class Iterator>
+	bool operator> (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) { return !(lhs.base() < rhs.base()); };
+
+	template <class Iterator>
+	bool operator<= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) { return lhs.base() <= rhs.base(); };
+
+	template <class Iterator>
+	bool operator>= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) { return !(lhs.base() <= rhs.base()); };
+
+	template <class Iterator>
+	reverse_iterator<Iterator> operator+ (typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator>& rev_it) {
+		reverse_iterator tmp(rev_it);
+			tmp.current_pos_ -= n;
+			return tmp;
+	};
+
+	template <class Iterator>
+	reverse_iterator<Iterator> operator- (typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator>& rev_it) {
+		reverse_iterator tmp(rev_it);
+			tmp.current_pos_ += n;
+			return tmp;
+	};
+
 };
 
 #endif
