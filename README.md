@@ -16,4 +16,4 @@
 	- Specify what changes have been made([add],[fix],[rm],[update],[move],[rename],[improve])
 	- Append the issue number to the prefix
 	- Clearly state in the body why the change was made
-	example) #X(what is the issue number) [add (what did you do change)] [body (why did you change)]
+	example) #X(what is the issue number) [add (what did you do change)] :[body (why did you change)]
