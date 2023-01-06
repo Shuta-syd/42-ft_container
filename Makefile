@@ -53,6 +53,10 @@ re: fclean all
 
 .PHONY: all re clean fclean
 
+run:
+	@make
+	@./ft_container
+
 RED = \033[31m
 GRN = \033[32m
 YEL = \033[33m

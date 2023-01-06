@@ -15,15 +15,15 @@ namespace ft {
 		typedef typename allocator_type::const_reference const_reference; // for the default allocator: const value_type&
 		typedef typename allocator_type::pointer pointer;		 // for the default allocator: value_type*
 		typedef typename allocator_type::const_pointer const_pointer; // for the default allocator: const value_type*
-		typedef ft::random_access_iterator<pointer> iterator;
-		typedef ft::random_access_iterator<const_pointer> const_iterator;
+		typedef ft::random_access_iterator<value_type> iterator;
+		typedef ft::random_access_iterator<const value_type> const_iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-		typedef ptrdiff_t difference_type;
-		typedef size_t size_type;
+		typedef std::ptrdiff_t difference_type;
+		typedef std::size_t size_type;
 
 		/*----------------------------------------
-				[Constructors & Destructor]
+		[Constructors & Destructor]
 		----------------------------------------*/
 		/**
 		 * @brief empty container constructor (default constructor)
@@ -37,6 +37,7 @@ namespace ft {
 		 */
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
 		: alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
+			std::cout << "Fill" << std::endl;
 			begin_ = alloc_.allocate(n);
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
@@ -50,12 +51,15 @@ namespace ft {
 		 * @brief range constructor
 		 * Constructs a container with as many elements as the range [first,last],
 		 * with each element constructed from its corresponding element in that range, in the same order.
+		 *
+		 * vector(2, 10);
 		 */
-		template <class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
-		 : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
 
-		}
+		// template <class InputIterator>
+		// vector(InputIterator begin, InputIterator end, const allocator_type &alloc = allocator_type())
+		//  : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
+		// 	std::cout << "Range" << std::endl;
+		// }
 
 		/** @brief copy constructor */
 		vector(const vector &x){
@@ -73,13 +77,13 @@ namespace ft {
 			// this->insert();
 			return *this;
 		}
-		/*----------------------------------------
+		/*----------------------------------------*/
 
 
 		/*----------------------------------------
-									[Iterators]
+		[Iterators]
 		----------------------------------------*/
-		iterator begin() { return iterator(begin_);  }
+		iterator begin() { return iterator(begin_); }
 		const_iterator begin() const  { return const_iterator(begin_); }
 		iterator end() { return iterator(end_);  }
 		const_iterator end() const  { return const_iterator(end_); }
@@ -87,28 +91,25 @@ namespace ft {
 		const_reverse_iterator rbegin() const { return const_reverse_iterator(end_);}
 		reverse_iterator rend() { return reverse_iterator(begin_); }
 		const_reverse_iterator rend() const { return const_reverse_iterator(begin_);}
-
-
-
 		/*--------------------------------------*/
 
 
 		/*----------------------------------------
-							[Element access]
+		[Element access]
 		----------------------------------------*/
 
 		/*--------------------------------------*/
 
 
 		/*----------------------------------------
-								[Capacity]
+		[Capacity]
 		----------------------------------------*/
 
 		/*--------------------------------------*/
 
 
 		/*----------------------------------------
-								[Modifiers]
+		[Modifiers]
 		----------------------------------------*/
 		/**
 		 * @brief
@@ -154,7 +155,7 @@ namespace ft {
 		/*--------------------------------------*/
 
 		/*---------------------------------------
-								[Allocator]
+		[Allocator]
 		----------------------------------------*/
 
 		/*--------------------------------------*/
