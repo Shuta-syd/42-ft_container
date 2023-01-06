@@ -37,7 +37,6 @@ namespace ft {
 		 */
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
 		: alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
-			std::cout << "Fill" << std::endl;
 			begin_ = alloc_.allocate(n);
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
@@ -87,10 +86,10 @@ namespace ft {
 		const_iterator begin() const  { return const_iterator(begin_); }
 		iterator end() { return iterator(end_);  }
 		const_iterator end() const  { return const_iterator(end_); }
-		reverse_iterator rbegin() { return reverse_iterator(end_); }
-		const_reverse_iterator rbegin() const { return const_reverse_iterator(end_);}
-		reverse_iterator rend() { return reverse_iterator(begin_); }
-		const_reverse_iterator rend() const { return const_reverse_iterator(begin_);}
+		reverse_iterator rbegin() { return reverse_iterator(this->end()); }
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(this->end());}
+		reverse_iterator rend() { return reverse_iterator(this->begin()); }
+		const_reverse_iterator rend() const { return const_reverse_iterator(this->begin());}
 		/*--------------------------------------*/
 
 

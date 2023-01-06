@@ -2,7 +2,7 @@ NAME=ft_container
 RM=rm -rf
 
 CXX=c++
-CXXFLAGS= -std=c++98#-Wall -Werror -Wextra -std=c++98 -pedantic
+CXXFLAGS= -g -std=c++98#-Wall -Werror -Wextra -std=c++98 -pedantic
 headerflags=-MMD -MP
 
 INC = -I./containers -I./iterators

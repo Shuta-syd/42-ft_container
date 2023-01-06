@@ -42,7 +42,7 @@ namespace ft {
 		random_access_iterator operator++(int) { // postfix increment
 			random_access_iterator tmp(*this);
 			++(*this);
-			return *tmp;
+			return tmp;
 		}
 		random_access_iterator &operator--() {
 			current_pos_--;
