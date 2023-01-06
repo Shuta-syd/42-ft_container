@@ -22,54 +22,50 @@ namespace ft {
 		typedef ptrdiff_t difference_type;
 		typedef size_t size_type;
 
-		/*----------------------------------------[Constructors & Destructor]----------------------------------------*/
+		/*----------------------------------------
+				[Constructors & Destructor]
+		----------------------------------------*/
 		/**
 		 * @brief empty container constructor (default constructor)
 		 * Constructs an empty container, with no elements.
 		 */
-		explicit vector(const allocator_type &alloc = allocator_type()): alloc_(alloc), first_(NULL), last_(NULL), reserved_last_(NULL) {}
+		explicit vector(const allocator_type &alloc = allocator_type()): alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {}
 
 		/**
 		 * @brief fill constructor
 		 * Constructs a container with n elements. Each element is a copy of val.
 		 */
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
-		: alloc_(alloc), first_(NULL), last_(NULL), reserved_last_(NULL) {
-			first_ = alloc_.allocate(n);
-			last_ = first_;
-			reserved_last_ = first_ + n;
+		: alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
+			begin_ = alloc_.allocate(n);
+			end_ = begin_;
+			reserved_end_ = begin_ + n;
 			for (size_t i = 0; i < n; i++) {
-				alloc_.construct(last_, val);
-				last_++;
+				alloc_.construct(end_, val);
+				end_++;
 			}
 		}
 
 		/**
 		 * @brief range constructor
-		 * Constructs a container with as many elements as the range [first,last),
+		 * Constructs a container with as many elements as the range [first,last],
 		 * with each element constructed from its corresponding element in that range, in the same order.
 		 */
 		template <class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) : alloc_(alloc), first_(NULL), last_(NULL), reserved_last_(NULL) {
+		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
+		 : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
 
 		}
 
-		/**
-		 * @brief copy constructor
-		 * Constructs a container with a copy of each of the elements in x, in the same order.
-		 */
+		/** @brief copy constructor */
 		vector(const vector &x){
-
+			*this = x;
 		}
 
-		/**
-		 * @brief Destroy the vector object
-		 */
+		/** @brief Destroy the vector object */
 		~vector() {}
 
-		/**
-		 * @brief Copies all the elements from x into the container.
-		 */
+		/** @brief Copies all the elements from x into the container */
 		vector &operator=(const vector &x) {
 			if (x == *this)
 				return *this;
@@ -77,26 +73,43 @@ namespace ft {
 			// this->insert();
 			return *this;
 		}
-		/*-----------------------------------------------------------------------------------------------------------*/
+		/*----------------------------------------
 
 
-		/*-------------------------------------------------[Iterators]-----------------------------------------------*/
+		/*----------------------------------------
+									[Iterators]
+		----------------------------------------*/
+		iterator begin() { return iterator(begin_);  }
+		const_iterator begin() const  { return const_iterator(begin_); }
+		iterator end() { return iterator(end_);  }
+		const_iterator end() const  { return const_iterator(end_); }
+		reverse_iterator rbegin() { return reverse_iterator(end_); }
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(end_);}
+		reverse_iterator rend() { return reverse_iterator(begin_); }
+		const_reverse_iterator rend() const { return const_reverse_iterator(begin_);}
 
 
-		/*-----------------------------------------------------------------------------------------------------------*/
+
+		/*--------------------------------------*/
 
 
-		/*----------------------------------------------[Element access]---------------------------------------------*/
+		/*----------------------------------------
+							[Element access]
+		----------------------------------------*/
 
-		/*-----------------------------------------------------------------------------------------------------------*/
-
-
-		/*-------------------------------------------------[Capacity]------------------------------------------------*/
-
-		/*-----------------------------------------------------------------------------------------------------------*/
+		/*--------------------------------------*/
 
 
-		/*------------------------------------------------[Modifiers]------------------------------------------------*/
+		/*----------------------------------------
+								[Capacity]
+		----------------------------------------*/
+
+		/*--------------------------------------*/
+
+
+		/*----------------------------------------
+								[Modifiers]
+		----------------------------------------*/
 		/**
 		 * @brief
 		 *
@@ -138,16 +151,18 @@ namespace ft {
 
 		}
 
-		/*-----------------------------------------------------------------------------------------------------------*/
+		/*--------------------------------------*/
 
-		/*------------------------------------------------[Allocator]------------------------------------------------*/
+		/*---------------------------------------
+								[Allocator]
+		----------------------------------------*/
 
-		/*-----------------------------------------------------------------------------------------------------------*/
+		/*--------------------------------------*/
 	private:
 		allocator_type alloc_;	// Allocator value
-		pointer first_;					// Pointer to the first element
-		pointer last_;					// Pointer to the last element
-		pointer reserved_last_; // End of allocated storage
+		pointer begin_;					// Pointer to the first element
+		pointer end_;					// Pointer to the last element
+		pointer reserved_end_; // End of allocated storage
 	};
 }
 
