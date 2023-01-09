@@ -1,0 +1,11 @@
+version: '3'
+services:
+  ft_container:
+    container_name: ft_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /Users/shuta/dev/42Tokyo/42_Cursus/ft_container:/app
+      - /Users/shuta/.ssh:/root/.ssh:ro
+      - /Users/shuta/.gitconfig:/root/.gitconfig:ro

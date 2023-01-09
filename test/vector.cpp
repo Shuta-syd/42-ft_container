@@ -36,9 +36,9 @@ void iterators_test() {
 	//random_iterator
 	ft::vector<int>::iterator random_it = ft_int.begin();
 	std::vector<int>::iterator random_sit = std_int.begin();
-	std::cout << YEL << "- _iterator base()" << RES << std::endl;
+	std::cout << YEL << "- iterator base()" << RES << std::endl;
 	std::cout << "ft: ["<< random_it.base() << "] std: [" << random_sit.base() << "]" << std::endl;
-	std::cout << YEL << "- _iterator operator*" << RES << std::endl;
+	std::cout << YEL << "- iterator operator*" << RES << std::endl;
 	std::cout << "ft: ["<< *random_it << "] std: [" << *random_sit << "]" << std::endl;
 
 	//reverse_iterator
@@ -46,4 +46,21 @@ void iterators_test() {
 	std::vector<int>::reverse_iterator reverse_sit = std_int.rbegin();
 	std::cout << YEL << "- reverse_iterator operator*" << RES << std::endl;
 	std::cout << "ft: ["<< *reverse_it << "] std: [" << *reverse_sit << "]" << std::endl;
+
+	ft::vector<const int> ft_const_int(5, 42);
+	std::vector<const int> std_const_int(5, 42);
+
+	//const random_iterator
+	ft::vector<int>::const_iterator const_random_it = ft_const_int.begin();
+	std::vector<int>::const_iterator const_random_sit = std_const_int.begin();
+	std::cout << YEL << "- const_iterator base()" << RES << std::endl;
+	std::cout << "ft: ["<< const_random_it.base() << "] std: [" << const_random_sit.base() << "]" << std::endl;
+	std::cout << YEL << "- const_iterator operator*" << RES << std::endl;
+	std::cout << "ft: ["<< *const_random_it << "] std: [" << *const_random_sit << "]" << std::endl;
+
+	//const reverse_iterator
+	ft::vector<int>::const_reverse_iterator const_reverse_it = ft_const_int.rbegin();
+	std::vector<int>::const_reverse_iterator const_reverse_sit = std_const_int.rbegin();
+	std::cout << YEL << "- const_reverse_iterator operator*" << RES << std::endl;
+	std::cout << "ft: ["<< *const_reverse_it << "] std: [" << *const_reverse_sit << "]" << std::endl;
 }
