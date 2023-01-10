@@ -143,6 +143,61 @@ namespace ft {
 		----------------------------------------*/
 		/** @brief Returns the number of elements in the vector */
 		size_type size() const { return (end_ - begin_); }
+
+		/** @brief Returns the maximum number of elements that the vector can hold */
+		size_type max_size() const { return this->alloc_.max_size(); }
+
+		/**
+		 * @brief Resizes the container so that it contains n elements.
+		 *
+		 * @param n New container size, expressed in number of elements
+		 * @param val Object whose content is copied to the added elements in case that n is greater than the current container size
+		 */
+		void resize (size_type n, value_type val = value_type()) {
+			if (this->max_size() < n)
+				throw std::length_error("Size required is too long\n");
+
+			size_type size = this->size();
+			if (size > n) {
+				for (size_type i = n; i < size; i++) {
+					--end_;
+					alloc_.destroy(end_); // deallocate()ではなく？
+				}
+			}
+			else if (size < n) {
+				//insert() ?
+			}
+		}
+
+		/** @brief Returns the size of the storage space currently allocated for the vector, expressed in terms of elements */
+		size_type capacity() const { return (reserved_end_ - begin_); }
+		/** @brief Returns whether the vector is empty (i.e. whether its size is 0) */
+		bool empty() const {
+			if (this->size() == 0)
+				return true;
+			return false;
+		}
+
+		/** @brief Requests that the vector capacity be at least enough to contain n elements */
+		void reserve (size_type n) {
+			if (this->max_size() < n)
+				throw std::length_error("Size required is too long\n");
+			else if (capacity() >= n)
+				return ;
+
+			pointer old_start = begin_;
+			size_type old_capacity = this->capacity();
+
+			begin_ = alloc_.allocate(n);
+			end_ = begin_;
+			reserved_end_ = begin_ + n;
+			for (size_t i = 0; i < n; i++) {
+				alloc_.construct(end_, *(old_start + i));
+				end_++;
+			}
+			alloc_.deallocate(old_start, old_capacity);
+		}
+
 		/*--------------------------------------*/
 
 

@@ -3,13 +3,15 @@
 #include <iostream>
 #include <string>
 
+void capacity_test();
 void iterators_test();
 void constructor_test();
 
 void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
 	// constructor_test();
-	iterators_test();
+	// iterators_test();
+	capacity_test();
 }
 
 void constructor_test() {
@@ -66,4 +68,15 @@ void iterators_test() {
 	std::vector<int>::const_reverse_iterator const_reverse_sit = std_const_int.rbegin();
 	std::cout << YEL << "- const_reverse_iterator operator*" << RES << std::endl;
 	std::cout << "ft: ["<< *const_reverse_it << "] std: [" << *const_reverse_sit << "]" << std::endl;
+}
+
+
+void capacity_test() {
+	std::vector<int> std_int;
+
+	for (size_t i = 0; i < 10; i++)
+		std_int.push_back(i);
+	for (size_t i = 0; i < 20; i++)
+		std::cout << std_int[i] << " ";
+	std::cout << std::endl;
 }
