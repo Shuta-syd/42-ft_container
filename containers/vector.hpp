@@ -186,16 +186,18 @@ namespace ft {
 				return ;
 
 			pointer old_start = begin_;
+			pointer old_end = end_;
 			size_type old_capacity = this->capacity();
 
 			begin_ = alloc_.allocate(n);
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
-			for (size_t i = 0; i < n; i++) {
-				alloc_.construct(end_, *(old_start + i));
+			for (size_t i = 0; (old_begin + i)  != old_end; i++) {
+				alloc_.construct(end_, *(old_start + i)); // copy old val to new ptr
+				alloc_.destroy(alloc_, &(*(old_start + i))); // destroy object in memory
 				end_++;
 			}
-			alloc_.deallocate(old_start, old_capacity);
+			alloc_.deallocate(old_start, old_capacity); // release memory
 		}
 
 		/*--------------------------------------*/
