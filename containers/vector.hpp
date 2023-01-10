@@ -96,14 +96,53 @@ namespace ft {
 		/*----------------------------------------
 		[Element access]
 		----------------------------------------*/
+		/** @brief Returns a reference to the element at position n in the vector container. */
+		reference operator[] (size_type n) { return *(begin_ + n);}
+		const_reference operator[] (size_type n) const { return *(begin_ + n); }
 
-		/*--------------------------------------*/
+		/** @brief Returns a reference to the element at position n in the vector.
+		 * The function automatically checks whether n is within the bounds of valid elements in the vector, throwing an out_of_range exception
+		 */
+		reference at(size_type n) {
+			if (n >= this->size())
+				throw std::out_of_range("Error: Bad access");
+			return begin_[n];
+		}
+
+		const_reference at(size_type n) const {
+			if (n >= this->size())
+				throw std::out_of_range("Error: Bad access");
+			return begin_[n];
+		}
+
+		/** @brief Returns a reference to the first element in the container */
+		reference front() { return this->at(0); }
+		const_reference front() const { return this->at(0); }
+
+		/** @brief Returns a reference to the last element in the vector */
+		reference back() { return this->at(this->size() - 1); }
+		const_reference back() const { return this->at(this->size() - 1); }
+
+	/** @brief Returns a direct pointer to the memory array used internally by the vector to store its owned elements */
+	T* data() {
+		if (this->size() == 0)
+			return NULL;
+		return begin_;
+	}
+
+	const T* data() const {
+		if (this->size() == 0)
+			return NULL;
+		return begin_;
+	}
+	/*--------------------------------------*/
 
 
 		/*----------------------------------------
 		[Capacity]
 		----------------------------------------*/
-
+		/** @brief Returns the number of elements in the vector */
+		size_type size() const { return (end_ - begin_); }
 		/*--------------------------------------*/
 
 

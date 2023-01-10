@@ -7,21 +7,21 @@ headerflags=-MMD -MP
 
 INC = -I./containers -I./iterators
 
-objs_dir += test/
-deps_dir += test/
 srcs += $(addprefix test/, \
     main.cpp vector.cpp\
 )
 
+objs_dir += test/
 objs := $(srcs:%.cpp=objs/%.o)
-deps := $(srcs:%.cpp=deps/%.d)
-
 objs_dir := $(addprefix objs/, $(objs_dir))
 
+deps_dir += test/
+deps := $(srcs:%.cpp=deps/%.d)
 deps_dir := $(addprefix deps/, $(deps_dir))
 
 ############# basic rules ##############
-all: $(NAME)
+.PHONY: all re clean fclean
+all: $(NAME) $(objs)
 
 -include $(deps)
 
@@ -39,6 +39,7 @@ $(NAME): $(objs)
 
 $(objs_dir):
 	@mkdir -p $@
+
 $(deps_dir):
 	@mkdir -p $@
 
@@ -51,10 +52,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all re clean fclean
-
-run:
-	@make
+run: all
 	@./ft_container
 
 RED = \033[31m

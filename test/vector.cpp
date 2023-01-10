@@ -47,6 +47,9 @@ void iterators_test() {
 	std::cout << YEL << "- reverse_iterator operator*" << RES << std::endl;
 	std::cout << "ft: ["<< *reverse_it << "] std: [" << *reverse_sit << "]" << std::endl;
 
+	/**
+	 * @brief https://qiita.com/HO-RI9191/items/6f761af23cf5d288cb9e (Linuxだとエラー)
+	 */
 	ft::vector<const int> ft_const_int(5, 42);
 	std::vector<const int> std_const_int(5, 42);
 
