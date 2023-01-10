@@ -179,13 +179,13 @@ namespace ft {
 		}
 
 		/** @brief Requests that the vector capacity be at least enough to contain n elements */
-		void reserve (size_type n) {
+		void reserve(size_type n) {
 			if (this->max_size() < n)
 				throw std::length_error("Size required is too long\n");
 			else if (capacity() >= n)
 				return ;
 
-			pointer old_start = begin_;
+			pointer old_begin = begin_;
 			pointer old_end = end_;
 			size_type old_capacity = this->capacity();
 
@@ -193,58 +193,65 @@ namespace ft {
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
 			for (size_t i = 0; (old_begin + i)  != old_end; i++) {
-				alloc_.construct(end_, *(old_start + i)); // copy old val to new ptr
-				alloc_.destroy(alloc_, &(*(old_start + i))); // destroy object in memory
+				alloc_.construct(end_, *(old_begin + i)); // copy old val to new ptr
+				alloc_.destroy(alloc_, &(*(old_begin + i))); // destroy object in memory
 				end_++;
 			}
-			alloc_.deallocate(old_start, old_capacity); // release memory
+			alloc_.deallocate(old_begin, old_capacity); // release memory
 		}
-
 		/*--------------------------------------*/
 
 
 		/*----------------------------------------
 		[Modifiers]
 		----------------------------------------*/
-		/**
-		 * @brief
-		 *
-		 * @param position
-		 * @param val
-		 * @return iterator
-		 */
-		iterator insert(iterator position, const value_type &val) {
 
+	/**
+	 * @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
+	 */
+	template <class InputIterator>
+	void assign (InputIterator first, InputIterator last) {
+
+	}
+
+	void assign (size_type n, const value_type& val) {
+		if (n == 0)
+				return;
+
+		size_type capacity = this->capacity();
+		if (capacity >= n) {
+			for (size_t i = 0; i < n; i++) {
+				alloc_.destroy(begin_ + i);
+				alloc_.construct(begin_ + i, val);
+			}
 		}
-
-		/**
-		 * @brief The vector is extended by inserting new elements before the element at the specified position,
-		 * 				effectively increasing the container size by the number of elements inserted.
-		 *
-		 * @param position Position in the vector where the new elements are inserted.
-		 * @param n Number of elements to insert. Each element is initialized to a copy of val.
-		 * @param val Value to be copied (or moved) to the inserted elements.
-		 */
-		void insert(iterator position, size_type n, const value_type &val) {
-
+		else {
+				// this->clear();
+				alloc_.deallocate(begin_, capacity);
+				begin_ = alloc_.allocate(n);
+				end_ = begin_;
+				reserved_end_ = begin_ + n;
+				for (size_t i = 0; i < n; i++) {
+					alloc_.construct(end_, val);
+					end_++;
+			}
 		}
+	}
 
-		/**
-		 * @brief Insert elements from first to last at "position" into this container
-		 *
-		 * @param position Position in the vector where the new elements are inserted.
-		 * @param first,last Iterators specifying a range of elements. Copies of the elements in the range [first,last) are inserted at position
-		 */
+		iterator insert(iterator position, const value_type &val) {}
+
+		void insert(iterator position, size_type n, const value_type &val) {}
+
 		template <class InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last) {
+		void insert(iterator position, InputIterator first, InputIterator last) {}
 
-		}
-
-		/**
-		 * @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
-		 */
+		/** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0 */
 		void clear() {
-
+			size_type size = this->size();
+			for (size_t i = 0; i < size; i++) {
+			end_--;
+			alloc_.destroy(begin_ + i);
+			}
 		}
 
 		/*--------------------------------------*/

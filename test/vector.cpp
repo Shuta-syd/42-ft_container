@@ -6,12 +6,14 @@
 void capacity_test();
 void iterators_test();
 void constructor_test();
+void modifier_test();
 
 void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
 	// constructor_test();
 	// iterators_test();
-	capacity_test();
+	// capacity_test();
+	modifier_test();
 }
 
 void constructor_test() {
@@ -77,6 +79,17 @@ void capacity_test() {
 	for (size_t i = 0; i < 10; i++)
 		std_int.push_back(i);
 	for (size_t i = 0; i < 20; i++)
+		std::cout << std_int[i] << " ";
+	std::cout << std::endl;
+}
+
+void modifier_test() {
+	std::vector<int> std_int;
+
+	for (size_t i = 0; i < 10; i++)
+		std_int.push_back(i);
+	std_int.assign(5, 100);
+	for (size_t i = 0; i < 10; i++)
 		std::cout << std_int[i] << " ";
 	std::cout << std::endl;
 }
