@@ -72,7 +72,7 @@ namespace ft {
 		vector &operator=(const vector &x) {
 			if (x == *this)
 				return *this;
-			// this->clear();
+			this->clear();
 			// this->insert();
 			return *this;
 		}
@@ -153,7 +153,7 @@ namespace ft {
 		 * @param n New container size, expressed in number of elements
 		 * @param val Object whose content is copied to the added elements in case that n is greater than the current container size
 		 */
-		void resize (size_type n, value_type val = value_type()) {
+		void resize(size_type n, value_type val = value_type()) {
 			if (this->max_size() < n)
 				throw std::length_error("Size required is too long\n");
 
@@ -205,10 +205,7 @@ namespace ft {
 		/*----------------------------------------
 		[Modifiers]
 		----------------------------------------*/
-
-	/**
-	 * @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
-	 */
+	/** @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly */
 	template <class InputIterator>
 	void assign (InputIterator first, InputIterator last) {
 
@@ -226,7 +223,7 @@ namespace ft {
 			}
 		}
 		else {
-				// this->clear();
+				this->clear();
 				alloc_.deallocate(begin_, capacity);
 				begin_ = alloc_.allocate(n);
 				end_ = begin_;
@@ -238,9 +235,18 @@ namespace ft {
 		}
 	}
 
-		iterator insert(iterator position, const value_type &val) {}
+		/** @brief Inserts elements at the specified location in the container */
+		/**
+		 * 1. reserved_end_を超えない場合
+		 * 2. reserved_end_を越してメモリを倍にする場合
+		*/
+		iterator insert(iterator pos, const value_type &val) {
+			// if (this->capacity() -)
+		}
 
-		void insert(iterator position, size_type n, const value_type &val) {}
+		void insert(iterator position, size_type n, const value_type &val) {
+
+		}
 
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last) {}
@@ -253,13 +259,12 @@ namespace ft {
 			alloc_.destroy(begin_ + i);
 			}
 		}
-
 		/*--------------------------------------*/
 
 		/*---------------------------------------
 		[Allocator]
 		----------------------------------------*/
-
+		allocator_type get_allocator() const { return alloc_; }
 		/*--------------------------------------*/
 	private:
 		allocator_type alloc_;	// Allocator value

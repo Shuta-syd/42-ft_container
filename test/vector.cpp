@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+template <typename T>
+void print_cmp(std::string test_name, T std_var, T ft_var);
 void capacity_test();
 void iterators_test();
 void constructor_test();
@@ -12,8 +14,8 @@ void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
 	// constructor_test();
 	// iterators_test();
-	// capacity_test();
-	modifier_test();
+	capacity_test();
+	// modifier_test();
 }
 
 void constructor_test() {
@@ -40,16 +42,13 @@ void iterators_test() {
 	//random_iterator
 	ft::vector<int>::iterator random_it = ft_int.begin();
 	std::vector<int>::iterator random_sit = std_int.begin();
-	std::cout << YEL << "- iterator base()" << RES << std::endl;
-	std::cout << "ft: ["<< random_it.base() << "] std: [" << random_sit.base() << "]" << std::endl;
-	std::cout << YEL << "- iterator operator*" << RES << std::endl;
-	std::cout << "ft: ["<< *random_it << "] std: [" << *random_sit << "]" << std::endl;
+	print_cmp("- iterator base()", random_it.base(), random_sit.base());
+	print_cmp("- iterator operator*", *random_it, *random_sit);
 
 	//reverse_iterator
 	ft::vector<int>::reverse_iterator reverse_it = ft_int.rbegin();
 	std::vector<int>::reverse_iterator reverse_sit = std_int.rbegin();
-	std::cout << YEL << "- reverse_iterator operator*" << RES << std::endl;
-	std::cout << "ft: ["<< *reverse_it << "] std: [" << *reverse_sit << "]" << std::endl;
+	print_cmp("- reverse_iterator operator*", *reverse_it, *reverse_sit);
 
 	/**
 	 * @brief https://qiita.com/HO-RI9191/items/6f761af23cf5d288cb9e (Linuxだとエラー)
@@ -60,27 +59,23 @@ void iterators_test() {
 	//const random_iterator
 	ft::vector<int>::const_iterator const_random_it = ft_const_int.begin();
 	std::vector<int>::const_iterator const_random_sit = std_const_int.begin();
-	std::cout << YEL << "- const_iterator base()" << RES << std::endl;
-	std::cout << "ft: ["<< const_random_it.base() << "] std: [" << const_random_sit.base() << "]" << std::endl;
-	std::cout << YEL << "- const_iterator operator*" << RES << std::endl;
-	std::cout << "ft: ["<< *const_random_it << "] std: [" << *const_random_sit << "]" << std::endl;
+	print_cmp("- const_iterator base()", const_random_it.base(), const_random_sit.base());
+	print_cmp("- const_iterator operator*", *const_random_it, *const_random_sit);
 
 	//const reverse_iterator
 	ft::vector<int>::const_reverse_iterator const_reverse_it = ft_const_int.rbegin();
 	std::vector<int>::const_reverse_iterator const_reverse_sit = std_const_int.rbegin();
-	std::cout << YEL << "- const_reverse_iterator operator*" << RES << std::endl;
-	std::cout << "ft: ["<< *const_reverse_it << "] std: [" << *const_reverse_sit << "]" << std::endl;
+	print_cmp("- const_reverse_iterator operator*", *const_reverse_it, *const_reverse_sit);
 }
 
 
 void capacity_test() {
-	std::vector<int> std_int;
+	std::cout << GRN << "-----------------capacity test----------------" << RES << std::endl;
+	std::vector<int> std_int(5, 42);
+	std::vector<int> ft_int(5, 42);
 
-	for (size_t i = 0; i < 10; i++)
-		std_int.push_back(i);
-	for (size_t i = 0; i < 20; i++)
-		std::cout << std_int[i] << " ";
-	std::cout << std::endl;
+	print_cmp("- size()", ft_int.size(), std_int.size());
+	print_cmp("- capacity()", ft_int.capacity(), std_int.capacity());
 }
 
 void modifier_test() {
@@ -92,4 +87,10 @@ void modifier_test() {
 	for (size_t i = 0; i < 10; i++)
 		std::cout << std_int[i] << " ";
 	std::cout << std::endl;
+}
+
+template <typename T>
+void print_cmp(std::string test_name, T ft_var, T std_var) {
+	std::cout << YEL << test_name << RES << std::endl;
+	std::cout << "ft: ["<< ft_var << "] std: [" << std_var << "]" << std::endl;
 }
