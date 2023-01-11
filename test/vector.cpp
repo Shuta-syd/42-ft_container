@@ -173,6 +173,27 @@ void modifier_test() {
 	ft_6.pop_back();
 	print_cmp("6. size()", ft_6.size(), std_6.size()); // stdは境界値対策してない
 	print_cmp("6. capacity()", ft_6.capacity(), std_6.capacity());
+
+	//push_back()
+	print_mgn("push_back()");
+	std::vector<int> std_7(5, 42);
+	ft::vector<int> ft_7(5, 42);
+
+	std_7.push_back(10);
+	ft_7.push_back(10);
+
+	print_std_vector(std_7);
+	{
+		ft::vector<int>::iterator begin = ft_7.begin();
+		ft::vector<int>::iterator end = ft_7.end();
+		std::cout << "ft : ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+
+	print_cmp("7. size()", ft_7.size(), std_7.size());
+	print_cmp("7. capacity()", ft_7.capacity(), std_7.capacity());
 }
 
 template <typename T>

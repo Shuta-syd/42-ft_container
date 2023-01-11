@@ -67,13 +67,14 @@ namespace ft {
 		~vector() {}
 
 		/** @brief Copies all the elements from x into the container */
-		vector &operator=(const vector &x) {
-			if (x == *this)
-				return *this;
+		vector &operator=(const vector &rhs) {
+			// if (*this == rhs)
+			// 	return *this;
 			this->clear();
-			// this->insert();
+			this->insert(this->begin(), rhs.begin(), rhs.end());
 			return *this;
 		}
+
 		/*----------------------------------------*/
 
 
@@ -231,6 +232,11 @@ namespace ft {
 					end_++;
 			}
 		}
+	}
+
+	/** @brief Appends the given element value to the end of the container */
+	void push_back (const value_type& val) {
+		insert(this->end(), val);
 	}
 
 	/** @brief Removes the last element in the vector */
