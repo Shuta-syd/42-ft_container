@@ -317,11 +317,43 @@ namespace ft {
 			}
 		}
 
-		/** @brief
-		 * insert(it, 3, 42) -> intの場合にこちらに入ってしまう
+		/** @brief inserts elements from range [first, last) before pos
+		 * int intの場合こちらに反応してしまう(enable_ifで対応？)
 		*/
-		// template <class InputIterator>
-		// void insert(iterator position, InputIterator first, InputIterator last) {}
+		template <class InputIterator>
+		void insert(iterator pos, InputIterator first, InputIterator last) {
+			size_type length = last - first;
+			size_type size = this->size();
+			size_type capacity = this->capacity();
+			if (capacity - size >= length) {
+				for (size_type i = 0; i < length; i++)
+					insert(pos - i, *(first + i));
+			}
+			else {
+				size_type new_capacity = capacity > 0 ? size * 2 : length;
+				new_capacity = capacity >= length ? size * 2 : size + length;
+				iterator old_begin = this->begin();
+				iterator old_end = this->end();
+				begin_ = alloc_.allocate(new_capacity);
+				end_ = begin_;
+				reserved_end_ = begin_ + new_capacity;
+				for (; old_begin != pos; old_begin++) {
+					alloc_.construct(end_, *(old_begin));
+					alloc_.destroy(&(*old_begin));
+					end_++;
+				}
+				for (size_t i = 0; i < length; i++) {
+					alloc_.construct(end_, *(first + i));
+					end_++;
+				}
+				for (; old_begin != old_end; old_begin++){
+					alloc_.construct(end_, *(old_begin));
+					alloc_.destroy(&(*old_begin));
+					end_++;
+				}
+				alloc_.deallocate(&(*(old_begin - size)), capacity);
+			}
+		}
 
 		/** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0 */
 		void clear() {

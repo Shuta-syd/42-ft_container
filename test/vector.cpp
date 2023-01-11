@@ -4,6 +4,10 @@
 #include <string>
 
 template <typename T>
+void print_std_vector(std::vector<T> vec);
+template <typename T>
+void print_ft_vector(ft::vector<T> vec);
+template <typename T>
 void print_cmp(std::string test_name, T std_var, T ft_var);
 void print_mgn(std::string str);
 void capacity_test();
@@ -18,11 +22,20 @@ void vector_test() {
 	// iterators_test();
 	// capacity_test();
 	modifier_test();
-	test();
+	// test();
 }
 
 void test() {
+	std::vector<int> var1(6, 42);
+	std::vector<int> var2(10, 10);
 
+	std::vector<int>::iterator it = var1.begin() + 1;
+	var1.insert(it, var2.begin(), var2.end());
+	for (std::vector<int>::iterator it = var1.begin(); it != var1.end(); it++) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+	std::cout << var1.size() << " " << var1.capacity() << std::endl;
 }
 
 void constructor_test() {
@@ -109,34 +122,57 @@ void modifier_test() {
 	print_cmp("2. capacity()", ft_2.capacity(), std_2.capacity());
 
 	//insert(pos, n, val)
-		std::vector<int> std_3(5, 42);
-	ft::vector<int> ft_3(5, 42);
-
 	print_mgn("insert(pos, n, val)");
-	std::vector<int>::iterator sit_3 = std_3.end();
-	ft::vector<int>::iterator it_3 = ft_3.end();
-	std_3.insert(sit_3, 7, 42);
-	ft_3.insert(it_3, 7, 42);
+
+	std::vector<std::string> std_3(5, "42");
+	ft::vector<std::string> ft_3(5, "42");
+	std::vector <std::string> ::iterator sit_3 = std_3.end();
+	ft::vector<std::string>::iterator it_3 = ft_3.end();
+	std_3.insert(sit_3, 7, "42");
+	ft_3.insert(it_3, 7, "42");
 	print_cmp("3. size()", ft_3.size(), std_3.size());
 	print_cmp("3. capacity()", ft_3.capacity(), std_3.capacity());
 
-	//pop_back()
-	print_mgn("pop_back()");
-	std::vector<int> std_4(5, 42);
-	ft::vector<int> ft_4(5, 42);
+	print_mgn("insert(pos, first, last)");
+	std::vector<std::string> std_4(5, "42");
+	std::vector<std::string> std_item_4(10, "10");
+	ft::vector<std::string> ft_4(5, "42");
+	ft::vector<std::string> ft_item_4(10, "10");
+	std::vector <std::string> ::iterator sit_4 = std_4.end();
+	ft::vector<std::string>::iterator it_4 = ft_4.end();
+	std_4.insert(std_4.begin() + 1, std_item_4.begin(), std_item_4.end());
+	ft_4.insert(ft_4.begin() + 1, ft_item_4.begin(), ft_item_4.end());
 
-	std_4.pop_back();
-	ft_4.pop_back();
+	print_std_vector(std_4);
+	{
+		ft::vector<std::string>::iterator begin = ft_4.begin();
+		ft::vector<std::string>::iterator end = ft_4.end();
+		std::cout << "ft : ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+
 	print_cmp("4. size()", ft_4.size(), std_4.size());
 	print_cmp("4. capacity()", ft_4.capacity(), std_4.capacity());
 
-	std::vector<int> std_5;
-	ft::vector<int> ft_5;
+	//pop_back()
+	print_mgn("pop_back()");
+	std::vector<int> std_5(5, 42);
+	ft::vector<int> ft_5(5, 42);
 
 	std_5.pop_back();
 	ft_5.pop_back();
-	print_cmp("5. size()", ft_5.size(), std_5.size()); // stdは境界値対策してない
+	print_cmp("5. size()", ft_5.size(), std_5.size());
 	print_cmp("5. capacity()", ft_5.capacity(), std_5.capacity());
+
+	std::vector<int> std_6;
+	ft::vector<int> ft_6;
+
+	std_6.pop_back();
+	ft_6.pop_back();
+	print_cmp("6. size()", ft_6.size(), std_6.size()); // stdは境界値対策してない
+	print_cmp("6. capacity()", ft_6.capacity(), std_6.capacity());
 }
 
 template <typename T>
@@ -147,4 +183,24 @@ void print_cmp(std::string test_name, T ft_var, T std_var) {
 
 void print_mgn(std::string str) {
 	std::cout << MGN << str << RES << std::endl;
+}
+
+template <typename T>
+void print_std_vector(std::vector<T> vec) {
+	typename std::vector<T>::iterator begin = vec.begin();
+	typename std::vector<T>::iterator end = vec.end();
+	std::cout << "std: ";
+	for (; begin != end; begin++)
+		std::cout << "[" << *begin << "]";
+	std::cout << std::endl;
+}
+
+template <typename T>
+void print_ft_vector(ft::vector<T> vec) {
+	typename ft::vector<T>::iterator begin = vec.begin();
+	typename ft::vector<T>::iterator end = vec.end();
+	std::cout << "ft: ";
+	for (; begin != end; begin++)
+		std::cout << "[" << *begin << "]";
+	std::cout << std::endl;
 }
