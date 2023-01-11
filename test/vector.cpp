@@ -5,10 +5,12 @@
 
 template <typename T>
 void print_cmp(std::string test_name, T std_var, T ft_var);
+void print_mgn(std::string str);
 void capacity_test();
 void iterators_test();
 void constructor_test();
 void modifier_test();
+void test();
 
 void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
@@ -16,6 +18,11 @@ void vector_test() {
 	// iterators_test();
 	// capacity_test();
 	modifier_test();
+	test();
+}
+
+void test() {
+
 }
 
 void constructor_test() {
@@ -79,7 +86,9 @@ void capacity_test() {
 }
 
 void modifier_test() {
+	//insert(pos, val)
 	//capacityを越してメモリを倍にする場合
+	print_mgn("insert(pos, val)");
 	std::vector<int> std_1;
 	ft::vector<int> ft_1;
 
@@ -87,8 +96,8 @@ void modifier_test() {
 	ft::vector<int>::iterator it_1 = ft_1.begin();
 	std_1.insert(sit_1, 42);
 	ft_1.insert(it_1, 42);
-	print_cmp("1. - size()", ft_1.size(), std_1.size());
-	print_cmp("1. - capacity()", ft_1.capacity(), std_1.capacity());
+	print_cmp("1. size()", ft_1.size(), std_1.size());
+	print_cmp("1. capacity()", ft_1.capacity(), std_1.capacity());
 
 	std::vector<int> std_2(5, 42);
 	ft::vector<int> ft_2(5, 42);
@@ -97,12 +106,28 @@ void modifier_test() {
 	ft::vector<int>::iterator it_2 = ft_2.end();
 	std_2.insert(sit_2, 42);
 	ft_2.insert(it_2, 42);
-	print_cmp("2. - size()", ft_2.size(), std_2.size());
-	print_cmp("2. - capacity()", ft_2.capacity(), std_2.capacity());
+	print_cmp("2. size()", ft_2.size(), std_2.size());
+	print_cmp("2. capacity()", ft_2.capacity(), std_2.capacity());
+
+	//insert(pos, n, val)
+		std::vector<int> std_3(5, 42);
+	ft::vector<int> ft_3(5, 42);
+
+	print_mgn("insert(pos, n, val)");
+	std::vector<int>::iterator sit_3 = std_3.end();
+	ft::vector<int>::iterator it_3 = ft_3.end();
+	std_3.insert(sit_3, 7, 42);
+	ft_3.insert(it_3, 7, 42);
+	print_cmp("3. size()", ft_3.size(), std_3.size());
+	print_cmp("3. capacity()", ft_3.capacity(), std_3.capacity());
 }
 
 template <typename T>
 void print_cmp(std::string test_name, T ft_var, T std_var) {
 	std::cout << YEL << test_name << RES << std::endl;
 	std::cout << "ft: ["<< ft_var << "] std: [" << std_var << "]" << std::endl;
+}
+
+void print_mgn(std::string str) {
+	std::cout << MGN << str << RES << std::endl;
 }

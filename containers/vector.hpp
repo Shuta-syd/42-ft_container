@@ -49,9 +49,7 @@ namespace ft {
 		/**
 		 * @brief range constructor
 		 * Constructs a container with as many elements as the range [first,last],
-		 * with each element constructed from its corresponding element in that range, in the same order.
-		 *
-		 * vector(2, 10);
+		 * with each element constructed from its corresponding element in that range, in the same  order.
 		 */
 
 		// template <class InputIterator>
@@ -235,7 +233,7 @@ namespace ft {
 		}
 	}
 
-		/** @brief Inserts elements at the specified location in the container */
+		/** @brief inserts value before pos */
 		iterator insert(iterator pos, const value_type &val) {
 			size_type size = this->size();
 			size_type capacity = this->capacity();
@@ -249,12 +247,12 @@ namespace ft {
 				alloc_.construct(&(*new_it), val);
 			}
 			else {
-				size_type new_size = size * 2 > 0 ? size * 2 : 1;
+				size_type new_capacity = capacity > 0 ? size * 2 : 1;
 				iterator old_begin = this->begin();
 				iterator old_end = this->end();
-				begin_ = alloc_.allocate(new_size);
+				begin_ = alloc_.allocate(new_capacity);
 				end_ = begin_;
-				reserved_end_ = begin_ + new_size;
+				reserved_end_ = begin_ + new_capacity;
 				for (; old_begin != pos; old_begin++) {
 					alloc_.construct(end_, *(old_begin));
 					alloc_.destroy(&(*old_begin));
@@ -272,12 +270,50 @@ namespace ft {
 			return (iterator(begin_ + pos_len));
 		}
 
-		void insert(iterator position, size_type n, const value_type &val) {
+		/** @brief inserts n copies of the value before pos */
+		void insert(iterator pos, size_type n, const value_type &val) {
+			if (n == 0)
+				return;
+			else if (n > this->max_size())
+				throw std::length_error("Size required is too long\n");
 
+			size_type size = this->size();
+			size_type capacity = this->capacity();
+			if (capacity - size >= n) {
+				for (size_type i = 0; i < n; i++)
+					insert(pos - i, val);
+			}
+			else {
+				size_type new_capacity = capacity > 0 ? size * 2 : n;
+				new_capacity = capacity >= n ? size * 2 : size + n ;
+				iterator old_begin = this->begin();
+				iterator old_end = this->end();
+				begin_ = alloc_.allocate(new_capacity);
+				end_ = begin_;
+				reserved_end_ = begin_ + new_capacity;
+				for (; old_begin != pos; old_begin++) {
+					alloc_.construct(end_, *(old_begin));
+					alloc_.destroy(&(*old_begin));
+					end_++;
+				}
+				for (size_t i = 0; i < n; i++) {
+					alloc_.construct(end_, val);
+					end_++;
+				}
+				for (; old_begin != old_end; old_begin++){
+					alloc_.construct(end_, *(old_begin));
+					alloc_.destroy(&(*old_begin));
+					end_++;
+				}
+				alloc_.deallocate(&(*(old_begin - size)), capacity);
+			}
 		}
 
-		template <class InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last) {}
+		/** @brief 
+		 * insert(it, 3, 42) -> intの場合にこちらに入ってしまう
+		*/
+		// template <class InputIterator>
+		// void insert(iterator position, InputIterator first, InputIterator last) {}
 
 		/** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0 */
 		void clear() {
