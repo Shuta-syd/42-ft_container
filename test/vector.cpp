@@ -87,7 +87,6 @@ void capacity_test() {
 
 void modifier_test() {
 	//insert(pos, val)
-	//capacityを越してメモリを倍にする場合
 	print_mgn("insert(pos, val)");
 	std::vector<int> std_1;
 	ft::vector<int> ft_1;
@@ -120,6 +119,24 @@ void modifier_test() {
 	ft_3.insert(it_3, 7, 42);
 	print_cmp("3. size()", ft_3.size(), std_3.size());
 	print_cmp("3. capacity()", ft_3.capacity(), std_3.capacity());
+
+	//pop_back()
+	print_mgn("pop_back()");
+	std::vector<int> std_4(5, 42);
+	ft::vector<int> ft_4(5, 42);
+
+	std_4.pop_back();
+	ft_4.pop_back();
+	print_cmp("4. size()", ft_4.size(), std_4.size());
+	print_cmp("4. capacity()", ft_4.capacity(), std_4.capacity());
+
+	std::vector<int> std_5;
+	ft::vector<int> ft_5;
+
+	std_5.pop_back();
+	ft_5.pop_back();
+	print_cmp("5. size()", ft_5.size(), std_5.size()); // stdは境界値対策してない
+	print_cmp("5. capacity()", ft_5.capacity(), std_5.capacity());
 }
 
 template <typename T>

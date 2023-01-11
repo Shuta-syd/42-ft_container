@@ -233,6 +233,14 @@ namespace ft {
 		}
 	}
 
+	/** @brief Removes the last element in the vector */
+	void pop_back() {
+		if (this->size() == 0)
+			return;
+		alloc_.destroy(end_ - 1);
+		end_ -= 1;
+	}
+
 		/** @brief inserts value before pos */
 		iterator insert(iterator pos, const value_type &val) {
 			size_type size = this->size();
@@ -309,7 +317,7 @@ namespace ft {
 			}
 		}
 
-		/** @brief 
+		/** @brief
 		 * insert(it, 3, 42) -> intの場合にこちらに入ってしまう
 		*/
 		// template <class InputIterator>
