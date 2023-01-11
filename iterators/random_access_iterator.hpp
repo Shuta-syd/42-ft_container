@@ -15,8 +15,8 @@ namespace ft {
 		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::iterator_category iterator_category; // iterator category (random, forward ...etc)
 
 		/* Constructor & Destructor */
-		random_access_iterator() : current_pos_(NULL){};
-		explicit random_access_iterator(pointer pos) : current_pos_(pos){};
+		random_access_iterator() : current_pos_(NULL){}
+		explicit random_access_iterator(pointer pos) : current_pos_(pos) {}
 		~random_access_iterator(){};
 		random_access_iterator(const random_access_iterator &rhs) {
 			*this = rhs;
@@ -90,7 +90,7 @@ namespace ft {
 		}
 
 		bool operator==(const random_access_iterator &rhs) const { return this->current_pos_ == rhs.current_pos_; }
-		bool operator!=(const random_access_iterator &rhs) const { return !(this == rhs); }
+		bool operator!=(const random_access_iterator &rhs) const { return !(*this == rhs); }
 		bool operator>(const random_access_iterator &rhs) const { return this->current_pos_ > rhs.current_pos_; }
 		bool operator<(const random_access_iterator &rhs) const { return !(this > rhs); }
 		bool operator>=(const random_access_iterator &rhs) const { return this->current_pos_ >= rhs.current_pos_; }

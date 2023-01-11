@@ -14,8 +14,8 @@ void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
 	// constructor_test();
 	// iterators_test();
-	capacity_test();
-	// modifier_test();
+	// capacity_test();
+	modifier_test();
 }
 
 void constructor_test() {
@@ -72,21 +72,33 @@ void iterators_test() {
 void capacity_test() {
 	std::cout << GRN << "-----------------capacity test----------------" << RES << std::endl;
 	std::vector<int> std_int(5, 42);
-	std::vector<int> ft_int(5, 42);
+	ft::vector<int> ft_int(5, 42);
 
 	print_cmp("- size()", ft_int.size(), std_int.size());
 	print_cmp("- capacity()", ft_int.capacity(), std_int.capacity());
 }
 
 void modifier_test() {
-	std::vector<int> std_int;
+	//capacityを越してメモリを倍にする場合
+	std::vector<int> std_1;
+	ft::vector<int> ft_1;
 
-	for (size_t i = 0; i < 10; i++)
-		std_int.push_back(i);
-	std_int.assign(5, 100);
-	for (size_t i = 0; i < 10; i++)
-		std::cout << std_int[i] << " ";
-	std::cout << std::endl;
+	std::vector<int>::iterator sit_1 = std_1.begin();
+	ft::vector<int>::iterator it_1 = ft_1.begin();
+	std_1.insert(sit_1, 42);
+	ft_1.insert(it_1, 42);
+	print_cmp("1. - size()", ft_1.size(), std_1.size());
+	print_cmp("1. - capacity()", ft_1.capacity(), std_1.capacity());
+
+	std::vector<int> std_2(5, 42);
+	ft::vector<int> ft_2(5, 42);
+
+	std::vector<int>::iterator sit_2 = std_2.end();
+	ft::vector<int>::iterator it_2 = ft_2.end();
+	std_2.insert(sit_2, 42);
+	ft_2.insert(it_2, 42);
+	print_cmp("2. - size()", ft_2.size(), std_2.size());
+	print_cmp("2. - capacity()", ft_2.capacity(), std_2.capacity());
 }
 
 template <typename T>

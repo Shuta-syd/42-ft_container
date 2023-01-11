@@ -40,7 +40,7 @@ namespace ft {
 			begin_ = alloc_.allocate(n);
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
-			for (size_t i = 0; i < n; i++) {
+			for (size_t i = 0; i < n; i++){
 				alloc_.construct(end_, val);
 				end_++;
 			}
@@ -194,7 +194,7 @@ namespace ft {
 			reserved_end_ = begin_ + n;
 			for (size_t i = 0; (old_begin + i)  != old_end; i++) {
 				alloc_.construct(end_, *(old_begin + i)); // copy old val to new ptr
-				alloc_.destroy(alloc_, &(*(old_begin + i))); // destroy object in memory
+				alloc_.destroy(&(*(old_begin + i))); // destroy object in memory
 				end_++;
 			}
 			alloc_.deallocate(old_begin, old_capacity); // release memory
@@ -236,12 +236,40 @@ namespace ft {
 	}
 
 		/** @brief Inserts elements at the specified location in the container */
-		/**
-		 * 1. reserved_end_を超えない場合
-		 * 2. reserved_end_を越してメモリを倍にする場合
-		*/
 		iterator insert(iterator pos, const value_type &val) {
-			// if (this->capacity() -)
+			size_type size = this->size();
+			size_type capacity = this->capacity();
+			size_type pos_len = &(*pos) - begin_;
+			if (capacity - size >= 1) {
+				iterator it = this->end();
+				iterator new_it = pos - 1;
+				for (; it != new_it; it--)
+					alloc_.construct(&(*it), *it);
+				end_ += 1;
+				alloc_.construct(&(*new_it), val);
+			}
+			else {
+				size_type new_size = size * 2 > 0 ? size * 2 : 1;
+				iterator old_begin = this->begin();
+				iterator old_end = this->end();
+				begin_ = alloc_.allocate(new_size);
+				end_ = begin_;
+				reserved_end_ = begin_ + new_size;
+				for (; old_begin != pos; old_begin++) {
+					alloc_.construct(end_, *(old_begin));
+					alloc_.destroy(&(*old_begin));
+					end_++;
+				}
+				alloc_.construct(end_, val);
+				end_ += 1;
+				for (; old_begin != old_end; old_begin++){
+					alloc_.construct(end_, *(old_begin));
+					alloc_.destroy(&(*old_begin));
+					end_++;
+				}
+				alloc_.deallocate(&(*(old_begin - size)), capacity);
+			}
+			return (iterator(begin_ + pos_len));
 		}
 
 		void insert(iterator position, size_type n, const value_type &val) {
@@ -269,8 +297,8 @@ namespace ft {
 	private:
 		allocator_type alloc_;	// Allocator value
 		pointer begin_;					// Pointer to the first element
-		pointer end_;					// Pointer to the last element
-		pointer reserved_end_; // End of allocated storage
+		pointer end_;					// Pointer next to the last element
+		pointer reserved_end_; // Next pointer to allocated memory
 	};
 }
 
