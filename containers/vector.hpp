@@ -377,7 +377,17 @@ namespace ft {
 		 * object of the same type. Sizes may differ
 		 * */
 		void swap( vector& other ) {
+			pointer tmp_begin = begin_;
+			pointer tmp_end = end_;
+			pointer tmp_reserved_end = reserved_end_;
 
+			this->begin_ = other.begin_;
+			this->end_ = other.end_;
+			this->reserved_end_ = other.reserved_end_;
+
+			other.begin_ = tmp_begin;
+			other.end_ = tmp_end;
+			other.reserved_end_ = tmp_reserved_end;
 		}
 
 		/*--------------------------------------*/

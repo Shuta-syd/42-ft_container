@@ -29,14 +29,13 @@ void test() {
 	std::vector<int> var1(6, 42);
 	std::vector<int> var2(15, 10);
 
-	std::vector<int>::iterator it = var1.begin() + 1;
-	var1.assign(var2.begin(), var2.end());
-	// var1.assign(0, 10);
-	for (std::vector<int>::iterator it = var1.begin(); it != var1.end(); it++) {
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
+	print_std_vector(var1);
+	print_std_vector(var2);
+	var1.swap(var2);
+	print_std_vector(var1);
+	print_std_vector(var2);
 	std::cout << var1.size() << " " << var1.capacity() << std::endl;
+	std::cout << var2.size() << " " << var2.capacity() << std::endl;
 }
 
 void constructor_test() {
@@ -239,6 +238,37 @@ void modifier_test() {
 
 	print_cmp("9. size()", ft_9.size(), std_9.size());
 	print_cmp("9. capacity()", ft_9.capacity(), std_9.capacity());
+
+	// swap (other)
+	print_mgn("swap(other)");
+	std::vector<std::string> std_10(5, "42");
+	std::vector<std::string> std_item_10(10, "10");
+	ft::vector<std::string> ft_10(5, "42");
+	ft::vector<std::string> ft_item_10(10, "10");
+	std_10.swap(std_item_10);
+	ft_10.swap(ft_item_10);
+
+	print_std_vector(std_10);
+	print_std_vector(std_item_10);
+	{
+		ft::vector<std::string>::iterator begin = ft_10.begin();
+		ft::vector<std::string>::iterator end = ft_10.end();
+		std::cout << "ft1: ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+	{
+		ft::vector<std::string>::iterator begin = ft_item_10.begin();
+		ft::vector<std::string>::iterator end = ft_item_10.end();
+		std::cout << "ft2: ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+
+	print_cmp("9. size()", ft_10.size(), std_10.size());
+	print_cmp("9. capacity()", ft_10.capacity(), std_10.capacity());
 }
 
 template <typename T>
