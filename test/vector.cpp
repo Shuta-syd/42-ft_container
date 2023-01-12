@@ -27,10 +27,11 @@ void vector_test() {
 
 void test() {
 	std::vector<int> var1(6, 42);
-	std::vector<int> var2(10, 10);
+	std::vector<int> var2(15, 10);
 
 	std::vector<int>::iterator it = var1.begin() + 1;
-	var1.insert(it, var2.begin(), var2.end());
+	var1.assign(var2.begin(), var2.end());
+	// var1.assign(0, 10);
 	for (std::vector<int>::iterator it = var1.begin(); it != var1.end(); it++) {
 		std::cout << *it << " ";
 	}
@@ -194,6 +195,50 @@ void modifier_test() {
 
 	print_cmp("7. size()", ft_7.size(), std_7.size());
 	print_cmp("7. capacity()", ft_7.capacity(), std_7.capacity());
+
+	//assign(n, val)
+		print_mgn("assign(n, val)");
+	std::vector<std::string> std_8(10, "42");
+	ft::vector<std::string> ft_8(10, "42");
+	std_8.assign(5, "10");
+	ft_8.assign(5, "10");
+
+	print_std_vector(std_8);
+	{
+		ft::vector<std::string>::iterator begin = ft_8.begin();
+		ft::vector<std::string>::iterator end = ft_8.end();
+		std::cout << "ft : ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+
+	print_cmp("8. size()", ft_8.size(), std_8.size());
+	print_cmp("8. capacity()", ft_8.capacity(), std_8.capacity());
+
+	// assign (first, last)
+	print_mgn("assign(first, last)");
+	std::vector<std::string> std_9(5, "42");
+	std::vector<std::string> std_item_9(2, "10");
+	ft::vector<std::string> ft_9(5, "42");
+	ft::vector<std::string> ft_item_9(2, "10");
+	std::vector <std::string> ::iterator sit_9 = std_9.end();
+	ft::vector<std::string>::iterator it_9 = ft_9.end();
+	std_9.assign(std_item_9.begin(), std_item_9.end());
+	ft_9.assign(ft_item_9.begin(), ft_item_9.end());
+
+	print_std_vector(std_9);
+	{
+		ft::vector<std::string>::iterator begin = ft_9.begin();
+		ft::vector<std::string>::iterator end = ft_9.end();
+		std::cout << "ft : ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+
+	print_cmp("9. size()", ft_9.size(), std_9.size());
+	print_cmp("9. capacity()", ft_9.capacity(), std_9.capacity());
 }
 
 template <typename T>

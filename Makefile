@@ -5,7 +5,7 @@ CXX=c++
 CXXFLAGS= -g -std=c++98#-Wall -Werror -Wextra -std=c++98 -pedantic
 headerflags=-MMD -MP
 
-INC = -I./containers -I./iterators
+INC = -I./containers -I./iterators -I./type_traits
 
 srcs += $(addprefix test/, \
     main.cpp vector.cpp\

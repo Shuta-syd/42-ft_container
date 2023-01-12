@@ -207,30 +207,33 @@ namespace ft {
 	/** @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly */
 	template <class InputIterator>
 	void assign (InputIterator first, InputIterator last) {
-
+		this->clear();
+		size_type length = last - first;
+		size_type capacity = this->capacity();
+		if (capacity < length) {
+			alloc_.deallocate(begin_, capacity);
+			begin_ = alloc_.allocate(length);
+			end_ = begin_;
+			reserved_end_ = begin_ + length;
+		}
+		for (;  first != last; first++) {
+				alloc_.construct(end_, *first);
+				end_++;
+		}
 	}
 
 	void assign (size_type n, const value_type& val) {
-		if (n == 0)
-				return;
-
+		this->clear();
 		size_type capacity = this->capacity();
-		if (capacity >= n) {
-			for (size_t i = 0; i < n; i++) {
-				alloc_.destroy(begin_ + i);
-				alloc_.construct(begin_ + i, val);
-			}
-		}
-		else {
-				this->clear();
+		if (capacity < n) {
 				alloc_.deallocate(begin_, capacity);
 				begin_ = alloc_.allocate(n);
 				end_ = begin_;
 				reserved_end_ = begin_ + n;
-				for (size_t i = 0; i < n; i++) {
-					alloc_.construct(end_, val);
-					end_++;
-			}
+		}
+		for (size_t i = 0; i < n; i++) {
+			alloc_.construct(end_, val);
+			end_++;
 		}
 	}
 
@@ -369,6 +372,14 @@ namespace ft {
 			alloc_.destroy(begin_ + i);
 			}
 		}
+
+		/** @brief Exchanges the content of the container by the content of x, which is another vector
+		 * object of the same type. Sizes may differ
+		 * */
+		void swap( vector& other ) {
+
+		}
+
 		/*--------------------------------------*/
 
 		/*---------------------------------------
