@@ -18,40 +18,63 @@ void test();
 
 void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
-	// constructor_test();
+	constructor_test();
 	// iterators_test();
 	// capacity_test();
-	modifier_test();
+	// modifier_test();
 	// test();
 }
 
 void test() {
 	std::vector<int> var1(6, 42);
-	std::vector<int> var2(15, 10);
+	// std::vector<int> var2(15, 10);
 
+	var1.resize(2, 10);
+	// print_std_vector(var1);
+	// print_std_vector(var2);
+	// var1.swap(var2);
 	print_std_vector(var1);
-	print_std_vector(var2);
-	var1.swap(var2);
-	print_std_vector(var1);
-	print_std_vector(var2);
+	// print_std_vector(var2);
 	std::cout << var1.size() << " " << var1.capacity() << std::endl;
-	std::cout << var2.size() << " " << var2.capacity() << std::endl;
+	// std::cout << var2.size() << " " << var2.capacity() << std::endl;
 }
 
 void constructor_test() {
 	std::cout << YEL << "-------------constructor test-------------" << RES << std::endl;
 	//test1 (empty constructor)
+	print_mgn("empty constructor");
 	ft::vector<int> empty_var_int;
 	ft::vector<int *> empty_var_int_p;
 	ft::vector<std::string> empty_var_string;
+	std::cout << "ok" << std::endl;
 
 	//test2 (fill constructor)
+	print_mgn("fill constructor");
 	ft::vector<int> var_int(5, 42); // KO
 	ft::vector<std::string> var_string(5, "TEST");
 	ft::vector<char> var_char(5, 'x');
+	print_ft_vector(var_char);
+	print_ft_vector(var_string);
+	print_ft_vector(var_int);
 
 	//test3 (range constructor)
+	print_mgn("range constructor");
 
+	//test4 (copy constructor)
+	print_mgn("copy constructor");
+	ft::vector<int> ft_4(5, 42);
+	ft::vector<int> ft_cp_4 = ft_4;
+
+	print_ft_vector(ft_4);
+	print_ft_vector(ft_cp_4);
+
+	//test5 operator=
+	ft::vector<std::string> ft_5(5, "42");
+	ft::vector<std::string> ft_cp_5;
+	ft_cp_5 = ft_5;
+	print_mgn("operator=");
+	print_ft_vector(ft_5);
+	print_ft_vector(ft_cp_5);
 }
 
 void iterators_test() {
@@ -91,11 +114,31 @@ void iterators_test() {
 
 void capacity_test() {
 	std::cout << GRN << "-----------------capacity test----------------" << RES << std::endl;
-	std::vector<int> std_int(5, 42);
-	ft::vector<int> ft_int(5, 42);
+	std::vector<int> std_1(5, 42);
+	ft::vector<int> ft_1(5, 42);
 
-	print_cmp("- size()", ft_int.size(), std_int.size());
-	print_cmp("- capacity()", ft_int.capacity(), std_int.capacity());
+	print_mgn("size() capacity()");
+	print_cmp("- size()", ft_1.size(), std_1.size());
+	print_cmp("- capacity()", ft_1.capacity(), std_1.capacity());
+
+
+	print_mgn("resize(n, val)");
+	std::vector<std::string> std_2(5, "42");
+	ft::vector<std::string> ft_2(5, "42");
+	std_2.resize(2, "10");
+	ft_2.resize(2, "10");
+
+	print_std_vector(std_2);
+	{
+		ft::vector<std::string>::iterator begin = ft_2.begin();
+		ft::vector<std::string>::iterator end = ft_2.end();
+		std::cout << "ft : ";
+		for (; begin != end; begin++)
+			std::cout << "[" << *begin << "]";
+		std::cout << std::endl;
+	}
+	print_cmp("- size()", ft_2.size(), std_2.size());
+	print_cmp("- capacity()", ft_2.capacity(), std_2.capacity());
 }
 
 void modifier_test() {

@@ -29,7 +29,7 @@ namespace ft {
 		 * @brief empty container constructor (default constructor)
 		 * Constructs an empty container, with no elements.
 		 */
-		explicit vector(const allocator_type &alloc = allocator_type()): alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {}
+		explicit vector(const allocator_type &alloc = allocator_type()) : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {}
 
 		/**
 		 * @brief fill constructor
@@ -59,17 +59,18 @@ namespace ft {
 		// }
 
 		/** @brief copy constructor */
-		vector(const vector &x){
+		vector(const vector &x) : alloc_(x.alloc_), begin_(NULL), end_(NULL), reserved_end_(NULL) {
 			*this = x;
 		}
 
 		/** @brief Destroy the vector object */
-		~vector() {}
+		~vector() {
+			this->clear();
+			alloc_.deallocate(begin_, this->capacity());
+		}
 
 		/** @brief Copies all the elements from x into the container */
 		vector &operator=(const vector &rhs) {
-			// if (*this == rhs)
-			// 	return *this;
 			this->clear();
 			this->insert(this->begin(), rhs.begin(), rhs.end());
 			return *this;
@@ -160,11 +161,11 @@ namespace ft {
 			if (size > n) {
 				for (size_type i = n; i < size; i++) {
 					--end_;
-					alloc_.destroy(end_); // deallocate()ではなく？
+					alloc_.destroy(end_);
 				}
 			}
-			else if (size < n) {
-				//insert() ?
+			else {
+				// this->insert(this->end_, n - size, val);
 			}
 		}
 
