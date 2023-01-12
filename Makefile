@@ -2,27 +2,26 @@ NAME=ft_container
 RM=rm -rf
 
 CXX=c++
-CXXFLAGS= -std=c++98#-Wall -Werror -Wextra -std=c++98 -pedantic
+CXXFLAGS= -g -std=c++98#-Wall -Werror -Wextra -std=c++98 -pedantic
 headerflags=-MMD -MP
 
-INC = -I./containers -I./iterators
+INC = -I./containers -I./iterators -I./type_traits
 
-objs_dir += test/
-deps_dir += test/
 srcs += $(addprefix test/, \
     main.cpp vector.cpp\
 )
 
+objs_dir += test/
 objs := $(srcs:%.cpp=objs/%.o)
-deps := $(srcs:%.cpp=deps/%.d)
-
 objs_dir := $(addprefix objs/, $(objs_dir))
 
+deps_dir += test/
+deps := $(srcs:%.cpp=deps/%.d)
 deps_dir := $(addprefix deps/, $(deps_dir))
 
 ############# basic rules ##############
-.PHONY: all clean fclean re
-all: $(NAME)
+.PHONY: all re clean fclean
+all: $(NAME) $(objs)
 
 -include $(deps)
 
@@ -40,21 +39,21 @@ $(NAME): $(objs)
 
 $(objs_dir):
 	@mkdir -p $@
+
 $(deps_dir):
 	@mkdir -p $@
 
 clean:
-	$(RM) $(objs)
-	$(RM) $(deps)
-
-fclean: clean
-	$(RM) $(NAME)
 	$(RM) ./objs
 	$(RM) ./deps
 
+fclean: clean
+	$(RM) $(NAME)
+
 re: fclean all
 
-.PHONY: all re clean fclean
+run: all
+	@./ft_container
 
 RED = \033[31m
 GRN = \033[32m

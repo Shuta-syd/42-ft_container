@@ -1,0 +1,15 @@
+{
+	"name": "ft_container",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "ft_container",
+	"extensions": [
+		"ms-vscode.cpptools",
+		"ms-vscode.cpptools-themes",
+		"ms-vscode.cpptools-extension-pack",
+		"eamodio.gitlens",
+		"tomoki1207.pdf",
+		"IBM.output-colorizer",
+		"yzhang.markdown-all-in-one"
+	],
+	"workspaceFolder": "/app"
+}

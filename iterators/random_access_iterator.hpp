@@ -15,8 +15,8 @@ namespace ft {
 		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::iterator_category iterator_category; // iterator category (random, forward ...etc)
 
 		/* Constructor & Destructor */
-		random_access_iterator() : current_pos_(NULL){};
-		explicit random_access_iterator(iterator_type pos) : current_pos_(pos){};
+		random_access_iterator() : current_pos_(NULL){}
+		explicit random_access_iterator(pointer pos) : current_pos_(pos) {}
 		~random_access_iterator(){};
 		random_access_iterator(const random_access_iterator &rhs) {
 			*this = rhs;
@@ -30,7 +30,7 @@ namespace ft {
 			return *this;
 		}
 
-	iterator_type base() const { return current_pos_; };
+	pointer base() const { return current_pos_; };
 
 		reference operator*() const { return *current_pos_; }
 		pointer operator->() const { return &(*current_pos_); }
@@ -42,7 +42,7 @@ namespace ft {
 		random_access_iterator operator++(int) { // postfix increment
 			random_access_iterator tmp(*this);
 			++(*this);
-			return *tmp;
+			return tmp;
 		}
 		random_access_iterator &operator--() {
 			current_pos_--;
@@ -90,14 +90,14 @@ namespace ft {
 		}
 
 		bool operator==(const random_access_iterator &rhs) const { return this->current_pos_ == rhs.current_pos_; }
-		bool operator!=(const random_access_iterator &rhs) const { return !(this == rhs); }
+		bool operator!=(const random_access_iterator &rhs) const { return !(*this == rhs); }
 		bool operator>(const random_access_iterator &rhs) const { return this->current_pos_ > rhs.current_pos_; }
 		bool operator<(const random_access_iterator &rhs) const { return !(this > rhs); }
 		bool operator>=(const random_access_iterator &rhs) const { return this->current_pos_ >= rhs.current_pos_; }
 		bool operator<=(const random_access_iterator &rhs) const { return !(this >= rhs); }
 
 	private:
-		iterator_type current_pos_;
+		pointer current_pos_;
 	};
 
 	template <class Iterator>

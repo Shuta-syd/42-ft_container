@@ -1,10 +1,7 @@
-#include <iostream>
-void vector_test();
+#include "test.hpp"
 
 int main(int argc, char const *argv[]) {
-	(void)argc;
-	(void)argv;
-	std::cout << "Hello! ft_container test started" << std::endl;
+	(void)argc; (void)argv;
 
 	vector_test();
 	return 0;
