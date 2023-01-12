@@ -3,6 +3,11 @@
 	STLとは、動的配列や双方向リンクリスト、連想配列などといった基本的なデータ構造を、type-safeかつ最小コーディングで再利用するためのライブラリ。
 	ライブラリとはいっても、ほとんどtemplateでできているので、ヘッダファイルをインクルードすればすぐ使えます。
 
+### What is SFINAE?
+	SFINAEとはSubstitution Falilure Is Not An Errorの略で、直訳すると「置き換え失敗はエラーではない」という意味
+	あるテンプレートの展開において、置き換えに失敗した場合はそこでコンパイルエラーとするのではなく、対象から除外してコンパイルを継続する機能
+	URL: https://izadori.net/cpp-templ-sfinae/
+
 ### Reference
 	URL: 
 		https://cpprefjp.github.io/

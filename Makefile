@@ -1,27 +1,19 @@
-NAME=ft_container
-RM=rm -rf
+NAME = ft_container
+CC = g++
+CXXFLAGS = -std=c++98 #-Wall -Wextra -Werror
+RM = rm -rf
 
-CXX=c++
-CXXFLAGS= -g -std=c++98#-Wall -Werror -Wextra -std=c++98 -pedantic
 headerflags=-MMD -MP
+srcs = $(wildcard test/*.cpp)
+objs = $(addprefix objs/, $(srcs:.cpp=.o))
+INC = -I./containers -I./iterators -I/type_traits
 
-INC = -I./containers -I./iterators -I./type_traits
-
-srcs += $(addprefix test/, \
-    main.cpp vector.cpp\
-)
-
-objs_dir += test/
-objs := $(srcs:%.cpp=objs/%.o)
-objs_dir := $(addprefix objs/, $(objs_dir))
-
-deps_dir += test/
-deps := $(srcs:%.cpp=deps/%.d)
-deps_dir := $(addprefix deps/, $(deps_dir))
+objs_dir = objs/test/
+deps_dir = deps/test/
 
 ############# basic rules ##############
 .PHONY: all re clean fclean
-all: $(NAME) $(objs)
+all: $(NAME)
 
 -include $(deps)
 
@@ -34,7 +26,7 @@ $(NAME): $(objs)
 	@echo "$(CYN)==============$(RES)"
 
 ./objs/%.o: %.cpp $(objs_dir) $(deps_dir)
-	@$(CXX) $(CXXFLAGS)  $(INC) $(headerflags) -MF ./deps/$(*).d -c $< -o $@
+	@$(CXX) $(CXXFLAGS) $(INC) $(headerflags) -MF deps/$(*).d -c $< -o $@
 	@echo "$< =========> $(GRN) $@ $(RES)"
 
 $(objs_dir):
@@ -52,7 +44,7 @@ fclean: clean
 
 re: fclean all
 
-run: all
+run:
 	@./ft_container
 
 RED = \033[31m
