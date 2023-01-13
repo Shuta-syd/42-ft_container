@@ -54,11 +54,14 @@ namespace ft {
 		 * with each element constructed from its corresponding element in that range, in the same  order.
 		 */
 
-		// template <class InputIterator>
-		// vector(InputIterator begin, InputIterator end, const allocator_type &alloc = allocator_type())
-		//  : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
-		// 	std::cout << "Range" << std::endl;
-		// }
+		template <class InputIterator>
+		vector(
+		InputIterator begin,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type end,
+		const allocator_type &alloc = allocator_type())
+		 : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
+			insert(this->begin(), begin, end);
+		}
 
 		/** @brief copy constructor */
 		vector(const vector &x) : alloc_(x.alloc_), begin_(NULL), end_(NULL), reserved_end_(NULL) {

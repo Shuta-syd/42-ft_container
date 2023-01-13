@@ -16,28 +16,19 @@ void test();
 
 void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
-	// constructor_test();
+	constructor_test();
 	// iterators_test();
 	// capacity_test();
-	modifier_test();
-	// test();
+	// modifier_test();
+	test();
 }
 
 void test() {
-	std::vector<int> var1 (6, 42);
-	// std::vector<int> var2(15, 10);
+	std::vector<int> var1(5, 42);
+	std::vector<int>::iterator it = var1.begin();
+	std::vector<int> var2(it, var1.end() - 2);
 
-	// var1.resize(2, 10);
-	print_std_vector(var1);
-	std::vector<int>::iterator it = var1.erase(var1.begin() + 1, var1.end());
-	std::cout << *it << std::endl;
-	// print_std_vector(var1);
-	// print_std_vector(var2);
-	// var1.swap(var2);
-	print_std_vector(var1);
-	// print_std_vector(var2);
-	std::cout << var1.size() << " " << var1.capacity() << std::endl;
-	// std::cout << var2.size() << " " << var2.capacity() << std::endl;
+	print_std_vector(var2);
 }
 
 void constructor_test() {
@@ -60,6 +51,13 @@ void constructor_test() {
 
 	//test3 (range constructor)
 	print_mgn("range constructor");
+	std::vector<int> std_3(5, 42);
+	std::vector<int> std_item_3(std_3.begin(), std_3.end() - 2);
+	ft::vector<int> ft_3(5, 42);
+	ft::vector<int> ft_item_3(ft_3.begin(), ft_3.end() - 2);
+
+	print_std_vector(std_item_3);
+	print_ft_vector(ft_item_3);
 
 	//test4 (copy constructor)
 	print_mgn("copy constructor");
