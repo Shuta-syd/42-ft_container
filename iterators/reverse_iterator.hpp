@@ -50,7 +50,7 @@ namespace ft {
 			reverse_iterator operator++(int) { // postfix increment
 				reverse_iterator tmp(*this);
 				++(*this);
-				return *tmp;
+				return tmp;
 			}
 			reverse_iterator &operator--() {
 				++current_pos_;

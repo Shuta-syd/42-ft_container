@@ -6,7 +6,7 @@ RM = rm -rf
 headerflags=-MMD -MP
 srcs = $(wildcard test/*.cpp)
 objs = $(addprefix objs/, $(srcs:.cpp=.o))
-INC = -I./containers -I./iterators -I/type_traits
+INC = -I./containers -I./iterators -I./type_traits
 
 objs_dir = objs/test/
 deps_dir = deps/test/
@@ -46,6 +46,9 @@ re: fclean all
 
 run:
 	@./ft_container
+
+leaks: $(NAME)
+	leaks -q --atExit -- ./$(NAME)
 
 RED = \033[31m
 GRN = \033[32m

@@ -2,6 +2,8 @@
 #define VECTOR_HPP_
 
 #include <memory>
+#include <enable_if.hpp>
+#include <is_integral.hpp>
 #include <random_access_iterator.hpp>
 #include <reverse_iterator.hpp>
 
@@ -52,11 +54,14 @@ namespace ft {
 		 * with each element constructed from its corresponding element in that range, in the same  order.
 		 */
 
-		// template <class InputIterator>
-		// vector(InputIterator begin, InputIterator end, const allocator_type &alloc = allocator_type())
-		//  : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
-		// 	std::cout << "Range" << std::endl;
-		// }
+		template <class InputIterator>
+		vector(
+		InputIterator begin,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type end,
+		const allocator_type &alloc = allocator_type())
+		 : alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
+			insert(this->begin(), begin, end);
+		}
 
 		/** @brief copy constructor */
 		vector(const vector &x) : alloc_(x.alloc_), begin_(NULL), end_(NULL), reserved_end_(NULL) {
@@ -207,7 +212,10 @@ namespace ft {
 		----------------------------------------*/
 	/** @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly */
 	template <class InputIterator>
-	void assign (InputIterator first, InputIterator last) {
+	void assign (
+		InputIterator first,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type last
+		) {
 		this->clear();
 		size_type length = last - first;
 		size_type capacity = this->capacity();
@@ -331,7 +339,11 @@ namespace ft {
 		 * int intの場合こちらに反応してしまう(enable_ifで対応？)
 		*/
 		template <class InputIterator>
-		void insert(iterator pos, InputIterator first, InputIterator last) {
+		void insert(
+			iterator pos,
+			InputIterator first,
+			typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type last
+			) {
 			size_type length = last - first;
 			size_type size = this->size();
 			size_type capacity = this->capacity();
@@ -363,6 +375,36 @@ namespace ft {
 				}
 				alloc_.deallocate(&(*(old_begin - size)), capacity);
 			}
+		}
+
+		/** @brief Erases the specified elements from the container */
+		iterator erase (iterator pos) {
+			size_type pos_len = end_ - &(*pos) - 1;
+			if (pos_len == 0) {
+				pop_back();
+				return pos;
+			}
+			iterator pos_next = pos + 1;
+			for (size_type i = 0; i < pos_len; i++) {
+				alloc_.destroy(&(*(pos + i)));
+				alloc_.construct(&(*pos), *pos_next);
+				pos_next++;
+			}
+			end_ -= 1;
+			return pos;
+		}
+
+		iterator erase (iterator first, iterator last) {
+			pointer last_next = &(*last) == end_ ? end_ : &(*last) + 1;
+			for (; first != last; first++) {
+				alloc_.destroy(&(*(first)));
+				if (last_next != end_){
+					alloc_.construct(&(*first), *last_next);
+					last_next++;
+				}
+				end_ -= 1;
+			}
+			return first;
 		}
 
 		/** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0 */
