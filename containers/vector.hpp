@@ -212,7 +212,10 @@ namespace ft {
 		----------------------------------------*/
 	/** @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly */
 	template <class InputIterator>
-	void assign (InputIterator first, InputIterator last) {
+	void assign (
+		InputIterator first,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type last
+		) {
 		this->clear();
 		size_type length = last - first;
 		size_type capacity = this->capacity();
@@ -336,7 +339,11 @@ namespace ft {
 		 * int intの場合こちらに反応してしまう(enable_ifで対応？)
 		*/
 		template <class InputIterator>
-		void insert(iterator pos, InputIterator first, InputIterator last) {
+		void insert(
+			iterator pos,
+			InputIterator first,
+			typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type last
+			) {
 			size_type length = last - first;
 			size_type size = this->size();
 			size_type capacity = this->capacity();
