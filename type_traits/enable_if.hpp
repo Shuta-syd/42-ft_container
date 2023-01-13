@@ -6,7 +6,9 @@ namespace ft {
 	 * @brief The type T is enabled as member type enable_if::type if Cond is true
 	 */
 	template <bool Condition, class T = void>
-	struct enable_if;
+	struct enable_if {
+		typedef T type;
+	};
 }
 
 #endif

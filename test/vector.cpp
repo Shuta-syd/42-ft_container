@@ -18,18 +18,21 @@ void test();
 
 void vector_test() {
 	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
-	constructor_test();
+	// constructor_test();
 	// iterators_test();
 	// capacity_test();
-	// modifier_test();
+	modifier_test();
 	// test();
 }
 
 void test() {
-	std::vector<int> var1(6, 42);
+	std::vector<int> var1 (6, 42);
 	// std::vector<int> var2(15, 10);
 
-	var1.resize(2, 10);
+	// var1.resize(2, 10);
+	print_std_vector(var1);
+	std::vector<int>::iterator it = var1.erase(var1.begin() + 1, var1.end());
+	std::cout << *it << std::endl;
 	// print_std_vector(var1);
 	// print_std_vector(var2);
 	// var1.swap(var2);
@@ -129,14 +132,7 @@ void capacity_test() {
 	ft_2.resize(2, "10");
 
 	print_std_vector(std_2);
-	{
-		ft::vector<std::string>::iterator begin = ft_2.begin();
-		ft::vector<std::string>::iterator end = ft_2.end();
-		std::cout << "ft : ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
+	print_ft_vector(ft_2);
 	print_cmp("- size()", ft_2.size(), std_2.size());
 	print_cmp("- capacity()", ft_2.capacity(), std_2.capacity());
 }
@@ -187,14 +183,7 @@ void modifier_test() {
 	ft_4.insert(ft_4.begin() + 1, ft_item_4.begin(), ft_item_4.end());
 
 	print_std_vector(std_4);
-	{
-		ft::vector<std::string>::iterator begin = ft_4.begin();
-		ft::vector<std::string>::iterator end = ft_4.end();
-		std::cout << "ft : ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
+	print_ft_vector(ft_4);
 
 	print_cmp("4. size()", ft_4.size(), std_4.size());
 	print_cmp("4. capacity()", ft_4.capacity(), std_4.capacity());
@@ -226,14 +215,7 @@ void modifier_test() {
 	ft_7.push_back(10);
 
 	print_std_vector(std_7);
-	{
-		ft::vector<int>::iterator begin = ft_7.begin();
-		ft::vector<int>::iterator end = ft_7.end();
-		std::cout << "ft : ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
+	print_ft_vector(ft_7);
 
 	print_cmp("7. size()", ft_7.size(), std_7.size());
 	print_cmp("7. capacity()", ft_7.capacity(), std_7.capacity());
@@ -246,14 +228,7 @@ void modifier_test() {
 	ft_8.assign(5, "10");
 
 	print_std_vector(std_8);
-	{
-		ft::vector<std::string>::iterator begin = ft_8.begin();
-		ft::vector<std::string>::iterator end = ft_8.end();
-		std::cout << "ft : ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
+	print_ft_vector(ft_8);
 
 	print_cmp("8. size()", ft_8.size(), std_8.size());
 	print_cmp("8. capacity()", ft_8.capacity(), std_8.capacity());
@@ -270,14 +245,7 @@ void modifier_test() {
 	ft_9.assign(ft_item_9.begin(), ft_item_9.end());
 
 	print_std_vector(std_9);
-	{
-		ft::vector<std::string>::iterator begin = ft_9.begin();
-		ft::vector<std::string>::iterator end = ft_9.end();
-		std::cout << "ft : ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
+	print_ft_vector(ft_9);
 
 	print_cmp("9. size()", ft_9.size(), std_9.size());
 	print_cmp("9. capacity()", ft_9.capacity(), std_9.capacity());
@@ -293,25 +261,45 @@ void modifier_test() {
 
 	print_std_vector(std_10);
 	print_std_vector(std_item_10);
-	{
-		ft::vector<std::string>::iterator begin = ft_10.begin();
-		ft::vector<std::string>::iterator end = ft_10.end();
-		std::cout << "ft1: ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
-	{
-		ft::vector<std::string>::iterator begin = ft_item_10.begin();
-		ft::vector<std::string>::iterator end = ft_item_10.end();
-		std::cout << "ft2: ";
-		for (; begin != end; begin++)
-			std::cout << "[" << *begin << "]";
-		std::cout << std::endl;
-	}
+	print_ft_vector(ft_10);
+	print_ft_vector(ft_item_10);
 
-	print_cmp("9. size()", ft_10.size(), std_10.size());
-	print_cmp("9. capacity()", ft_10.capacity(), std_10.capacity());
+	print_cmp("10. size()", ft_10.size(), std_10.size());
+	print_cmp("10. capacity()", ft_10.capacity(), std_10.capacity());
+
+	//erase(pos)
+	print_mgn("erase(pos)");
+	std::vector<std::string> std_11(5, "42");
+	ft::vector<std::string> ft_11(5, "42");
+
+	std::vector<std::string>::iterator sit_11 = std_11.begin() + 3;
+	ft::vector<std::string>::iterator it_11 = ft_11.begin() + 3;
+
+	ft_11.erase(it_11);
+	std_11.erase(sit_11);
+
+	print_std_vector(std_11);
+	print_ft_vector(ft_11);
+
+	print_cmp("11. size()", ft_11.size(), std_11.size());
+	print_cmp("11. capacity()", ft_11.capacity(), std_11.capacity());
+
+	//erase(first, end)
+	print_mgn("erase(first, end)");
+	std::vector<std::string> std_12(5, "42");
+	ft::vector<std::string> ft_12(5, "42");
+
+	std::vector<std::string>::iterator sit_12 = std_12.begin() + 1;
+	ft::vector<std::string>::iterator it_12 = ft_12.begin() + 1;
+
+	ft_12.erase(it_12, it_12 + 3);
+	std_12.erase(sit_12, sit_12 + 3);
+
+	print_std_vector(std_12);
+	print_ft_vector(ft_12);
+
+	print_cmp("12. size()", ft_12.size(), std_12.size());
+	print_cmp("12. capacity()", ft_12.capacity(), std_12.capacity());
 }
 
 template <typename T>
@@ -338,7 +326,7 @@ template <typename T>
 void print_ft_vector(ft::vector<T> vec) {
 	typename ft::vector<T>::iterator begin = vec.begin();
 	typename ft::vector<T>::iterator end = vec.end();
-	std::cout << "ft: ";
+	std::cout << "ft : ";
 	for (; begin != end; begin++)
 		std::cout << "[" << *begin << "]";
 	std::cout << std::endl;

@@ -47,6 +47,9 @@ re: fclean all
 run:
 	@./ft_container
 
+leaks: $(NAME)
+	leaks -q --atExit -- ./$(NAME)
+
 RED = \033[31m
 GRN = \033[32m
 YEL = \033[33m

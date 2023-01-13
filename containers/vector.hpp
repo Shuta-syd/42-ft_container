@@ -365,6 +365,36 @@ namespace ft {
 			}
 		}
 
+		/** @brief Erases the specified elements from the container */
+		iterator erase (iterator pos) {
+			size_type pos_len = end_ - &(*pos) - 1;
+			if (pos_len == 0) {
+				pop_back();
+				return pos;
+			}
+			iterator pos_next = pos + 1;
+			for (size_type i = 0; i < pos_len; i++) {
+				alloc_.destroy(&(*(pos + i)));
+				alloc_.construct(&(*pos), *pos_next);
+				pos_next++;
+			}
+			end_ -= 1;
+			return pos;
+		}
+
+		iterator erase (iterator first, iterator last) {
+			pointer last_next = &(*last) == end_ ? end_ : &(*last) + 1;
+			for (; first != last; first++) {
+				alloc_.destroy(&(*(first)));
+				if (last_next != end_){
+					alloc_.construct(&(*first), *last_next);
+					last_next++;
+				}
+				end_ -= 1;
+			}
+			return first;
+		}
+
 		/** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0 */
 		void clear() {
 			size_type size = this->size();
