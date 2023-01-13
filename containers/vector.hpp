@@ -2,6 +2,8 @@
 #define VECTOR_HPP_
 
 #include <memory>
+#include <enable_if.hpp>
+#include <is_integral.hpp>
 #include <random_access_iterator.hpp>
 #include <reverse_iterator.hpp>
 

@@ -2,10 +2,12 @@
 #define TEST_HPP_
 
 #include <iostream>
+#include <string>
 #include <vector>
 
 /* test funcs */
 void vector_test();
+void test_type_traits();
 
 
 /* color code */

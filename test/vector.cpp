@@ -1,7 +1,5 @@
 #include "test.hpp"
 #include <vector.hpp>
-#include <iostream>
-#include <string>
 
 template <typename T>
 void print_std_vector(std::vector<T> vec);

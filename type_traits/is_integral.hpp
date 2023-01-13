@@ -4,15 +4,12 @@
 
 /** @brief Trait class that identifies whether T is an integral type. */
 namespace ft {
-template <class T>
-struct is_integral: public ft::is_integral_helper<T> {};
-
 	template <class T, T v>
 	struct integral_constant {
-	static constexpr T value = v;
+	static const T value = v;
 	typedef T value_type;
 	typedef integral_constant<T,v> type;
-	constexpr operator T() { return v; }
+	operator T() { return v; }
 };
 
 	typedef integral_constant<bool, false> false_type;
@@ -77,6 +74,9 @@ struct is_integral: public ft::is_integral_helper<T> {};
 	struct is_integral_helper<const unsigned long int> : public true_type {};
 	template <>
 	struct is_integral_helper<const unsigned long long int> : public true_type {};
+
+	template <class T>
+	struct is_integral: public is_integral_helper<T> {};
 }
 
 #endif
