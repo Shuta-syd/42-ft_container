@@ -35,9 +35,27 @@ namespace ft {
 		/** @brief Removes the element on top of the stack, effectively reducing its size by one */
 		void pop() { return ctnr_.pop_back(); }
 
-	private:
+	protected:
 		container_type ctnr_;
 	};
+
+	template <class T, class Container>
+	bool operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { lhs.ctnr_ == rhs.ctnr_; }
+
+	template <class T, class Container>
+	bool operator!=(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { !(lhs.ctnr_ == rhs.ctnr_); }
+
+	template <class T, class Container>
+	bool operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { lhs.ctnr_ < rhs.ctnr_; }
+
+	template <class T, class Container>
+	bool operator<=(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { lhs.ctnr_ <= rhs.ctnr_; }
+
+	template <class T, class Container>
+	bool operator>(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { lhs.ctnr_ > rhs.ctnr_; }
+
+	template <class T, class Container>
+	bool operator>=(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { lhs.ctnr_ >= rhs.ctnr_; }
 }
 
 #endif
