@@ -96,13 +96,13 @@ namespace ft {
 	bool operator< (const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs) { return lhs.base() < rhs.base(); }
 
 	template <class Iterator>
-	bool operator> (const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs) { return !(lhs.base() < rhs.base()); }
+	bool operator> (const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs) { return lhs.base() > rhs.base(); }
 
 	template <class Iterator>
 	bool operator<= (const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs) { return lhs.base() <= rhs.base(); }
 
 	template <class Iterator>
-	bool operator>= (const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs) { return !(lhs.base() <= rhs.base()); }
+	bool operator>= (const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs) { return lhs.base() >= rhs.base(); }
 
 	template <class Iterator>
 	ft::reverse_iterator<Iterator> operator+ (typename ft::reverse_iterator<Iterator>::difference_type n, const ft::reverse_iterator<Iterator>& rev_it) {
