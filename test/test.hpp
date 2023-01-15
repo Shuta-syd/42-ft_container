@@ -7,8 +7,8 @@
 
 /* test funcs */
 void vector_test();
+void stack_test();
 void test_type_traits();
-
 
 /* color code */
 #define RED "\e[31m"

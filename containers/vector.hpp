@@ -2,10 +2,10 @@
 #define VECTOR_HPP_
 
 #include <memory>
-#include <enable_if.hpp>
-#include <is_integral.hpp>
+#include <type_traits.hpp>
 #include <random_access_iterator.hpp>
 #include <reverse_iterator.hpp>
+#include <algorithm.hpp>
 
 namespace ft {
 	template <typename T, typename Allocator = std::allocator<T> >
@@ -446,6 +446,42 @@ namespace ft {
 		pointer end_;					// Pointer next to the last element
 		pointer reserved_end_; // Next pointer to allocated memory
 	};
+
+	template <class T, class Alloc>
+	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		if (lhs.size() != rhs.size())
+			return false;
+		typename vector<T>::iterator it_lhs = lhs.begin();
+		typename vector<T>::iterator end_lhs = lhs.end();
+		typename  vector<T>::iterator it_rhs = rhs.begin();
+
+		for (; it_lhs < end_lhs; it_lhs++) {
+			if (*it_lhs != *it_rhs)
+				return false;
+			it_rhs++;
+		}
+		return true;
+	}
+
+	template <class T, class Alloc>
+	bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) { return !(lhs == rhs); }
+
+	template <class T, class Alloc>
+	bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template <class T, class Alloc>
+	bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) { return !(lhs > rhs); }
+
+	template <class T, class Alloc>
+	bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) { return ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()); }
+
+	template <class T, class Alloc>
+	bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) { return !(lhs < rhs); }
+
+	template <class T, class Alloc>
+	void swap(vector<T, Alloc> &lhs, vector<T, Alloc> &rhs) { lhs.swap(rhs); }
 }
 
 #endif
