@@ -7,6 +7,7 @@ template <typename T>
 void print_ft_vector(ft::vector<T> vec);
 template <typename T>
 void print_cmp(std::string test_name, T std_var, T ft_var);
+void print_white(std::string str);
 void print_mgn(std::string str);
 void capacity_test();
 void iterators_test();
@@ -15,7 +16,9 @@ void modifier_test();
 void test();
 
 void vector_test() {
-	std::cout << GRN << "-------------ft::vector test start-------------" << RES << std::endl;
+	print_white("--------------------------------------------------");
+	print_white("|                   Vector Test                  |");
+	print_white("--------------------------------------------------");
 	constructor_test();
 	// iterators_test();
 	// capacity_test();
@@ -326,4 +329,8 @@ void print_ft_vector(ft::vector<T> vec) {
 	for (; begin != end; begin++)
 		std::cout << "[" << *begin << "]";
 	std::cout << std::endl;
+}
+
+void print_white(std::string str) {
+	std::cout << str  << std::endl;
 }

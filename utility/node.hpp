@@ -1,8 +1,6 @@
 #ifndef NODE_HPP_
 #define NODE_HPP_
 
-#include <memory>
-
 namespace ft {
 	template <class T>
 	class node {

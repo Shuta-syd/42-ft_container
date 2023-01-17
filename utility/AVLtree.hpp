@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <node.hpp>
+// #include <pair.hpp>
 
 namespace ft {
 	template <class T, class Comp, class Allocator= std::allocator<T> >
@@ -24,6 +25,14 @@ namespace ft {
 				}
 
 				node_type *pta = this->searchParent(val.first);
+				if (key_compare(pta->key_, val.first)) {
+					pta->rhs_ = new node_type(val, pta);
+					//balance_insert(pta->rhs_)
+				}
+				else {
+					pta->lhs_ = new node_type(val, pta);
+					//balance_insert(pta->lhs_)
+				}
 			}
 
 		private:
