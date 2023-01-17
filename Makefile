@@ -6,7 +6,7 @@ RM = rm -rf
 headerflags=-MMD -MP
 srcs = $(wildcard test/*.cpp)
 objs = $(addprefix objs/, $(srcs:.cpp=.o))
-INC = -I./containers -I./iterators -I./type_traits -I./algorithm
+INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
 objs_dir = objs/test/
 deps_dir = deps/test/

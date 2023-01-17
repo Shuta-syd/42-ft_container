@@ -19,8 +19,8 @@ namespace ft {
 		typedef Allocator allocator_type;
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
-		typedef Allocator::pointer pointer;
-		typedef Allocator::const_pointer pointer;
+		typedef typename Allocator::pointer pointer;
+		typedef typename Allocator::const_pointer pointer;
 
 		private:
 			typedef AVLtree<key_type, mapped_type, key_compare, allocator_type> tree_type;

@@ -9,6 +9,8 @@
 void vector_test();
 void stack_test();
 void test_type_traits();
+void test_node();
+void test_avl_tree();
 
 /* color code */
 #define RED "\e[31m"
