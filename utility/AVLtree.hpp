@@ -11,11 +11,10 @@ namespace ft {
 		public:
 			typedef T value_type;
 			typedef typename value_type::first_type key_type;
-			typedef Comp key_compare;
 			typedef Allocator allocator_type;
 			typedef node<T> node_type;
 
-			AVLtree(): root_(NULL) {}
+			AVLtree(): root_(NULL), key_compare(Comp()) {}
 			~AVLtree() {}
 
 			void insert(value_type &val) {
@@ -27,7 +26,7 @@ namespace ft {
 				node_type *pta = this->searchParent(val.first);
 				if (key_compare(pta->key_, val.first)) {
 					pta->rhs_ = new node_type(val, pta);
-					//balance_insert(pta->rhs_)
+					// balance_insert(pta->rhs_)
 				}
 				else {
 					pta->lhs_ = new node_type(val, pta);
@@ -37,6 +36,7 @@ namespace ft {
 
 		private:
 			node_type *root_;
+			Comp key_compare;
 
 			/** @brief Search for appropriate parent node of val to insert by traversing from root */
 			node_type *searchParent(const key_type &key) {

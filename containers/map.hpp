@@ -23,7 +23,7 @@ namespace ft {
 		typedef typename Allocator::const_pointer pointer;
 
 		private:
-			typedef AVLtree<key_type, mapped_type, key_compare, allocator_type> tree_type;
+			typedef AVLtree<value_type, key_compare> tree_type;
 			tree_type tree_;
 	};
 }
