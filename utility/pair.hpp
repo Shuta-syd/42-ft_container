@@ -1,0 +1,38 @@
+#ifndef PAIR_HPP_
+#define PAIR_HPP_
+
+/**
+ * @brief This class couples together a pair of values, which may be of different types (T1 and
+ *      T2). The individual values can be accessed through its public members first and second.
+ */
+namespace ft {
+	template <class T1, class T2>
+	struct pair {
+		public:
+			typedef T1 first_type;
+			typedef T2 second_type;
+			first_type first_;
+			second_type second_;
+
+			pair(): first_(), second_() {}
+
+			template <class U, class V>
+			pair(const pair<U, V> &pr): first_(pr.first_), second_(pr.second_) {}
+
+			pair (const first_type& a, const second_type& b): first_(a), second_(b) {}
+
+		pair& operator= (const pair& pr) {
+			first_ = pr.first_;
+			second_ = pr.second_;
+			return *this;
+		}
+
+		/** @brief Creates a std::pair object, deducing the target type from the types of arguments */
+		template< class T1, class T2 >
+		std::pair<T1, T2> make_pair( T1 t, T2 u ) {
+			
+		}
+	};
+}
+
+#endif

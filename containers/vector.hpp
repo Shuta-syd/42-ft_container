@@ -53,7 +53,6 @@ namespace ft {
 		 * Constructs a container with as many elements as the range [first,last],
 		 * with each element constructed from its corresponding element in that range, in the same  order.
 		 */
-
 		template <class InputIterator>
 		vector(
 		InputIterator begin,
@@ -81,8 +80,6 @@ namespace ft {
 			return *this;
 		}
 
-		/*----------------------------------------*/
-
 
 		/*----------------------------------------
 		[Iterators]
@@ -95,7 +92,6 @@ namespace ft {
 		const_reverse_iterator rbegin() const { return const_reverse_iterator(this->end());}
 		reverse_iterator rend() { return reverse_iterator(this->begin()); }
 		const_reverse_iterator rend() const { return const_reverse_iterator(this->begin());}
-		/*--------------------------------------*/
 
 
 		/*----------------------------------------
@@ -140,7 +136,6 @@ namespace ft {
 			return NULL;
 		return begin_;
 	}
-	/*--------------------------------------*/
 
 
 		/*----------------------------------------
@@ -204,7 +199,6 @@ namespace ft {
 			}
 			alloc_.deallocate(old_begin, old_capacity); // release memory
 		}
-		/*--------------------------------------*/
 
 
 		/*----------------------------------------
@@ -433,13 +427,12 @@ namespace ft {
 			other.reserved_end_ = tmp_reserved_end;
 		}
 
-		/*--------------------------------------*/
 
 		/*---------------------------------------
 		[Allocator]
 		----------------------------------------*/
 		allocator_type get_allocator() const { return alloc_; }
-		/*--------------------------------------*/
+
 	private:
 		allocator_type alloc_;	// Allocator value
 		pointer begin_;					// Pointer to the first element
