@@ -26,11 +26,11 @@ namespace ft {
 				node_type *pta = this->searchParent(val.first);
 				if (key_compare(pta->key_, val.first)) {
 					pta->rhs_ = new node_type(val, pta);
-					// balance_insert(pta->rhs_)
+					// balanceInsert(pta->rhs_)
 				}
 				else {
 					pta->lhs_ = new node_type(val, pta);
-					//balance_insert(pta->lhs_)
+					//balanceInsert(pta->lhs_)
 				}
 			}
 
@@ -56,6 +56,29 @@ namespace ft {
 				return pta;
 			}
 
+			/** @brief Check if it is established as an equilibrium binary tree and rotate if it is not balanced */
+			void balanceInsert(node_type *targetNode) {
+				while (targetNode.pta_ != NULL) {
+					node_type *pta = targetNode.pta_;
+					int hight = pta->height_;
+
+					// targetNode inserted to left side
+					if (pta->lhs_ == targetNode) {
+						if (this->bias(pta) == 2)// need to rotate
+							pta = this->bias(pta->lhs_) == 1 ? this->rotateR(pta) : this->rotateLR(pta);
+						else // -1 <= bias <= 1, no problem, update parent height
+							this->updateHeight(pta);
+					}
+					else { // targetNode inserted to right side
+						if (this->bias(pta) == -2)// need to rotate
+							pta = this->bias(pta->lhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
+						else // -1 <= bias <= 1, no problem, update parent height
+							this->updateHeight(pta);
+					}
+					targetNode = pta;
+				}
+			}
+
 			/** @brief single left rotate */
 			void rotateL() {}
 			/** @brief single right rotate */
@@ -64,6 +87,19 @@ namespace ft {
 			void rotateRL() {}
 			/** @brief single LL rotate + RR rotate rotate */
 			void rotateLR() {}
+
+			/**
+			 * @brief Calculate the difference (bias) between left and right nodes
+			 * 				Formula is: left partial tree - right partial tree
+			 */
+			int bias(note_type *node) {
+				return (node->lhs->height - node->rhs->height);
+			}
+
+			/** @brief Update node height and bias by insertion or deletion */
+			void updateHeight(node_type *node) {
+				
+			}
 	};
 }
 
