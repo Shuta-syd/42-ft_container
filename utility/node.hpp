@@ -10,7 +10,7 @@ namespace ft {
 			typedef node<T> node_type;
 
 			node(): pta_(NULL), lhs_(NULL), rhs_(NULL), val_(), key_(), bias_(0), height_(0) {}
-			node(value_type &val, node* pta): pta_(pta), lhs_(), rhs_(), val_(val), key_(val.first), bias_(0), height_(1) {}
+			node(value_type &val, node* pta, node *null): pta_(pta), lhs_(null), rhs_(null), val_(val), key_(val.first), bias_(0), height_(1) {}
 			~node() {}
 
 			node_type *pta_;
