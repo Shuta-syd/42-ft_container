@@ -53,17 +53,33 @@ namespace ft
 			if (target == nullNode_)
 				return;
 
-			if (target->lhs_ == nullNode_ && target->rhs_ == nullNode_) { // end point
+			/**
+			 * 1. If the node you want to delete is the leftmost node, simply delete that node
+			 * 2. If the node you want to delete has a right subtree, promote it
+			 * 3. The node to be deleted is replaced by the node with the largest value in the left subtree, and the node with the largest value is deleted.
+			 */
+			if (target->lhs_ == nullNode_) {
+				// All patterns of equilibrium binary tree collapse are on this side.
 				node_type *pta = target->pta_;
-				if (key_compare(pta->key_, target->key_))
-					pta->rhs_ = nullNode_;
+				if (pta->lhs_ == target)
+					pta->lhs_ = target->rhs_;
 				else
-					pta->lhs_ = nullNode_;
-				balanceErase(target);
+					pta->rhs_ = target->rhs_;
+				target->rhs_->pta_ = pta;
+				balanceErase(target->rhs_);
 				delete target;
 			}
 			else {
-
+				node_type *pta = target->pta_;
+				node_type *maxNode = this->searchLeftMax(target->lhs_);
+				if (pta->lhs_ == target)
+					pta->lhs_ = maxNode;
+				else
+					pta->rhs_ = maxNode;
+				maxNode->pta_ = pta;
+				maxNode->rhs_ = target->rhs_;
+				maxNode->lhs_ = target->lhs_;
+				balanceErase(target->lhs_); 
 				delete target;
 			}
 		}
@@ -105,19 +121,19 @@ namespace ft
 		}
 
 		/** @brief Check equilibrium binary tree and rotate if it is not balanced (insert) */
-		void balanceInsert(node_type *targetNode) {
-			while (targetNode->pta_ != nullNode_) {
-				node_type *pta = targetNode->pta_;
+		void balanceInsert(node_type *target) {
+			while (target->pta_ != nullNode_) {
+				node_type *pta = target->pta_;
 				int height = pta->height_;
 
-				// targetNode inserted in left side
-				if (pta->lhs_ == targetNode) {
+				// target inserted in left side
+				if (pta->lhs_ == target) {
 					if (this->bias(pta) == 2) // need to rotate
 						pta = this->bias(pta->lhs_) == 1 ? this->rotateR(pta) : this->rotateLR(pta);
 					else // -1 <= bias <= 1, no problem, update parent height
 						this->updateHeight(pta);
 				}
-				else { // targetNode inserted in right side
+				else { // target inserted in right side
 					if (this->bias(pta) == -2) // need to rotate
 						pta = this->bias(pta->rhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
 					else // -1 <= bias <= 1, no problem, update parent height
@@ -125,18 +141,18 @@ namespace ft
 				}
 				if (height == pta->height_) // nothing update == end point
 					break;
-				targetNode = pta;
+				target = pta;
 			}
 		}
 
 	/** @brief Check equilibrium binary tree and rotate if it is not balanced (erase) */
-	void balanceErase(node_type *targetNode) {
-		while (targetNode->pta_ != nullNode_) {
-			node_type *pta = targetNode->pta_;
+	void balanceErase(node_type *target) {
+		while (target->pta_ != nullNode_) {
+			node_type *pta = target->pta_;
 			int height = pta->height_;
 
 			// target erased in left side
-			if (pta->lhs_ == targetNode) {
+			if (pta->lhs_ == target) {
 				if (this->bias(pta) == 2)
 					pta = this->bias(pta->lhs_) >= 0 ? rotateR(pta) : rotateLR(pta);
 				else
@@ -150,7 +166,7 @@ namespace ft
 			}
 			if (height == pta->height_)
 				break;
-			targetNode->pta_;
+			target->pta_;
 		}
 	}
 
@@ -225,6 +241,13 @@ namespace ft
 			node->bias_ = left_height - right_height;
 		}
 
+		/** @brief Search for the maximum value from the left-branch tree of a specific node */
+		node_type *searchLeftMax(node_type *node) {
+			while (node->rhs_ != nullNode_) {
+				node = node->rhs_;
+			}
+			return node;
+		}
 	};
 }
 
