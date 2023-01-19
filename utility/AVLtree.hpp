@@ -28,20 +28,20 @@ namespace ft
 			node_type *pta = this->searchParent(val.first);
 			if (key_compare(pta->key_, val.first)) {
 				pta->rhs_ = new node_type(val, pta, nullNode_);
-				// balanceInsert(pta->rhs_)
+				balanceInsert(pta->rhs_);
 			}
 			else {
 				pta->lhs_ = new node_type(val, pta, nullNode_);
-				// balanceInsert(pta->lhs_)
+				balanceInsert(pta->lhs_);
 			}
 		}
 
 		void printAVL(node_type *node, int i) {
 			if (node == NULL) {
 				node = root_;
-				std::cout << "nullNode:[" << nullNode_ << "]" << std::endl;
+				std::cout << "null:[" << nullNode_ << "]" << std::endl;
 			}
-			std::cout << i << ":" << "[" << node->key_ << "]" << std::endl;
+			std::cout << MGN << i << ":" << "[" << node->key_ << "]" << RES << std::endl;
 			std::cout << "node:[" << node << "]" << std::endl;
 			std::cout << "lhs :[" << node->lhs_ << "]" << std::endl;
 			std::cout << "rhs :[" << node->rhs_ << "]" << std::endl;
@@ -111,6 +111,9 @@ namespace ft
 			afterRoot->lhs_ = beforeRoot;
 			beforeRoot->pta_ = afterRoot;
 
+			if (beforeRoot == root_)
+				root_ = afterRoot;
+
 			updateHeight(beforeRoot);
 			updateHeight(afterRoot);
 
@@ -129,6 +132,9 @@ namespace ft
 			afterRoot->rhs_ = beforeRoot;
 			beforeRoot->pta_ = afterRoot;
 
+			if (beforeRoot == root_)
+				root_ = afterRoot;
+
 			updateHeight(beforeRoot);
 			updateHeight(afterRoot);
 
@@ -138,20 +144,20 @@ namespace ft
 		/** @brief single RR rotate + LL rotate */
 		node_type *rotateRL(node_type *beforeRoot) {
 			rotateR(beforeRoot->rhs_);
-			rotateL(beforeRoot);
+			return rotateL(beforeRoot);
 		}
 
 		/** @brief single LL rotate + RR rotate rotate */
 		node_type *rotateLR(node_type *beforeRoot) {
 			rotateL(beforeRoot->lhs_);
-			rotateR(beforeRoot);
+			return rotateR(beforeRoot);
 		}
 
 		/**
 		 * @brief Calculate the difference (bias) between left and right nodes
 		 * 				Formula is: left partial tree - right partial tree
 		 */
-		int bias(node_type *node) { return (node->lhs->height - node->rhs->height); }
+		int bias(node_type *node) { return (node->lhs_->height_ - node->rhs_->height_); }
 
 		/** @brief Update node height and bias by insertion or deletion */
 		void updateHeight(node_type *node)
