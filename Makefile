@@ -1,12 +1,12 @@
 NAME = ft_container
 CC = g++
-CXXFLAGS = -std=c++98 #-Wall -Wextra -Werror
+CXXFLAGS = -g -std=c++98 #-Wall -Wextra -Werror
 RM = rm -rf
 
 headerflags=-MMD -MP
 srcs = $(wildcard test/*.cpp)
 objs = $(addprefix objs/, $(srcs:.cpp=.o))
-INC = -I./containers -I./iterators -I./type_traits -I./algorithm
+INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
 objs_dir = objs/test/
 deps_dir = deps/test/
