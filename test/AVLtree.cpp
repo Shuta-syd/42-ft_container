@@ -37,8 +37,3 @@ void test_avl_tree() {
 	 */
 	root_.printAVL(NULL, 1);
 }
-
-template <class T, class Comp>
-void print_tree(ft::AVLtree<T, Comp> root_) {
-	//avl tree表示 左root copyコンストラクタ実装必要
-}
