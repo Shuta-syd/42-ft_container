@@ -49,7 +49,6 @@ namespace ft
 		/** @brief Delete a specific node */
 		void erase(const key_type &key) {
 			node_type *target = this->search(root_, key);
-
 			if (target == nullNode_)
 				return;
 
@@ -78,8 +77,7 @@ namespace ft
 					pta->rhs_ = maxNode;
 				maxNode->pta_ = pta;
 				maxNode->rhs_ = target->rhs_;
-				maxNode->lhs_ = target->lhs_;
-				balanceErase(target->lhs_); 
+				balanceErase(target->lhs_);
 				delete target;
 			}
 		}
@@ -126,19 +124,12 @@ namespace ft
 				node_type *pta = target->pta_;
 				int height = pta->height_;
 
-				// target inserted in left side
-				if (pta->lhs_ == target) {
-					if (this->bias(pta) == 2) // need to rotate
-						pta = this->bias(pta->lhs_) == 1 ? this->rotateR(pta) : this->rotateLR(pta);
-					else // -1 <= bias <= 1, no problem, update parent height
-						this->updateHeight(pta);
-				}
-				else { // target inserted in right side
-					if (this->bias(pta) == -2) // need to rotate
-						pta = this->bias(pta->rhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
-					else // -1 <= bias <= 1, no problem, update parent height
-						this->updateHeight(pta);
-				}
+				if (this->bias(pta) == 2) // need to rotate
+					pta = this->bias(pta->lhs_) == 1 ? this->rotateR(pta) : this->rotateLR(pta);
+				if (this->bias(pta) == -2) // need to rotate
+					pta = this->bias(pta->rhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
+				else // -1 <= bias <= 1, no problem, update parent height
+					this->updateHeight(pta);
 				if (height == pta->height_) // nothing update == end point
 					break;
 				target = pta;
@@ -151,22 +142,15 @@ namespace ft
 			node_type *pta = target->pta_;
 			int height = pta->height_;
 
-			// target erased in left side
-			if (pta->lhs_ == target) {
-				if (this->bias(pta) == 2)
-					pta = this->bias(pta->lhs_) >= 0 ? rotateR(pta) : rotateLR(pta);
-				else
-					this->updateHeight(pta);
-			}
-			else { // target erased in right side
-				if (this->bias(pta) == 2)
-						pta = this->bias(pta->rhs_) <= 0 ? rotateL(pta) : rotateRL(pta);
-				else
-					this->updateHeight(pta);
-			}
+			if (this->bias(pta) == 2)
+				pta = this->bias(pta->lhs_) >= 0 ? rotateR(pta) : rotateLR(pta);
+			if (this->bias(pta) == -2)
+				pta = this->bias(pta->rhs_) <= 0 ? rotateL(pta) : rotateRL(pta); //segv
+			else
+				this->updateHeight(pta);
 			if (height == pta->height_)
 				break;
-			target->pta_;
+			target = pta;
 		}
 	}
 
@@ -238,7 +222,6 @@ namespace ft
 			int right_height = node->rhs_->height_;
 
 			node->height_ = 1 + (left_height > right_height ? left_height : right_height);
-			node->bias_ = left_height - right_height;
 		}
 
 		/** @brief Search for the maximum value from the left-branch tree of a specific node */

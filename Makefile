@@ -1,6 +1,6 @@
 NAME = ft_container
 CC = g++
-CXXFLAGS = -std=c++98 #-Wall -Wextra -Werror
+CXXFLAGS = -g -std=c++98 #-Wall -Wextra -Werror
 RM = rm -rf
 
 headerflags=-MMD -MP
