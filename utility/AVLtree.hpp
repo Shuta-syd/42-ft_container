@@ -20,6 +20,7 @@ namespace ft
 		AVLtree() : root_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
 		~AVLtree() {}
 
+		/** @brief Insert at the appropriate position in the AVLtree */
 		void insert(value_type &val) {
 			if (root_ == nullNode_) {
 				root_ = new node_type(val, nullNode_, nullNode_);
@@ -34,6 +35,36 @@ namespace ft
 			else {
 				pta->lhs_ = new node_type(val, pta, nullNode_);
 				balanceInsert(pta->lhs_);
+			}
+		}
+
+		/** @brief Locate a specific key from a specific tree */
+		node_type *search(node_type *node, const key_type &key) {
+			while (node != nullNode_ && node->key_ != key) {
+				node = key_compare(node->key_, key) ? node->rhs_ : node->lhs_;
+			}
+			return node;
+		}
+
+		/** @brief Delete a specific node */
+		void erase(const key_type &key) {
+			node_type *target = this->search(root_, key);
+
+			if (target == nullNode_)
+				return;
+
+			if (target->lhs_ == nullNode_ && target->rhs_ == nullNode_) { // end point
+				node_type *pta = target->pta_;
+				if (key_compare(pta->key_, target->key_))
+					pta->rhs_ = nullNode_;
+				else
+					pta->lhs_ = nullNode_;
+				balanceErase(target);
+				delete target;
+			}
+			else {
+
+				delete target;
 			}
 		}
 
@@ -73,20 +104,20 @@ namespace ft
 			return pta;
 		}
 
-		/** @brief Check if it is established as an equilibrium binary tree and rotate if it is not balanced */
+		/** @brief Check equilibrium binary tree and rotate if it is not balanced (insert) */
 		void balanceInsert(node_type *targetNode) {
 			while (targetNode->pta_ != nullNode_) {
 				node_type *pta = targetNode->pta_;
 				int height = pta->height_;
 
-				// targetNode inserted to left side
+				// targetNode inserted in left side
 				if (pta->lhs_ == targetNode) {
 					if (this->bias(pta) == 2) // need to rotate
 						pta = this->bias(pta->lhs_) == 1 ? this->rotateR(pta) : this->rotateLR(pta);
 					else // -1 <= bias <= 1, no problem, update parent height
 						this->updateHeight(pta);
 				}
-				else { // targetNode inserted to right side
+				else { // targetNode inserted in right side
 					if (this->bias(pta) == -2) // need to rotate
 						pta = this->bias(pta->rhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
 					else // -1 <= bias <= 1, no problem, update parent height
@@ -97,6 +128,31 @@ namespace ft
 				targetNode = pta;
 			}
 		}
+
+	/** @brief Check equilibrium binary tree and rotate if it is not balanced (erase) */
+	void balanceErase(node_type *targetNode) {
+		while (targetNode->pta_ != nullNode_) {
+			node_type *pta = targetNode->pta_;
+			int height = pta->height_;
+
+			// target erased in left side
+			if (pta->lhs_ == targetNode) {
+				if (this->bias(pta) == 2)
+					pta = this->bias(pta->lhs_) >= 0 ? rotateR(pta) : rotateLR(pta);
+				else
+					this->updateHeight(pta);
+			}
+			else { // target erased in right side
+				if (this->bias(pta) == 2)
+						pta = this->bias(pta->rhs_) <= 0 ? rotateL(pta) : rotateRL(pta);
+				else
+					this->updateHeight(pta);
+			}
+			if (height == pta->height_)
+				break;
+			targetNode->pta_;
+		}
+	}
 
 		/** @brief single left rotate */
 		node_type *rotateL(node_type *beforeRoot) {
@@ -161,8 +217,7 @@ namespace ft
 		int bias(node_type *node) { return (node->lhs_->height_ - node->rhs_->height_); }
 
 		/** @brief Update node height and bias by insertion or deletion */
-		void updateHeight(node_type *node)
-		{
+		void updateHeight(node_type *node) {
 			int left_height = node->lhs_->height_;
 			int right_height = node->rhs_->height_;
 
