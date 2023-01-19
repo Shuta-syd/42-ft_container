@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <node.hpp>
+#include <iomanip>
 // #include <pair.hpp>
 
 namespace ft
@@ -37,14 +38,12 @@ namespace ft
 		}
 
 		void printAVL(node_type *node, int i) {
-			if (node == NULL) {
+			if (node == NULL)
 				node = root_;
-				std::cout << "null:[" << nullNode_ << "]" << std::endl;
-			}
-			std::cout << MGN << i << ":" << "[" << node->key_ << "]" << RES << std::endl;
-			std::cout << "node:[" << node << "]" << std::endl;
-			std::cout << "lhs :[" << node->lhs_ << "]" << std::endl;
-			std::cout << "rhs :[" << node->rhs_ << "]" << std::endl;
+			std::cout << YEL << "[ " << i << " ]" << RES << ": ";
+			std::cout << " [ " << std::setw(3) << std::right << std::setfill(' ') << node->key_ << " ] ";
+			std::cout << " | lhs :[ " << std::setw(3) << std::right << std::setfill(' ') << node->lhs_->key_ << " ] ";
+			std::cout << " | rhs :[ " << std::setw(3) << std::right << std::setfill(' ') << node->rhs_->key_ << " ] " << std::endl;
 			if (node->lhs_ != nullNode_)
 				printAVL(node->lhs_, i + 1);
 			if (node->rhs_ != nullNode_)
@@ -89,7 +88,7 @@ namespace ft
 				}
 				else { // targetNode inserted to right side
 					if (this->bias(pta) == -2) // need to rotate
-						pta = this->bias(pta->lhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
+						pta = this->bias(pta->rhs_) == -1 ? this->rotateL(pta) : this->rotateRL(pta);
 					else // -1 <= bias <= 1, no problem, update parent height
 						this->updateHeight(pta);
 				}
@@ -144,12 +143,14 @@ namespace ft
 		/** @brief single RR rotate + LL rotate */
 		node_type *rotateRL(node_type *beforeRoot) {
 			rotateR(beforeRoot->rhs_);
+			beforeRoot->rhs_ = beforeRoot->rhs_->pta_;
 			return rotateL(beforeRoot);
 		}
 
 		/** @brief single LL rotate + RR rotate rotate */
 		node_type *rotateLR(node_type *beforeRoot) {
 			rotateL(beforeRoot->lhs_);
+			beforeRoot->lhs_ = beforeRoot->lhs_->pta_;
 			return rotateR(beforeRoot);
 		}
 
