@@ -44,7 +44,7 @@ namespace ft {
 		map() {}
 
 		// empty constructor
-		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) {}
+		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): key_compare(comp), alloc_(alloc) {}
 
 		// range constructor
 		template<class InputIt>
@@ -129,6 +129,7 @@ namespace ft {
 		tree_type tree_;
 		value_compare val_compare;
 		key_compare key_compare;
+		allocator_type alloc_;
 
 		template< class Key, class T, class Compare, class Alloc >
 		bool operator==( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}

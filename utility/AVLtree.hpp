@@ -28,11 +28,17 @@ namespace ft {
 
 			node_type *pta = this->searchParent(val.first);
 			if (key_compare(pta->key_, val.first)) {
-				pta->rhs_ = new node_type(val, pta, nullNode_);
+				if (pta->rhs_ != nullNode_)
+					pta->rhs_->val_ = val;
+				else
+					pta->rhs_ = new node_type(val, pta, nullNode_);
 				balanceInsert(pta->rhs_);
 			}
 			else {
-				pta->lhs_ = new node_type(val, pta, nullNode_);
+				if (pta->lhs_ != nullNode_)
+					pta->lhs_->val_ = val;
+				else
+					pta->lhs_ = new node_type(val, pta, nullNode_);
 				balanceInsert(pta->lhs_);
 			}
 		}
