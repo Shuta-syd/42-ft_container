@@ -13,18 +13,18 @@ namespace ft {
 		public:
 			typedef T1 first_type;
 			typedef T2 second_type;
-			first_type first_;
+			first_type first;
 			second_type second_;
 
-			pair(): first_(), second_() {}
+			pair(): first(), second_() {}
 
 			template <class U, class V>
-			pair(const pair<U, V> &pr): first_(pr.first_), second_(pr.second_) {}
+			pair(const pair<U, V> &pr): first(pr.first), second_(pr.second_) {}
 
-			pair (const first_type& a, const second_type& b): first_(a), second_(b) {}
+			pair (const first_type& a, const second_type& b): first(a), second_(b) {}
 
 		pair& operator= (const pair& pr) {
-			first_ = pr.first_;
+			first = pr.first;
 			second_ = pr.second_;
 			return *this;
 		}

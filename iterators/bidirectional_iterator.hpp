@@ -3,6 +3,7 @@
 
 #include <node.hpp>
 #include <iterator.hpp>
+#include <iterator_trait.hpp>
 
 namespace ft {
 	template <class T, class Comp>
@@ -17,7 +18,7 @@ namespace ft {
 			typedef typename iterator_traits<T>::reference reference;
 
 			bidirectional_iterator(): current_(), key_compare(Comp()) {}
-			explicit bidirectional_iterator(node_type *ptr): current_(ptr), key_compare(Comp()) {}
+			explicit bidirectional_iterator(node_type *ptr, node_type *null): current_(ptr), nullNode_(null), key_compare(Comp()) {}
 			bidirectional_iterator(const bidirectional_iterator &rhs) {
 				*this = rhs;
 			}

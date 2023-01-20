@@ -8,7 +8,7 @@
 #include <bidirectional_iterator.hpp>
 
 namespace ft {
-	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
+	template <class Key, class T , class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class map {
 		typedef Key key_type;
 		typedef T mapped_type;

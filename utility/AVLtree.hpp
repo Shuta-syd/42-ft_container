@@ -2,9 +2,8 @@
 #define AVLTREE_HPP_
 
 #include <memory>
-#include <node.hpp>
 #include <iomanip>
-// #include <pair.hpp>
+#include <node.hpp>
 
 namespace ft {
 	template <class T, class Comp, class Allocator = std::allocator<T> >
@@ -37,7 +36,8 @@ namespace ft {
 		}
 
 		/** @brief Locate a specific key from a specific tree */
-		node_type *search(node_type *node, const key_type &key) {
+		node_type *search(const key_type &key) {
+			node_type *node = root_;
 			while (node != nullNode_ && node->key_ != key) {
 				node = key_compare(node->key_, key) ? node->rhs_ : node->lhs_;
 			}
@@ -46,7 +46,7 @@ namespace ft {
 
 		/** @brief Delete a specific node */
 		void erase(const key_type &key) {
-			node_type *target = this->search(root_, key);
+			node_type *target = this->search(key);
 			if (target == nullNode_)
 				return;
 
@@ -84,6 +84,8 @@ namespace ft {
 				delete maxNode;
 			}
 		}
+
+		node_type *getNullNode() const { return nullNode_; }
 
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
