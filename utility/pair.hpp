@@ -32,7 +32,7 @@ namespace ft {
 
 		/** @brief Creates a std::pair object, deducing the target type from the types of arguments */
 		template< class T1, class T2 >
-		ft::pair<T1, T2> make_pair( T1 t, T2 u ) { return ft::pair(t, u); }
+		ft::pair<T1, T2> make_pair( T1 t, T2 u ) { return ft::pair<T1, T2>(t, u); }
 
 		template< class T1, class T2 >
 		bool operator==( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ) {

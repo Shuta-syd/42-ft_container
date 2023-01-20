@@ -2,8 +2,6 @@
 #define ITERATOR_HPP_
 
 #include <cstddef>
-#include <random_access_iterator.hpp>
-#include <reverse_iterator.hpp>
 
 namespace ft {
 	template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T &>
@@ -16,6 +14,7 @@ namespace ft {
 	};
 
 	struct random_access_iterator_tag {};
+	struct bidirectional_iterator_tag {};
 }
 
 #endif
