@@ -5,6 +5,7 @@
 #include <functional>
 #include <utility.hpp>
 #include <reverse_iterator.hpp>
+#include <bidirectional_iterator.hpp>
 
 namespace ft {
 	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
@@ -20,9 +21,10 @@ namespace ft {
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		//
-		// typedef ft::reverse_iterator<iterator> reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef ft::bidirectional_iterator<pointer, Compare> iterator;
+		typedef ft::bidirectional_iterator<const_pointer, Compare> const_iterator;
+		typedef ft::reverse_iterator<iterator> reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 
 		private:

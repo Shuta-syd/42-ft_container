@@ -8,6 +8,7 @@ void test_erase_no_rotate();
 void test_erase_balance1();
 void test_erase_balance2();
 void test_erase_balance3();
+void test_search();
 
 typedef std::pair<int, std::string> T;
 
@@ -20,9 +21,10 @@ void test_avl_tree() {
 	// test_rotateL();
 	// test_rotateLR();
 	// test_rotateRL();
-	test_erase_no_rotate();
-	test_erase_balance1();
-	test_erase_balance2();
+	// test_erase_no_rotate();
+	// test_erase_balance1();
+	// test_erase_balance2();
+	test_search();
 }
 
 void test_rotateR() {
@@ -193,4 +195,9 @@ void test_erase_balance2() {
 	std::cout << std::endl;
 	root_.erase(80);
 	root_.printAVL(NULL, 1);
+}
+
+
+void test_search() {
+	
 }
