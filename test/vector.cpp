@@ -23,15 +23,6 @@ void vector_test() {
 	// iterators_test();
 	// capacity_test();
 	// modifier_test();
-	test();
-}
-
-void test() {
-	std::vector<int> var1(5, 42);
-	std::vector<int>::iterator it = var1.begin();
-	std::vector<int> var2(it, var1.end() - 2);
-
-	print_std_vector(var2);
 }
 
 void constructor_test() {

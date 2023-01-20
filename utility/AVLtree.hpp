@@ -2,15 +2,12 @@
 #define AVLTREE_HPP_
 
 #include <memory>
-#include <node.hpp>
 #include <iomanip>
-// #include <pair.hpp>
+#include <node.hpp>
 
-namespace ft
-{
+namespace ft {
 	template <class T, class Comp, class Allocator = std::allocator<T> >
-	class AVLtree
-	{
+	class AVLtree {
 	public:
 		typedef T value_type;
 		typedef typename value_type::first_type key_type;
@@ -18,7 +15,9 @@ namespace ft
 		typedef node<T> node_type;
 
 		AVLtree() : root_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
-		~AVLtree() {}
+		~AVLtree() {
+			//clear
+		}
 
 		/** @brief Insert at the appropriate position in the AVLtree */
 		void insert(value_type &val) {
@@ -29,17 +28,24 @@ namespace ft
 
 			node_type *pta = this->searchParent(val.first);
 			if (key_compare(pta->key_, val.first)) {
-				pta->rhs_ = new node_type(val, pta, nullNode_);
+				if (pta->rhs_ != nullNode_)
+					pta->rhs_->val_ = val;
+				else
+					pta->rhs_ = new node_type(val, pta, nullNode_);
 				balanceInsert(pta->rhs_);
 			}
 			else {
-				pta->lhs_ = new node_type(val, pta, nullNode_);
+				if (pta->lhs_ != nullNode_)
+					pta->lhs_->val_ = val;
+				else
+					pta->lhs_ = new node_type(val, pta, nullNode_);
 				balanceInsert(pta->lhs_);
 			}
 		}
 
 		/** @brief Locate a specific key from a specific tree */
-		node_type *search(node_type *node, const key_type &key) {
+		node_type *search(const key_type &key) {
+			node_type *node = root_;
 			while (node != nullNode_ && node->key_ != key) {
 				node = key_compare(node->key_, key) ? node->rhs_ : node->lhs_;
 			}
@@ -48,7 +54,7 @@ namespace ft
 
 		/** @brief Delete a specific node */
 		void erase(const key_type &key) {
-			node_type *target = this->search(root_, key);
+			node_type *target = this->search(key);
 			if (target == nullNode_)
 				return;
 
@@ -60,7 +66,9 @@ namespace ft
 			if (target->lhs_ == nullNode_) {
 				// All patterns of equilibrium binary tree collapse are on this side.
 				node_type *pta = target->pta_;
-				if (pta->lhs_ == target)
+				if (root_ == target)
+					root_ = target->rhs_;
+				else if (pta->lhs_ == target)
 					pta->lhs_ = target->rhs_;
 				else
 					pta->rhs_ = target->rhs_;
@@ -69,18 +77,23 @@ namespace ft
 				delete target;
 			}
 			else {
-				node_type *pta = target->pta_;
 				node_type *maxNode = this->searchLeftMax(target->lhs_);
-				if (pta->lhs_ == target)
-					pta->lhs_ = maxNode;
+				node_type *pta = maxNode->pta_;
+				target->key_ = maxNode->key_;
+				target->val_ = maxNode->val_;
+				if (pta->lhs_ == maxNode)
+					pta->lhs_ = maxNode->lhs_;
 				else
-					pta->rhs_ = maxNode;
-				maxNode->pta_ = pta;
-				maxNode->rhs_ = target->rhs_;
+					pta->rhs_ = maxNode->lhs_;
+				maxNode->lhs_->pta_ = pta;
 				balanceErase(target->lhs_);
-				delete target;
+				if (maxNode->lhs_ == nullNode_)
+					maxNode->lhs_->pta_ = nullNode_;
+				delete maxNode;
 			}
 		}
+
+		node_type *getNullNode() const { return nullNode_; }
 
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
