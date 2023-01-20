@@ -32,6 +32,8 @@ namespace ft {
 				return *this;
 			}
 
+			node_type *base() const { return current_; };
+
 			reference operator*() const { return current_->val_; }
 			pointer operator->() const { return &current_->val_; }
 			bool operator==(const bidirectional_iterator &rhs) const { return current_ == rhs.current_; }
@@ -78,7 +80,6 @@ namespace ft {
 			--(*this);
 			return tmp;
 		}
-
 
 		private:
 			node_type *current_;
