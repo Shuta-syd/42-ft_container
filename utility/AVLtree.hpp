@@ -15,7 +15,9 @@ namespace ft {
 		typedef node<T> node_type;
 
 		AVLtree() : root_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
-		~AVLtree() {}
+		~AVLtree() {
+			//clear
+		}
 
 		/** @brief Insert at the appropriate position in the AVLtree */
 		void insert(value_type &val) {

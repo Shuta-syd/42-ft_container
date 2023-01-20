@@ -37,11 +37,117 @@ namespace ft {
 				bool operator() (const value_type& x, const value_type& y) const { return comp(x.first, y.first); }
 		};
 
-		
+		/*----------------------------------------
+		[Constructors & Destructor]
+		----------------------------------------*/
+		// default constructor
+		map() {}
 
-		private :
+		// empty constructor
+		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ) {}
+
+		// range constructor
+		template<class InputIt>
+		map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) {}
+
+		// copy constructor
+		map( const map& rhs ): tree_(rhs.tree_), key_compare(rhs.key_compare) {}
+
+		// destructor
+		~map() {}
+
+		// copy operator
+		map& operator=( const map& rhs ) {}
+
+		allocator_type get_allocator() const {}
+
+
+		/*----------------------------------------
+		[Iterators]
+		----------------------------------------*/
+		iterator begin() {}
+		const_iterator begin() const {}
+		iterator end() {}
+		const_iterator end() const {}
+		reverse_iterator rbegin() {}
+		const_reverse_iterator rbegin() const {}
+		reverse_iterator rend() {}
+		const_reverse_iterator rend() const {}
+
+		/*----------------------------------------
+		[Capacity]
+		----------------------------------------*/
+		bool empty() const {}
+		size_type size() const {}
+		size_type max_size() const {}
+
+		/*----------------------------------------
+		[Element access]
+		----------------------------------------*/
+		mapped_type& operator[] (const key_type& k) {}
+		mapped_type& at (const key_type& k) {}
+		const mapped_type& at (const key_type& k) const {}
+
+		/*----------------------------------------
+		[Modifiers]
+		----------------------------------------*/
+		pair<iterator,bool> insert (const value_type& val) {}
+		iterator insert (iterator position, const value_type& val) {}
+		template <class InputIterator>
+		void insert (InputIterator first, InputIterator last) {}
+
+		void erase (iterator position) {}
+		size_type erase (const key_type& k) {}
+		void erase (iterator first, iterator last) {}
+
+		void clear() {}
+
+		void swap (map& x) {}
+
+		/*----------------------------------------
+		[Look up]
+		----------------------------------------*/
+		size_type count( const Key& key ) const {}
+
+		iterator find( const Key& key ) {}
+		const_iterator find( const Key& key ) const {}
+
+		std::pair<iterator,iterator> equal_range( const Key& key ) {}
+		std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}
+
+		iterator lower_bound( const Key& key ) {}
+		const_iterator lower_bound( const Key& key ) const {}
+
+		iterator upper_bound( const Key& key ) {}
+		const_iterator upper_bound( const Key& key ) const {}
+
+		std::map::value_compare value_comp() const { return val_compare; }
+		key_compare key_comp() const { return key_compare; }
+
+	private:
 		typedef AVLtree<value_type, key_compare> tree_type;
-			tree_type tree_;
+		tree_type tree_;
+		value_compare val_compare;
+		key_compare key_compare;
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator==( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator!=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator<( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator<=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator>( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator>=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
+
 	};
 }
 
