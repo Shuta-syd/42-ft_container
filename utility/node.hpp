@@ -2,7 +2,7 @@
 #define NODE_HPP_
 
 namespace ft {
-	template <class T>
+	template <class T, class Allocator = std::allocator<T> >
 	class node {
 		public:
 			typedef T value_type;

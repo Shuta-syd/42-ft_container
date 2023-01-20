@@ -3,8 +3,7 @@
 
 #include <memory>
 #include <type_traits.hpp>
-#include <random_access_iterator.hpp>
-#include <reverse_iterator.hpp>
+#include <iterator.hpp>
 #include <algorithm.hpp>
 
 namespace ft {

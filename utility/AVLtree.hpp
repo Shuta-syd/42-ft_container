@@ -6,11 +6,9 @@
 #include <iomanip>
 // #include <pair.hpp>
 
-namespace ft
-{
+namespace ft {
 	template <class T, class Comp, class Allocator = std::allocator<T> >
-	class AVLtree
-	{
+	class AVLtree {
 	public:
 		typedef T value_type;
 		typedef typename value_type::first_type key_type;
