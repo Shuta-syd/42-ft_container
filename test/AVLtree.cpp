@@ -217,8 +217,4 @@ void test_bidirectional_iterator() {
 	root_.insert(node3);
 	root_.insert(node4);
 	root_.insert(node5);
-	// ft::bidirectional_iterator<T, std::less<int> > it(root_.search(20), root_.getNullNode());
-	// std::cout << it.base()->key_ << std::endl;
-	// std::cout << (it++).base()->key_ << std::endl;
-	// std::cout << (it++).base()->key_ << std::endl;
 }

@@ -11,21 +11,22 @@ namespace ft {
 	template <class T1, class T2>
 	struct pair {
 		public:
+
 			typedef T1 first_type;
 			typedef T2 second_type;
 			first_type first;
-			second_type second_;
+			second_type second;
 
-			pair(): first(), second_() {}
+			pair(): first(), second() {}
 
 			template <class U, class V>
-			pair(const pair<U, V> &pr): first(pr.first), second_(pr.second_) {}
+			pair(const pair<U, V> &pr): first(pr.first), second(pr.second) {}
 
-			pair (const first_type& a, const second_type& b): first(a), second_(b) {}
+			pair (const first_type& a, const second_type& b): first(a), second(b) {}
 
 		pair& operator= (const pair& pr) {
 			first = pr.first;
-			second_ = pr.second_;
+			second = pr.second;
 			return *this;
 		}
 	};
@@ -36,7 +37,7 @@ namespace ft {
 
 		template< class T1, class T2 >
 		bool operator==( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ) {
-			return (lhs.first_ == rhs.first_ && lhs.second_ == rhs.second_) ;
+			return (lhs.first_ == rhs.first_ && lhs.second == rhs.second) ;
 		}
 
 		template <class T1, class T2>
@@ -44,7 +45,7 @@ namespace ft {
 
 		template <class T1, class T2>
 		bool operator<(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs) {
-			return (lhs.first_ < rhs.first_ && lhs.second_ < rhs.second_);
+			return (lhs.first_ < rhs.first_ && lhs.second < rhs.second);
 		}
 
 		template <class T1, class T2>
