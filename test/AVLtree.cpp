@@ -4,12 +4,10 @@ void test_rotateR();
 void test_rotateL();
 void test_rotateLR();
 void test_rotateRL();
-void test_erase_no_balance();
+void test_erase_no_rotate();
 void test_erase_balance1();
 void test_erase_balance2();
 void test_erase_balance3();
-void test_erase_balance4();
-void test_erase_balance5();
 
 typedef std::pair<int, std::string> T;
 
@@ -22,8 +20,9 @@ void test_avl_tree() {
 	// test_rotateL();
 	// test_rotateLR();
 	// test_rotateRL();
-	// test_erase_no_balance();
+	test_erase_no_rotate();
 	test_erase_balance1();
+	test_erase_balance2();
 }
 
 void test_rotateR() {
@@ -127,9 +126,9 @@ void test_rotateRL() {
 }
 
 
-void test_erase_no_balance() {
+void test_erase_no_rotate() {
 	print_white("--------------------------------------------------");
-	print_white("|             TEST erase no balance              |");
+	print_white("|              TEST erase no rotate              |");
 	print_white("--------------------------------------------------");
 	std::pair<int, std::string> node1(42, "node1");
 	std::pair<int, std::string> node2(30, "node2");
@@ -148,6 +147,7 @@ void test_erase_no_balance() {
 	root_.erase(30);
 	root_.printAVL(NULL, 1);
 }
+
 
 void test_erase_balance1() {
 	print_white("--------------------------------------------------");
@@ -173,13 +173,14 @@ void test_erase_balance1() {
 
 void test_erase_balance2() {
 	print_white("--------------------------------------------------");
-	print_white("|             TEST erase no balance              |");
+	print_white("|              TEST erase balance 2              |");
 	print_white("--------------------------------------------------");
-	std::pair<int, std::string> node1(42, "node1");
-	std::pair<int, std::string> node2(30, "node2");
-	std::pair<int, std::string> node3(90, "node3");
-	std::pair<int, std::string> node4(20, "node4");
-	std::pair<int, std::string> node5(35, "node5");
+	std::pair<int, std::string> node1(80, "node1");
+	std::pair<int, std::string> node2(90, "node2");
+	std::pair<int, std::string> node3(50, "node3");
+	std::pair<int, std::string> node4(42, "node4");
+	std::pair<int, std::string> node5(95, "node5");
+	std::pair<int, std::string> node6(55, "node6");
 
 	ft::AVLtree<T, std::less<int> > root_;
 	root_.insert(node1);
@@ -187,74 +188,9 @@ void test_erase_balance2() {
 	root_.insert(node3);
 	root_.insert(node4);
 	root_.insert(node5);
+	root_.insert(node6);
 	root_.printAVL(NULL, 1);
 	std::cout << std::endl;
-	root_.erase(30);
-	root_.printAVL(NULL, 1);
-}
-
-void test_erase_balance3() {
-	print_white("--------------------------------------------------");
-	print_white("|             TEST erase no balance              |");
-	print_white("--------------------------------------------------");
-	std::pair<int, std::string> node1(42, "node1");
-	std::pair<int, std::string> node2(30, "node2");
-	std::pair<int, std::string> node3(90, "node3");
-	std::pair<int, std::string> node4(20, "node4");
-	std::pair<int, std::string> node5(35, "node5");
-
-	ft::AVLtree<T, std::less<int> > root_;
-	root_.insert(node1);
-	root_.insert(node2);
-	root_.insert(node3);
-	root_.insert(node4);
-	root_.insert(node5);
-	root_.printAVL(NULL, 1);
-	std::cout << std::endl;
-	root_.erase(30);
-	root_.printAVL(NULL, 1);
-}
-
-void test_erase_balance4() {
-	print_white("--------------------------------------------------");
-	print_white("|             TEST erase no balance              |");
-	print_white("--------------------------------------------------");
-	std::pair<int, std::string> node1(42, "node1");
-	std::pair<int, std::string> node2(30, "node2");
-	std::pair<int, std::string> node3(90, "node3");
-	std::pair<int, std::string> node4(20, "node4");
-	std::pair<int, std::string> node5(35, "node5");
-
-	ft::AVLtree<T, std::less<int> > root_;
-	root_.insert(node1);
-	root_.insert(node2);
-	root_.insert(node3);
-	root_.insert(node4);
-	root_.insert(node5);
-	root_.printAVL(NULL, 1);
-	std::cout << std::endl;
-	root_.erase(30);
-	root_.printAVL(NULL, 1);
-}
-
-void test_erase_balance5() {
-	print_white("--------------------------------------------------");
-	print_white("|             TEST erase no balance              |");
-	print_white("--------------------------------------------------");
-	std::pair<int, std::string> node1(42, "node1");
-	std::pair<int, std::string> node2(30, "node2");
-	std::pair<int, std::string> node3(90, "node3");
-	std::pair<int, std::string> node4(20, "node4");
-	std::pair<int, std::string> node5(35, "node5");
-
-	ft::AVLtree<T, std::less<int> > root_;
-	root_.insert(node1);
-	root_.insert(node2);
-	root_.insert(node3);
-	root_.insert(node4);
-	root_.insert(node5);
-	root_.printAVL(NULL, 1);
-	std::cout << std::endl;
-	root_.erase(30);
+	root_.erase(80);
 	root_.printAVL(NULL, 1);
 }

@@ -60,7 +60,9 @@ namespace ft
 			if (target->lhs_ == nullNode_) {
 				// All patterns of equilibrium binary tree collapse are on this side.
 				node_type *pta = target->pta_;
-				if (pta->lhs_ == target)
+				if (root_ == target)
+					root_ = target->rhs_;
+				else if (pta->lhs_ == target)
 					pta->lhs_ = target->rhs_;
 				else
 					pta->rhs_ = target->rhs_;
@@ -69,16 +71,19 @@ namespace ft
 				delete target;
 			}
 			else {
-				node_type *pta = target->pta_;
 				node_type *maxNode = this->searchLeftMax(target->lhs_);
-				if (pta->lhs_ == target)
-					pta->lhs_ = maxNode;
+				node_type *pta = maxNode->pta_;
+				target->key_ = maxNode->key_;
+				target->val_ = maxNode->val_;
+				if (pta->lhs_ == maxNode)
+					pta->lhs_ = maxNode->lhs_;
 				else
-					pta->rhs_ = maxNode;
-				maxNode->pta_ = pta;
-				maxNode->rhs_ = target->rhs_;
+					pta->rhs_ = maxNode->lhs_;
+				maxNode->lhs_->pta_ = pta;
 				balanceErase(target->lhs_);
-				delete target;
+				if (maxNode->lhs_ == nullNode_)
+					maxNode->lhs_->pta_ = nullNode_;
+				delete maxNode;
 			}
 		}
 
