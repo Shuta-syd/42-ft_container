@@ -75,10 +75,10 @@ namespace ft {
 		}
 
 		/** @brief Delete a specific node */
-		void erase(const key_type &key) {
+		size_type erase(const key_type &key) {
 			node_type *target = this->search(key);
 			if (target == nullNode_)
-				return;
+				return 0;
 			size_ -= 1;
 			/**
 			 * 1. If the node you want to delete is the leftmost node, simply delete that node
@@ -113,8 +113,8 @@ namespace ft {
 					maxNode->lhs_->pta_ = nullNode_;
 				delete maxNode;
 			}
+			return 1;
 		}
-
 
 		node_type *getNullNode() const { return nullNode_; }
 		iterator begin() { return iterator(begin_, nullNode_); }

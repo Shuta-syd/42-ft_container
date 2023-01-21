@@ -110,19 +110,28 @@ namespace ft {
 		pair<iterator,bool> insert (const value_type& val) { return tree_.insert(val); }
 
 		/** @brief Inserts value in the position as close as possible to the position just prior to pos */
-		iterator insert (iterator position, const value_type& val) {
-			(void)position;
+		iterator insert (iterator pos, const value_type& val) {
+			(void)pos;
 			return tree_.insert(val).first;
 		}
 
 		template <class InputIterator>
 		void insert (InputIterator first, InputIterator last) {
-			
+			for (; first != last; first++)
+				tree_.insert(first.base()->val_;);
 		}
 
-		void erase (iterator position) {}
-		size_type erase (const key_type& k) {}
-		void erase (iterator first, iterator last) {}
+		void erase (iterator pos) {
+			key_type key = pos.base()->key_;
+			tree_.erase(key);
+		}
+
+		size_type erase (const key_type& key) { return tree_.erase(key_); }
+
+		void erase (iterator first, iterator last) {
+			for (; first != last; first++)
+				tree_.erase(first.base()->key_;);
+		}
 
 		void clear() {}
 
@@ -133,8 +142,8 @@ namespace ft {
 		----------------------------------------*/
 		size_type count( const Key& key ) const {}
 
-		iterator find(const Key &key) { return iterator(tree_.search(k), tree_.getNullNode()); }
-		const_iterator find( const Key& key ) const { return const_iterator(tree_.search(k), tree_.getNullNode()) }
+		iterator find(const Key &key) { return iterator(tree_.search(key), tree_.getNullNode()); }
+		const_iterator find( const Key& key ) const { return const_iterator(tree_.search(key), tree_.getNullNode()) }
 
 		ft::pair<iterator,iterator> equal_range( const Key& key ) {}
 		ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}
