@@ -4,6 +4,7 @@
 #include <memory>
 #include <iomanip>
 #include <node.hpp>
+#include <bidirectional_iterator.hpp>
 
 namespace ft {
 	template <class T, class Comp, class Allocator = std::allocator<T> >
@@ -13,16 +14,22 @@ namespace ft {
 		typedef typename value_type::first_type key_type;
 		typedef Allocator allocator_type;
 		typedef node<T> node_type;
+		typedef bidirectional_iterator<T *, Comp> iterator;
+		typedef bidirectional_iterator<const T *, Comp> const_iterator;
 
-		AVLtree() : root_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
+		AVLtree() : root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
+
 		~AVLtree() {
-			//clear
+			this->destroyTree(root_);
+			this->destroyNode(nullNode_);
 		}
 
 		/** @brief Insert at the appropriate position in the AVLtree */
 		void insert(value_type &val) {
 			if (root_ == nullNode_) {
 				root_ = new node_type(val, nullNode_, nullNode_);
+				begin_ = root_;
+				begin_ = end_;
 				return;
 			}
 
@@ -32,6 +39,7 @@ namespace ft {
 					pta->rhs_->val_ = val;
 				else
 					pta->rhs_ = new node_type(val, pta, nullNode_);
+				end_ = pta->rhs_;
 				balanceInsert(pta->rhs_);
 			}
 			else {
@@ -39,6 +47,7 @@ namespace ft {
 					pta->lhs_->val_ = val;
 				else
 					pta->lhs_ = new node_type(val, pta, nullNode_);
+				begin_ = pta->lhs_;
 				balanceInsert(pta->lhs_);
 			}
 		}
@@ -77,7 +86,7 @@ namespace ft {
 				delete target;
 			}
 			else {
-				node_type *maxNode = this->searchLeftMax(target->lhs_);	
+				node_type *maxNode = this->searchLeftMax(target->lhs_);
 				node_type *pta = maxNode->pta_;
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;
@@ -93,7 +102,12 @@ namespace ft {
 			}
 		}
 
+
 		node_type *getNullNode() const { return nullNode_; }
+		iterator begin() { return iterator(begin_, nullNode_); }
+		const_iterator begin() const { return const_iterator(begin_, nullNode_); }
+		iterator end() { return iterator(end_, nullNode_); }
+		const_iterator end() const { return const_iterator(end_, nullNode_); }
 
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
@@ -110,6 +124,8 @@ namespace ft {
 
 	private:
 		node_type *root_;
+		node_type *begin_;
+		node_type *end_;
 		node_type *nullNode_;
 		Comp key_compare;
 
@@ -243,6 +259,16 @@ namespace ft {
 				node = node->rhs_;
 			}
 			return node;
+		}
+
+		/** @brief  */
+		void destroyTree(node_type *root) {
+
+		}
+
+		/**  @brief  */
+		void destroyNode(node_type *node) {
+
 		}
 	};
 }
