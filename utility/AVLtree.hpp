@@ -4,6 +4,7 @@
 #include <memory>
 #include <iomanip>
 #include <node.hpp>
+#include <pair.hpp>
 #include <bidirectional_iterator.hpp>
 
 namespace ft {
@@ -14,8 +15,8 @@ namespace ft {
 		typedef typename value_type::first_type key_type;
 		typedef Allocator allocator_type;
 		typedef node<T> node_type;
-		typedef bidirectional_iterator<T *, Comp> iterator;
-		typedef bidirectional_iterator<const T *, Comp> const_iterator;
+		typedef bidirectional_iterator<T, Comp> iterator;
+		typedef bidirectional_iterator<const T, Comp> const_iterator;
 		typedef std::size_t size_type;
 
 		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
@@ -29,6 +30,7 @@ namespace ft {
 
 		}
 
+		// !!!!!!!!!!!!! duplicate pattern need support
 		/** @brief Insert at the appropriate position in the AVLtree */
 		pair<iterator, bool> insert(value_type &val) {
 			if (root_ == nullNode_) {
@@ -40,28 +42,17 @@ namespace ft {
 			}
 
 			node_type *pta = this->searchParent(val.first);
+			node_type *node = new node_type(val, pta, nullNode_);
 			if (key_compare(pta->key_, val.first)) {
-				if (pta->rhs_ != nullNode_)
-					pta->rhs_->val_ = val;
-				else{
-					node_type *node = new node_type(val, pta, nullNode_);
-					pta->rhs_ = node;
-					size_ += 1;
-				}
+				pta->rhs_ = node;
 				end_ = pta->rhs_;
-				balanceInsert(pta->rhs_);
 			}
 			else {
-				if (pta->lhs_ != nullNode_)
-					pta->lhs_->val_ = val;
-				else {
-					node_type *node = new node_type(val, pta, nullNode_);
-					pta->lhs_ = node;
-					size_ += 1;
-				}
+				pta->lhs_ = node;
 				begin_ = pta->lhs_;
-				balanceInsert(pta->lhs_);
 			}
+			size_ += 1;
+			balanceInsert(pta->lhs_);
 			return ft::make_pair(iterator(node, nullNode_), true);
 		}
 
