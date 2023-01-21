@@ -12,6 +12,7 @@ namespace ft {
 	class map {
 		typedef Key key_type;
 		typedef T mapped_type;
+		typedef node<T> node_type;
 		typedef ft::pair<const Key, T> value_type;
 		typedef std::size_t size_type;
 		typedef std::ptrdiff_t difference_type;
@@ -48,19 +49,23 @@ namespace ft {
 
 		// range constructor
 		template<class InputIt>
-		map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) {}
+		map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ) {
+
+		}
 
 		// copy constructor
-		map( const map& rhs ): tree_(rhs.tree_), key_compare(rhs.key_compare) {}
+		map( const map& rhs ): tree_(rhs.tree_), key_compare(rhs.key_compare), val_compare_(rhs.val_compare_) {}
 
 		// destructor
 		~map() {}
 
 		// copy operator
-		map& operator=( const map& rhs ) {}
+		map& operator=( const map& rhs ) {
+				// tree_ = rhs.tree_;
+				return *this;
+		}
 
-		allocator_type get_allocator() const {}
-
+		allocator_type get_allocator() const { return alloc_; }
 
 		/*----------------------------------------
 		[Iterators]
@@ -77,24 +82,43 @@ namespace ft {
 		/*----------------------------------------
 		[Capacity]
 		----------------------------------------*/
-		bool empty() const {}
-		size_type size() const {}
+		bool empty() const { return tree_.size() == 0; }
+		size_type size() const { return tree_.size(); }
 		size_type max_size() const {}
 
 		/*----------------------------------------
 		[Element access]
 		----------------------------------------*/
-		mapped_type& operator[] (const key_type& k) {}
-		mapped_type& at (const key_type& k) {}
-		const mapped_type& at (const key_type& k) const {}
+		mapped_type& operator[] (const key_type& k) {
+			node_type *node = tree_.search(k);
+			// アクセスしたkeyがなかった場合に0初期化して表示;
+			return node->val_.second;
+		}
+
+		mapped_type& at (const key_type& k) {
+
+		}
+
+		const mapped_type& at (const key_type& k) const {
+
+		}
 
 		/*----------------------------------------
 		[Modifiers]
 		----------------------------------------*/
-		pair<iterator,bool> insert (const value_type& val) {}
-		iterator insert (iterator position, const value_type& val) {}
+		/** @brief Inserts value */
+		pair<iterator,bool> insert (const value_type& val) { return tree_.insert(val); }
+
+		/** @brief Inserts value in the position as close as possible to the position just prior to pos */
+		iterator insert (iterator position, const value_type& val) {
+			(void)position;
+			return tree_.insert(val).first;
+		}
+
 		template <class InputIterator>
-		void insert (InputIterator first, InputIterator last) {}
+		void insert (InputIterator first, InputIterator last) {
+			
+		}
 
 		void erase (iterator position) {}
 		size_type erase (const key_type& k) {}
@@ -109,8 +133,8 @@ namespace ft {
 		----------------------------------------*/
 		size_type count( const Key& key ) const {}
 
-		iterator find( const Key& key ) {}
-		const_iterator find( const Key& key ) const {}
+		iterator find(const Key &key) { return iterator(tree_.search(k), tree_.getNullNode()); }
+		const_iterator find( const Key& key ) const { return const_iterator(tree_.search(k), tree_.getNullNode()) }
 
 		ft::pair<iterator,iterator> equal_range( const Key& key ) {}
 		ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}

@@ -16,40 +16,53 @@ namespace ft {
 		typedef node<T> node_type;
 		typedef bidirectional_iterator<T *, Comp> iterator;
 		typedef bidirectional_iterator<const T *, Comp> const_iterator;
+		typedef std::size_t size_type;
 
-		AVLtree() : root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
+		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
 
 		~AVLtree() {
 			this->destroyTree(root_);
 			this->destroyNode(nullNode_);
 		}
 
+		AVLtree &operator=(const AVLtree &rhs) {
+
+		}
+
 		/** @brief Insert at the appropriate position in the AVLtree */
-		void insert(value_type &val) {
+		pair<iterator, bool> insert(value_type &val) {
 			if (root_ == nullNode_) {
 				root_ = new node_type(val, nullNode_, nullNode_);
 				begin_ = root_;
 				begin_ = end_;
-				return;
+				size_ += 1;
+				return ft::make_pair(iterator(root_, nullNode_), true);
 			}
 
 			node_type *pta = this->searchParent(val.first);
 			if (key_compare(pta->key_, val.first)) {
 				if (pta->rhs_ != nullNode_)
 					pta->rhs_->val_ = val;
-				else
-					pta->rhs_ = new node_type(val, pta, nullNode_);
+				else{
+					node_type *node = new node_type(val, pta, nullNode_);
+					pta->rhs_ = node;
+					size_ += 1;
+				}
 				end_ = pta->rhs_;
 				balanceInsert(pta->rhs_);
 			}
 			else {
 				if (pta->lhs_ != nullNode_)
 					pta->lhs_->val_ = val;
-				else
-					pta->lhs_ = new node_type(val, pta, nullNode_);
+				else {
+					node_type *node = new node_type(val, pta, nullNode_);
+					pta->lhs_ = node;
+					size_ += 1;
+				}
 				begin_ = pta->lhs_;
 				balanceInsert(pta->lhs_);
 			}
+			return ft::make_pair(iterator(node, nullNode_), true);
 		}
 
 		/** @brief Locate a specific key from a specific tree */
@@ -66,7 +79,7 @@ namespace ft {
 			node_type *target = this->search(key);
 			if (target == nullNode_)
 				return;
-
+			size_ -= 1;
 			/**
 			 * 1. If the node you want to delete is the leftmost node, simply delete that node
 			 * 2. If the node you want to delete has a right subtree, promote it
@@ -108,6 +121,7 @@ namespace ft {
 		const_iterator begin() const { return const_iterator(begin_, nullNode_); }
 		iterator end() { return iterator(end_, nullNode_); }
 		const_iterator end() const { return const_iterator(end_, nullNode_); }
+		size_type size() const { return size_; }
 
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
@@ -123,6 +137,7 @@ namespace ft {
 		}
 
 	private:
+		size_type size_;
 		node_type *root_;
 		node_type *begin_;
 		node_type *end_;
