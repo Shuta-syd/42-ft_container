@@ -77,7 +77,7 @@ namespace ft {
 				delete target;
 			}
 			else {
-				node_type *maxNode = this->searchLeftMax(target->lhs_);
+				node_type *maxNode = this->searchLeftMax(target->lhs_);	
 				node_type *pta = maxNode->pta_;
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;

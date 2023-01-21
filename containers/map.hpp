@@ -44,7 +44,7 @@ namespace ft {
 		map() {}
 
 		// empty constructor
-		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): key_compare(comp), alloc_(alloc) {}
+		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): key_compare_(comp), alloc_(alloc) {}
 
 		// range constructor
 		template<class InputIt>
@@ -112,8 +112,8 @@ namespace ft {
 		iterator find( const Key& key ) {}
 		const_iterator find( const Key& key ) const {}
 
-		std::pair<iterator,iterator> equal_range( const Key& key ) {}
-		std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}
+		ft::pair<iterator,iterator> equal_range( const Key& key ) {}
+		ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}
 
 		iterator lower_bound( const Key& key ) {}
 		const_iterator lower_bound( const Key& key ) const {}
@@ -121,35 +121,35 @@ namespace ft {
 		iterator upper_bound( const Key& key ) {}
 		const_iterator upper_bound( const Key& key ) const {}
 
-		std::map::value_compare value_comp() const { return val_compare; }
-		key_compare key_comp() const { return key_compare; }
+		value_compare value_comp() const { return val_compare_; }
+		key_compare key_comp() const { return key_compare_; }
 
 	private:
 		typedef AVLtree<value_type, key_compare> tree_type;
 		tree_type tree_;
-		value_compare val_compare;
-		key_compare key_compare;
+		value_compare val_compare_;
+		key_compare key_compare_;
 		allocator_type alloc_;
 
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator==( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator!=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator<( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator<=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator>( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator>=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs ) {}
 
 	};
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator==( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {}
 }
 
 #endif
