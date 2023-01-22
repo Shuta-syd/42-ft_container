@@ -99,7 +99,10 @@ namespace ft {
 			----------------------------------------*/
 			mapped_type& operator[] (const key_type& k) {
 				node_type *node = tree_.search(k);
-				// アクセスしたkeyがなかった場合に0初期化して表示;
+				if (node == tree_.getNullNode()) {
+					tree_.insert(ft::make_pair<key_type, mapped_type>(k, mapped_type()));
+					node_type *node = tree_.search(k);
+				}
 				return node->val_.second;
 			}
 
