@@ -9,7 +9,6 @@ namespace ft {
 	template <class T, class Comp>
 	class bidirectional_iterator : public iterator<bidirectional_iterator_tag, T> {
 		public:
-			typedef T iterator_type;
 			typedef node<T> node_type;
 			typedef typename iterator<bidirectional_iterator_tag, T>::iterator_category iterator_category;
 			typedef typename iterator<bidirectional_iterator_tag, T>::value_type value_type;
@@ -18,7 +17,7 @@ namespace ft {
 			typedef typename iterator<bidirectional_iterator_tag, T>::reference reference;
 
 			bidirectional_iterator(): current_(), key_compare(Comp()) {}
-			explicit bidirectional_iterator(node_type *ptr, node_type *null): current_(ptr), nullNode_(null), key_compare(Comp()) {}
+			explicit bidirectional_iterator(node_type *ptr, node_type *null, node_type *end, node_type *begin): current_(ptr), nullNode_(null), end_(end), begin_(begin), key_compare(Comp()) {}
 			bidirectional_iterator(const bidirectional_iterator &rhs) {
 				*this = rhs;
 			}
@@ -45,15 +44,19 @@ namespace ft {
 			bool operator>=(const bidirectional_iterator &rhs) const { return current_ >= rhs.current_; }
 
 			bidirectional_iterator &operator++() { // prefix increment
-				if (current_->rhs_ != nullNode_) {
-					current_ = current_->lhs_;
+				if (current_ == end_)
+					current_ = nullNode_;
+				else if (current_ == nullNode_)
+					current_ = begin_;
+				else if (current_->rhs_ != nullNode_) {
+					current_ = current_->rhs_;
 					while (current_->lhs_ != nullNode_)
 						current_ = current_->lhs_;
-					return current_;
-				}
-				while (current_->pta_->lhs_ != current_)
+				} else {
+					while (current_->pta_->lhs_ != current_)
+						current_ = current_->pta_;
 					current_ = current_->pta_;
-				current_ = current_->pta_;
+				}
 				return *this;
 		}
 
@@ -64,15 +67,20 @@ namespace ft {
 		}
 
 		bidirectional_iterator &operator--() {
-			if (current_->lhs_ != nullNode_) {
-				current_ = current_->rhs_;
+			if (current_ == begin_)
+				current_ = nullNode_;
+			else if (current_ == nullNode_)
+				current_ = end_;
+			else if (current_->lhs_ != nullNode_) {
+				current_ = current_->lhs_;
 				while (current_->rhs_ != nullNode_)
 					current_ = current_->rhs_;
-				return current_;
 			}
-			while (current_->pta_->rhs_ != current_)
+			else {
+				while (current_->pta_->rhs_ != current_)
+					current_ = current_->pta_;
 				current_ = current_->pta_;
-			current_ = current_->pta_;
+			}
 			return *this;
 		}
 
@@ -85,6 +93,8 @@ namespace ft {
 		private:
 			node_type *current_;
 			node_type *nullNode_;
+			node_type *end_;
+			node_type *begin_;
 			Comp key_compare;
 	};
 };

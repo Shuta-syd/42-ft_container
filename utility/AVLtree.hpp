@@ -38,7 +38,7 @@ namespace ft {
 				begin_ = root_;
 				begin_ = end_;
 				size_ += 1;
-				return ft::make_pair(iterator(root_, nullNode_), true);
+				return ft::make_pair(iterator(root_, nullNode_, end_, begin_), true);
 			}
 
 			node_type *pta = this->searchParent(val.first);
@@ -53,7 +53,7 @@ namespace ft {
 			}
 			size_ += 1;
 			balanceInsert(pta->lhs_);
-			return ft::make_pair(iterator(node, nullNode_), true);
+			return ft::make_pair(iterator(node, nullNode_, end_, begin_), true);
 		}
 
 		/** @brief Locate a specific key from a specific tree */
@@ -90,7 +90,7 @@ namespace ft {
 				delete target;
 			}
 			else {
-				node_type *maxNode = this->searchLeftMax(target->lhs_);
+				node_type *maxNode = this->searchMaxNode(target->lhs_);
 				node_type *pta = maxNode->pta_;
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;
@@ -108,10 +108,10 @@ namespace ft {
 		}
 
 		node_type *getNullNode() const { return nullNode_; }
-		iterator begin() { return iterator(begin_, nullNode_); }
-		const_iterator begin() const { return const_iterator(begin_, nullNode_); }
-		iterator end() { return iterator(end_, nullNode_); }
-		const_iterator end() const { return const_iterator(end_, nullNode_); }
+		iterator begin() { return iterator(begin_, nullNode_, end_, begin_); }
+		const_iterator begin() const { return const_iterator(begin_, nullNode_, end_, begin_); }
+		iterator end() { return iterator(nullNode_, nullNode_, end_, begin_); }
+		const_iterator end() const { return const_iterator(nullNode_, nullNode_, end_, begin_); }
 		size_type size() const { return size_; }
 
 		void printAVL(node_type *node, int i) {
@@ -260,7 +260,7 @@ namespace ft {
 		}
 
 		/** @brief Search for the maximum value from the left-branch tree of a specific node */
-		node_type *searchLeftMax(node_type *node) {
+		node_type *searchMaxNode(node_type *node) {
 			while (node->rhs_ != nullNode_) {
 				node = node->rhs_;
 			}
