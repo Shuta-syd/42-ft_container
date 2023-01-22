@@ -23,8 +23,8 @@ namespace ft {
 			typedef const value_type& const_reference;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
-			typedef ft::bidirectional_iterator<pointer, Compare> iterator;
-			typedef ft::bidirectional_iterator<const_pointer, Compare> const_iterator;
+			typedef ft::bidirectional_iterator<value_type, Compare> iterator;
+			typedef ft::bidirectional_iterator<const value_type, Compare> const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 			class value_compare : public std::binary_function<value_type,value_type,bool> {
@@ -62,8 +62,7 @@ namespace ft {
 			// copy constructor
 			map( const map& rhs )
 			: tree_(rhs.tree_), key_compare(rhs.key_compare) {
-
-			}
+}
 
 			// destructor
 			~map() {}

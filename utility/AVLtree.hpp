@@ -32,7 +32,7 @@ namespace ft {
 
 		// !!!!!!!!!!!!! duplicate pattern need support
 		/** @brief Insert at the appropriate position in the AVLtree */
-		pair<iterator, bool> insert(value_type &val) {
+		pair<iterator, bool> insert(const value_type &val) {
 			if (root_ == nullNode_) {
 				root_ = new node_type(val, nullNode_, nullNode_);
 				begin_ = root_;
