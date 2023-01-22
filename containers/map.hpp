@@ -106,14 +106,6 @@ namespace ft {
 				return node->val_.second;
 			}
 
-			mapped_type& at (const key_type& k) {
-
-			}
-
-			const mapped_type& at (const key_type& k) const {
-
-			}
-
 			/*----------------------------------------
 			[Modifiers]
 			----------------------------------------*/
