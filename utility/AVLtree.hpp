@@ -21,16 +21,23 @@ namespace ft {
 
 		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
 
+		AVLtree(const AVLtree &rhs) { *this = rhs; }
+
 		~AVLtree() {
 			this->destroyTree(root_);
 			this->destroyNode(nullNode_);
 		}
 
 		AVLtree &operator=(const AVLtree &rhs) {
-
+			size_ = rhs.size_;
+			root_ = rhs.root_;
+			begin_ = rhs.begin_;
+			end_ = rhs.end_;
+			nullNode_ = rhs.nullNode_;
+			key_compare = rhs.key_compare;
+			return *this;
 		}
 
-		// !!!!!!!!!!!!! duplicate pattern need support
 		/** @brief Insert at the appropriate position in the AVLtree */
 		pair<iterator, bool> insert(const value_type &val) {
 			if (root_ == nullNode_) {

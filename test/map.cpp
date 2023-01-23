@@ -3,6 +3,10 @@
 #include <map.hpp>
 void test();
 void test_iterator();
+template <class T1, class T2>
+void print_std_map(std::map<T1, T2> test);
+template <class T1, class T2>
+void print_ft_map(ft::map<T1, T2> test);
 
 #define FT_PAIR(a, b) ft::pair<int, std::string>(a, b)
 #define STD_PAIR(a, b) std::pair<int, std::string>(a, b)
@@ -36,17 +40,33 @@ void test_iterator() {
 	std_test1.insert(STD_PAIR(42, "Hello"));
 	std_test1.insert(STD_PAIR(10, "World"));
 	std_test1.insert(STD_PAIR(50, "42Tokyo"));
-	std::map<int, std::string>::iterator std_it_1 = std_test1.begin();
-		for (; std_it_1 != std_test1.end() ; std_it_1++) {
-		std::cout << std_it_1->first << std::endl;
-	}
+	std::cout << "std: ";
+	print_std_map<int, std::string>(std_test1);
 
 	ft::map<int, std::string> ft_test1;
 	ft_test1.insert(FT_PAIR(42, "Hello"));
 	ft_test1.insert(FT_PAIR(10, "World"));
 	ft_test1.insert(FT_PAIR(50, "42Tokyo"));
-	ft::map<int, std::string>::iterator ft_it_1 = ft_test1.begin();
-	for (; ft_it_1 != ft_test1.end(); ft_it_1++) {
-		std::cout << ft_it_1->first << std::endl;
+	std::cout << "ft : ";
+	print_ft_map(ft_test1);
+}
+
+template <class T1, class T2>
+void print_std_map(std::map<T1, T2> test) {
+
+		typename std::map<T1, T2>::iterator it = test.begin();
+		for (; it != test.end(); it++) {
+			std::cout << "[" << std::setw(2) << std::right << std::setfill(' ') << it->first << "]";
 	}
+	std::cout << std::endl;
+}
+
+template <class T1, class T2>
+void print_ft_map(ft::map<T1, T2> test) {
+
+		typename ft::map<T1, T2>::iterator it = test.begin();
+		for (; it != test.end(); it++) {
+			std::cout << "[" << std::setw(2) << std::right << std::setfill(' ') << it->first << "]";
+	}
+	std::cout << std::endl;
 }

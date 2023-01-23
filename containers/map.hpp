@@ -61,15 +61,14 @@ namespace ft {
 
 			// copy constructor
 			map( const map& rhs )
-			: tree_(rhs.tree_), key_compare(rhs.key_compare) {
-}
+			: tree_(rhs.tree_), key_compare_(rhs.key_compare_) {*this = rhs;}
 
 			// destructor
 			~map() {}
 
 			// copy operator
 			map& operator=( const map& rhs ) {
-					// tree_ = rhs.tree_;
+					tree_ = rhs.tree_;
 					return *this;
 			}
 
