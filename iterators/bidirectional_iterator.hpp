@@ -6,18 +6,18 @@
 #include <iterator_trait.hpp>
 
 namespace ft {
-	template <class T, class Comp>
+	template <class T, class N>
 	class bidirectional_iterator : public iterator<bidirectional_iterator_tag, T> {
 		public:
-			typedef node<T> node_type;
+			typedef N node_type;
 			typedef typename iterator<bidirectional_iterator_tag, T>::iterator_category iterator_category;
 			typedef typename iterator<bidirectional_iterator_tag, T>::value_type value_type;
 			typedef typename iterator<bidirectional_iterator_tag, T>::difference_type difference_type;
 			typedef typename iterator<bidirectional_iterator_tag, T>::pointer pointer;
 			typedef typename iterator<bidirectional_iterator_tag, T>::reference reference;
 
-			bidirectional_iterator(): current_(), key_compare(Comp()) {}
-			explicit bidirectional_iterator(node_type *ptr, node_type *null, node_type *end, node_type *begin): current_(ptr), nullNode_(null), end_(end), begin_(begin), key_compare(Comp()) {}
+			bidirectional_iterator(): current_() {}
+			explicit bidirectional_iterator(node_type *ptr, node_type *null, node_type *end, node_type *begin): current_(ptr), nullNode_(null), end_(end), begin_(begin) {}
 			bidirectional_iterator(const bidirectional_iterator &rhs) {
 				*this = rhs;
 			}
@@ -28,7 +28,9 @@ namespace ft {
 				if (*this == rhs)
 					return *this;
 				current_ = rhs.current_;
-				key_compare = rhs.key_compare;
+				nullNode_ = rhs.nullNode_;
+				end_ = rhs.end_;
+				begin_ = rhs.begin_;
 				return *this;
 			}
 
@@ -95,7 +97,6 @@ namespace ft {
 			node_type *nullNode_;
 			node_type *end_;
 			node_type *begin_;
-			Comp key_compare;
 	};
 };
 

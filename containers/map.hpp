@@ -14,17 +14,18 @@ namespace ft {
 			typedef Key key_type;
 			typedef T mapped_type;
 			typedef node<T> node_type;
-			typedef ft::pair<const Key, T> value_type;
+			typedef pair<const Key, T> value_type;
 			typedef std::size_t size_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef Compare key_compare;
 			typedef Allocator allocator_type;
 			typedef value_type& reference;
 			typedef const value_type& const_reference;
+			typedef AVLtree<value_type, key_compare> tree_type;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
-			typedef ft::bidirectional_iterator<value_type, Compare> iterator;
-			typedef ft::bidirectional_iterator<const value_type, Compare> const_iterator;
+			typedef typename tree_type::iterator iterator;
+			typedef typename tree_type::const_iterator const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 			class value_compare : public std::binary_function<value_type,value_type,bool> {
@@ -60,8 +61,8 @@ namespace ft {
 			}
 
 			// copy constructor
-			map( const map& rhs )
-			: tree_(rhs.tree_), key_compare_(rhs.key_compare_) {*this = rhs;}
+			map(const map &rhs)
+					: tree_(), key_compare_(rhs.key_compare_) { this->insert(rhs.begin(), rhs.end()); }
 
 			// destructor
 			~map() {}
@@ -160,7 +161,6 @@ namespace ft {
 			key_compare key_comp() const { return key_compare_; }
 
 	private:
-		typedef AVLtree<value_type, key_compare> tree_type;
 		tree_type tree_;
 		key_compare key_compare_;
 		allocator_type alloc_;

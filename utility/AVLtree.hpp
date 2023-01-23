@@ -15,27 +15,28 @@ namespace ft {
 		typedef typename value_type::first_type key_type;
 		typedef Allocator allocator_type;
 		typedef node<T> node_type;
-		typedef bidirectional_iterator<T, Comp> iterator;
-		typedef bidirectional_iterator<const T, Comp> const_iterator;
+		typedef bidirectional_iterator<T, node_type> iterator;
+		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef std::size_t size_type;
 
-		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) { root_ = nullNode_; }
+		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) {
+			root_ = nullNode_;
+		}
 
 		AVLtree(const AVLtree &rhs) { *this = rhs; }
-
-		~AVLtree() {
-			this->destroyTree(root_);
-			this->destroyNode(nullNode_);
-		}
 
 		AVLtree &operator=(const AVLtree &rhs) {
 			size_ = rhs.size_;
 			root_ = rhs.root_;
+			nullNode_ = rhs.nullNode_;
 			begin_ = rhs.begin_;
 			end_ = rhs.end_;
-			nullNode_ = rhs.nullNode_;
 			key_compare = rhs.key_compare;
-			return *this;
+		}
+
+		~AVLtree() {
+			this->destroyTree(root_);
+			this->destroyNode(nullNode_);
 		}
 
 		/** @brief Insert at the appropriate position in the AVLtree */
@@ -53,13 +54,14 @@ namespace ft {
 			if (key_compare(pta->key_, val.first)) {
 				pta->rhs_ = node;
 				end_ = pta->rhs_;
+				balanceInsert(pta->rhs_);
 			}
 			else {
 				pta->lhs_ = node;
 				begin_ = pta->lhs_;
+				balanceInsert(pta->lhs_);
 			}
 			size_ += 1;
-			balanceInsert(pta->lhs_);
 			return ft::make_pair(iterator(node, nullNode_, end_, begin_), true);
 		}
 

@@ -10,7 +10,6 @@ void test_erase_no_rotate();
 void test_erase_balance1();
 void test_erase_balance2();
 void test_erase_balance3();
-void test_bidirectional_iterator();
 
 typedef ft::pair<int, std::string> pair_type;
 typedef ft::pair<int, std::string> T;
@@ -20,14 +19,13 @@ void test_avl_tree() {
 	print_white("|                    AVL Tree                    |");
 	print_white("--------------------------------------------------");
 
-	// test_rotateR();
-	// test_rotateL();
-	// test_rotateLR();
-	// test_rotateRL();
-	// test_erase_no_rotate();
-	// test_erase_balance1();
-	// test_erase_balance2();
-	// test_bidirectional_iterator();
+	test_rotateR();
+	test_rotateL();
+	test_rotateLR();
+	test_rotateRL();
+	test_erase_no_rotate();
+	test_erase_balance1();
+	test_erase_balance2();
 }
 
 void test_rotateR() {
@@ -198,23 +196,4 @@ void test_erase_balance2() {
 	std::cout << std::endl;
 	root_.erase(80);
 	root_.printAVL(NULL, 1);
-}
-
-
-void test_bidirectional_iterator() {
-	print_white("--------------------------------------------------");
-	print_white("|          TEST bidirectional_iterator           |");
-	print_white("--------------------------------------------------");
-	pair_type node1(42, "node1");
-	pair_type node2(30, "node2");
-	pair_type node3(90, "node3");
-	pair_type node4(20, "node4");
-	pair_type node5(35, "node5");
-
-	ft::AVLtree<T, std::less<int> > root_;
-	root_.insert(node1);
-	root_.insert(node2);
-	root_.insert(node3);
-	root_.insert(node4);
-	root_.insert(node5);
 }
