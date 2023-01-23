@@ -32,6 +32,7 @@ namespace ft {
 			begin_ = rhs.begin_;
 			end_ = rhs.end_;
 			key_compare = rhs.key_compare;
+			return *this;
 		}
 
 		~AVLtree() {
@@ -44,7 +45,7 @@ namespace ft {
 			if (root_ == nullNode_) {
 				root_ = new node_type(val, nullNode_, nullNode_);
 				begin_ = root_;
-				begin_ = end_;
+				end_ = begin_;
 				size_ += 1;
 				return ft::make_pair(iterator(root_, nullNode_, end_, begin_), true);
 			}
@@ -136,11 +137,11 @@ namespace ft {
 				printAVL(node->rhs_, i + 1);
 		}
 
-	private:
-		size_type size_;
 		node_type *root_;
+		size_type size_;
 		node_type *begin_;
 		node_type *end_;
+	private:
 		node_type *nullNode_;
 		Comp key_compare;
 

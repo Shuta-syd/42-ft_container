@@ -57,12 +57,14 @@ namespace ft {
 				const Compare& comp = Compare(),
 				const Allocator& alloc = Allocator()
 				): key_compare_(comp), alloc_(alloc){
-					tree_.insert(first, last);
+					this->insert(first, last);
 			}
 
 			// copy constructor
 			map(const map &rhs)
-					: tree_(), key_compare_(rhs.key_compare_) { this->insert(rhs.begin(), rhs.end()); }
+					: tree_(), key_compare_(rhs.key_compare_), alloc_(rhs.alloc_) {
+					this->insert(rhs.begin(), rhs.end());
+			}
 
 			// destructor
 			~map() {}
@@ -115,13 +117,13 @@ namespace ft {
 			/** @brief Inserts value in the position as close as possible to the position just prior to pos */
 			iterator insert (iterator pos, const value_type& val) {
 				(void)pos;
-				return tree_.insert(val).first;
+				return this->insert(val).first;
 			}
 
 			template <class InputIterator>
 			void insert (InputIterator first, InputIterator last) {
 				for (; first != last; first++)
-					tree_.insert(first.base()->val_);
+					this->insert(*first);
 			}
 
 			void erase (iterator pos) {
