@@ -55,20 +55,20 @@ void test_iterator() {
 	std::cout << "ft : ";
 	print_ft_map(ft_test1);
 
-	// print_mgn("bidirectional  operator--");
-	// std::map<int, std::string> std_test2;
-	// std_test2.insert(STD_PAIR(42, "Hello"));
-	// std_test2.insert(STD_PAIR(10, "World"));
-	// std_test2.insert(STD_PAIR(50, "42Tokyo"));
-	// std::cout << "std: ";
-	// print_std_map_reverse<int, std::string>(std_test2);
+	print_mgn("bidirectional  operator--");
+	std::map<int, std::string> std_test2;
+	std_test2.insert(STD_PAIR(42, "Hello"));
+	std_test2.insert(STD_PAIR(10, "World"));
+	std_test2.insert(STD_PAIR(50, "42Tokyo"));
+	std::cout << "std: ";
+	print_std_map_reverse<int, std::string>(std_test2);
 
-	// ft::map<int, std::string> ft_test2;
-	// ft_test2.insert(FT_PAIR(42, "Hello"));
-	// ft_test2.insert(FT_PAIR(10, "World"));
-	// ft_test2.insert(FT_PAIR(50, "42Tokyo"));
-	// std::cout << "ft : ";
-	// print_ft_map_reverse(ft_test2);
+	ft::map<int, std::string> ft_test2;
+	ft_test2.insert(FT_PAIR(42, "Hello"));
+	ft_test2.insert(FT_PAIR(10, "World"));
+	ft_test2.insert(FT_PAIR(50, "42Tokyo"));
+	std::cout << "ft : ";
+	print_ft_map_reverse(ft_test2);
 }
 
 template <class T1, class T2>

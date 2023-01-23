@@ -1,18 +1,30 @@
-NAME = ft_container
-CC = g++
-CXXFLAGS = -g -std=c++98 #-Wall -Wextra -Werror
-RM = rm -rf
+NAME := ft_container
+CXX := c++
+RM := rm -rf
 
-headerflags=-MMD -MP
-srcs = $(wildcard test/*.cpp)
-objs = $(addprefix objs/, $(srcs:.cpp=.o))
+objs_dir += test/
+deps_dir += test/
+
+srcs += $(addprefix test/, \
+  	AVLtree.cpp main.cpp vector.cpp stack.cpp type_traits.cpp map.cpp\
+    )
+
+objs := $(srcs:%.cpp=objs/%.o)
+deps := $(srcs:%.cpp=deps/%.d)
+
+objs_dir := $(addprefix objs/, $(objs_dir))
+objs_dir := $(addsuffix .keep, $(objs_dir))
+
+deps_dir := $(addprefix deps/, $(deps_dir))
+deps_dir := $(addsuffix .keep, $(deps_dir))
+
+debugflags := -g3 -fsanitize=address
+headerflags := -MMD -MP
+CXXFLAGS := #-Wall -Werror -Wextra -std=c++98 -pedantic
 INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
-objs_dir = objs/test/
-deps_dir = deps/test/
-
 ############# basic rules ##############
-.PHONY: all re clean fclean
+.PHONY: all clean fclean re
 all: $(NAME)
 
 -include $(deps)
@@ -31,24 +43,31 @@ $(NAME): $(objs)
 
 $(objs_dir):
 	@mkdir -p $@
-
 $(deps_dir):
 	@mkdir -p $@
 
 clean:
-	$(RM) ./objs
-	$(RM) ./deps
+	$(RM) $(objs)
+	$(RM) $(deps)
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(objs_dir)
+	$(RM) $(deps_dir)
 
 re: fclean all
 
-run:
-	@./ft_container
+############## convenient rules ##############
+.PHONY: debug leak
+debug: CXXFLAGS += $(debugflags)
+debug: re
+
+run: all
+	./$(NAME)
 
 leaks: $(NAME)
 	leaks -q --atExit -- ./$(NAME)
+
 
 RED = \033[31m
 GRN = \033[32m
