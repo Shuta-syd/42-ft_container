@@ -21,15 +21,15 @@ void test_map() {
 	print_white("--------------------------------------------------");
 
 	// test_iterator();
-	test();
+	// test();
 }
 
 void test() {
 	ft::map<int, std::string> ft_test1;
-	ft_test1.insert(FT_PAIR(42, "Hello"));
-	ft_test1.insert(FT_PAIR(10, "World"));
-	ft_test1.insert(FT_PAIR(50, "42Tokyo"));
-	ft_test1.insert(FT_PAIR(42, "Hello"));
+	std::cout << ft_test1.insert(FT_PAIR(42, "Hello")).second << std::endl;
+	std::cout << ft_test1.insert(FT_PAIR(10, "Hello")).second << std::endl;
+	std::cout << ft_test1.insert(FT_PAIR(50, "Hello")).second << std::endl;
+	std::cout << ft_test1.insert(FT_PAIR(42, "Hello")).second << std::endl;
 }
 
 void test_iterator() {

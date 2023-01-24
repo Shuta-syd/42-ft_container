@@ -15,6 +15,7 @@ namespace ft {
 		typedef typename value_type::first_type key_type;
 		typedef Allocator allocator_type;
 		typedef node<T> node_type;
+		typedef typename std::equal_to<key_type> equal_to;
 		typedef bidirectional_iterator<T, node_type> iterator;
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef std::size_t size_type;
@@ -54,7 +55,7 @@ namespace ft {
 			}
 
 			node_type *pta = this->searchParent(val.first);
-			if (std::equal()(pta->key_, val.first))
+			if (equal_to()(pta->key_, val.first))
 				return ft::make_pair(iterator(pta, nullNode_, end_, begin_), false);
 
 			node_type *node = new node_type(val, pta, nullNode_);
@@ -159,7 +160,7 @@ namespace ft {
 
 			while (candidate) {
 				pta = candidate;
-				if (std::less()(pta->key_, key))
+				if (equal_to()(pta->key_, key))
 					return pta;
 				high_or_low = key_compare(pta->key_, key);
 				if ((high_or_low && pta->rhs_ == nullNode_) && (!high_or_low && pta->lhs_ == nullNode_))
