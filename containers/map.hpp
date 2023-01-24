@@ -156,11 +156,31 @@ namespace ft {
 			ft::pair<iterator,iterator> equal_range( const Key& key ) {}
 			ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}
 
-			iterator lower_bound( const Key& key ) {}
-			const_iterator lower_bound( const Key& key ) const {}
+			iterator lower_bound( const Key& key ) {
+			}
 
-			iterator upper_bound( const Key& key ) {}
-			const_iterator upper_bound( const Key& key ) const {}
+			const_iterator lower_bound( const Key& key ) const {
+			}
+
+			iterator upper_bound( const Key& key ) {
+				iterator begin = this->begin();
+				iterator end = this->end();
+				for (; begin != end; begin++) {
+					if (key_compare_(key, begin->first))
+						return begin;
+				}
+				return this->end();
+			}
+
+			const_iterator upper_bound( const Key& key ) const {
+				const_iterator begin = this->begin();
+				const_iterator end = this->end();
+				for (; begin != end; begin++) {
+					if (key_compare_(key, begin->first))
+						return begin;
+				}
+				return this->end();
+			}
 
 			value_compare value_comp() const { return value_compare(key_compare_); }
 			key_compare key_comp() const { return key_compare_; }
