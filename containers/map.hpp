@@ -18,6 +18,7 @@ namespace ft {
 			typedef std::size_t size_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef Compare key_compare;
+			typedef typename std::equal_to<Key> equal_to;
 			typedef Allocator allocator_type;
 			typedef value_type& reference;
 			typedef const value_type& const_reference;
@@ -157,9 +158,23 @@ namespace ft {
 			ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {}
 
 			iterator lower_bound( const Key& key ) {
+				iterator begin = this->begin();
+				iterator end = this->end();
+				for (; begin != end; begin++) {
+					if (equal_to()(key, begin->first) || key_compare_(key, begin->first))
+						return begin;
+				}
+				return this->end();
 			}
 
 			const_iterator lower_bound( const Key& key ) const {
+				const_iterator begin = this->begin();
+				const_iterator end = this->end();
+				for (; begin != end; begin++) {
+					if (equal_to()(key, begin->first) || key_compare_(key, begin->first))
+						return begin;
+				}
+				return this->end();
 			}
 
 			iterator upper_bound( const Key& key ) {
