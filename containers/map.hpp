@@ -14,8 +14,8 @@ namespace ft {
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
-			typedef node<T> node_type;
 			typedef pair<const Key, T> value_type;
+			typedef node<value_type> node_type;
 			typedef std::size_t size_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef Compare key_compare;

@@ -20,7 +20,11 @@ namespace ft {
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef std::size_t size_type;
 
-		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()), alloc_(allocator_type()) {
+		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(), key_compare(Comp()), alloc_(allocator_type()) {
+			nullNode_ = alloc_.allocate(1);
+			alloc_.construct(nullNode_, node_type());
+			begin_ = nullNode_;
+			end_ = nullNode_;
 			root_ = nullNode_;
 		}
 
@@ -48,7 +52,7 @@ namespace ft {
 		 */
 		pair<iterator, bool> insert(const value_type &val) {
 			if (root_ == nullNode_) {
-				root_ = new node_type(val, nullNode_, nullNode_);
+				root_ = this->createNode(val, nullNode_, nullNode_);
 				begin_ = root_;
 				end_ = begin_;
 				size_ += 1;
@@ -59,7 +63,7 @@ namespace ft {
 			if (equal_to()(pta->key_, val.first))
 				return ft::make_pair(iterator(pta, nullNode_, end_, begin_), false);
 
-			node_type *node = new node_type(val, pta, nullNode_);
+			node_type *node = this->createNode(val, pta, nullNode_);
 			if (key_compare(pta->key_, val.first)) {
 				pta->rhs_ = node;
 				end_ = pta->rhs_;
@@ -105,7 +109,7 @@ namespace ft {
 					pta->rhs_ = target->rhs_;
 				target->rhs_->pta_ = pta;
 				balanceErase(target->rhs_);
-				delete target;
+				this->destroyNode(target);
 			}
 			else {
 				node_type *maxNode = this->searchMaxNode(target->lhs_);
@@ -120,7 +124,7 @@ namespace ft {
 				balanceErase(target->lhs_);
 				if (maxNode->lhs_ == nullNode_)
 					maxNode->lhs_->pta_ = nullNode_;
-				delete maxNode;
+				this->destroyNode(maxNode);
 			}
 			return 1;
 		}
@@ -299,19 +303,25 @@ namespace ft {
 			return node;
 		}
 
-		/** @brief  */
-		node_type *createNode() {
-
+		/** @brief  Create node and allocate memory*/
+		node_type *createNode(const value_type &val, node_type *pta, node_type *null) {
+			node_type *node;
+			node = alloc_.allocate(1);
+			alloc_.construct(node, node_type(val, pta, null));
+			return node;
 		}
 
-		/** @brief  */
-		void destroyTree(node_type *root) {
-
+		void destroyTree(node_type *node) {
+			if (node->lhs_ != nullNode_)
+				destroyTree(node->lhs_);
+			if (node->rhs_ != nullNode_)
+				destroyTree(node->rhs_);
+			destroyNode(node);
 		}
 
-		/**  @brief  */
 		void destroyNode(node_type *node) {
-
+			alloc_.destroy(node);
+			alloc_.deallocate(node, 1);
 		}
 	};
 }

@@ -40,8 +40,7 @@ namespace ft
 		 * Constructs a container with n elements. Each element is a copy of val.
 		 */
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
-				: alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL)
-		{
+				: alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL) {
 			begin_ = alloc_.allocate(n);
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
