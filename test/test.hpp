@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
+#include <algorithm.hpp>
 
 /* test funcs */
 void vector_test();
@@ -13,6 +15,9 @@ void test_node();
 void test_avl_tree();
 void test_map();
 
+void tester_vector();
+
+void print_time_cmp(double ft, double std, bool ok);
 void print_mgn(std::string str);
 void print_white(std::string str);
 /* color code */

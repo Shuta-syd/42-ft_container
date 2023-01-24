@@ -298,10 +298,6 @@ void print_cmp(std::string test_name, T ft_var, T std_var) {
 	std::cout << "ft: ["<< ft_var << "] std: [" << std_var << "]" << std::endl;
 }
 
-void print_mgn(std::string str) {
-	std::cout << MGN << str << RES << std::endl;
-}
-
 template <typename T>
 void print_std_vector(std::vector<T> vec) {
 	typename std::vector<T>::iterator begin = vec.begin();
@@ -320,8 +316,4 @@ void print_ft_vector(ft::vector<T> vec) {
 	for (; begin != end; begin++)
 		std::cout << "[" << *begin << "]";
 	std::cout << std::endl;
-}
-
-void print_white(std::string str) {
-	std::cout << str  << std::endl;
 }

@@ -7,6 +7,7 @@ deps_dir += test/
 
 srcs += $(addprefix test/, \
   	AVLtree.cpp main.cpp vector.cpp stack.cpp type_traits.cpp map.cpp\
+		utils.cpp tester_vector.cpp \
     )
 
 objs := $(srcs:%.cpp=objs/%.o)
@@ -62,8 +63,8 @@ re: fclean all
 debug: CXXFLAGS += $(debugflags)
 debug: re
 
-run: all
-	@./$(NAME)
+vector: all
+	@./$(NAME) vector
 
 leaks: $(NAME)
 	@leaks -q --atExit -- ./$(NAME)
