@@ -21,7 +21,7 @@ deps_dir := $(addsuffix .keep, $(deps_dir))
 
 debugflags := -g3 -fsanitize=address
 headerflags := -MMD -MP
-CXXFLAGS := #-Wall -Werror -Wextra -std=c++98 -pedantic
+CXXFLAGS := -g #-Wall -Werror -Wextra -std=c++98 -pedantic
 INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
 ############# basic rules ##############
@@ -67,7 +67,7 @@ vector: all
 	@./$(NAME) vector
 
 leaks: $(NAME)
-	@leaks -q --atExit -- ./$(NAME)
+	@leaks -q --atExit -- ./$(NAME) vector
 
 
 RED = \033[31m

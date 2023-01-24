@@ -218,8 +218,7 @@ namespace ft
 				end_ = begin_;
 				reserved_end_ = begin_ + length;
 			}
-			for (; first != last; first++)
-			{
+			for (; first != last; first++){
 				alloc_.construct(end_, *first);
 				end_++;
 			}
@@ -259,7 +258,7 @@ namespace ft
 			size_type size = this->size();
 			size_type capacity = this->capacity();
 			size_type pos_len = &(*pos) - begin_;
-			if (capacity - size >= 1) {
+			if (capacity - size >= this->size() + 1) {
 				iterator it = this->end();
 				iterator new_it = pos - 1;
 				for (; it != new_it; it--)
@@ -330,9 +329,7 @@ namespace ft
 			}
 		}
 
-		/** @brief inserts elements from range [first, last) before pos
-		 * int intの場合こちらに反応してしまう(enable_ifで対応？)
-		 */
+		/** @brief inserts elements from range [first, last) before pos */
 		template <class InputIterator>
 		void insert(
 				iterator pos,

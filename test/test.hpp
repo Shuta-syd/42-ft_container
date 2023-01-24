@@ -6,6 +6,7 @@
 #include <vector>
 #include <time.h>
 #include <algorithm.hpp>
+#include <vector.hpp>
 
 /* test funcs */
 void vector_test();
@@ -20,6 +21,10 @@ void tester_vector();
 void print_time_cmp(double ft, double std, bool ok);
 void print_mgn(std::string str);
 void print_white(std::string str);
+template <typename T>
+void print_std_vector(std::vector<T> vec);
+template <typename T>
+void print_ft_vector(ft::vector<T> vec);
 /* color code */
 #define RED "\e[31m"
 #define GRN "\e[32m"
