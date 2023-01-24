@@ -32,7 +32,7 @@ namespace ft {
 				friend class map;
 				protected:
 					Compare comp;
-					value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+					value_compare (Compare c) : comp(c) {}
 				public:
 					typedef bool result_type;
 					typedef value_type first_argument_type;
@@ -140,12 +140,15 @@ namespace ft {
 
 			void clear() {}
 
-			void swap (map& x) {}
+			void swap (map& x) {
+
+			}
 
 			/*----------------------------------------
 			[Look up]
 			----------------------------------------*/
-			size_type count( const Key& key ) const {}
+			/**  @brief Returns the number of elements with key that compares equivalent to the specified argument */
+			size_type count(const Key &key) const { return tree_.search(key) != tree_.getNullNode(); }
 
 			iterator find(const Key &key) { return iterator(tree_.search(key), tree_.getNullNode()); }
 			const_iterator find(const Key &key) const { return const_iterator(tree_.search(key), tree_.getNullNode()); }

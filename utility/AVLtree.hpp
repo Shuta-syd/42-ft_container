@@ -74,7 +74,7 @@ namespace ft {
 		}
 
 		/** @brief Locate a specific key from a specific tree */
-		node_type *search(const key_type &key) {
+		node_type *search(const key_type &key) const {
 			node_type *node = root_;
 			while (node != nullNode_ && node->key_ != key) {
 				node = key_compare(node->key_, key) ? node->rhs_ : node->lhs_;
