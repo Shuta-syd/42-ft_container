@@ -13,6 +13,7 @@ void test_node();
 void test_avl_tree();
 void test_map();
 
+void print_mgn(std::string str);
 void print_white(std::string str);
 /* color code */
 #define RED "\e[31m"
