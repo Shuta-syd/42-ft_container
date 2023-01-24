@@ -63,10 +63,10 @@ debug: CXXFLAGS += $(debugflags)
 debug: re
 
 run: all
-	./$(NAME)
+	@./$(NAME)
 
 leaks: $(NAME)
-	leaks -q --atExit -- ./$(NAME)
+	@leaks -q --atExit -- ./$(NAME)
 
 
 RED = \033[31m

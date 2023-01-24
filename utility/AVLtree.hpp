@@ -40,7 +40,10 @@ namespace ft {
 			this->destroyNode(nullNode_);
 		}
 
-		/** @brief Insert at the appropriate position in the AVLtree */
+		/**
+		 * @brief Insert at the appropriate position in the AVLtree
+		 * Duplicate: https://cplusplus.com/reference/map/map/insert/
+		 */
 		pair<iterator, bool> insert(const value_type &val) {
 			if (root_ == nullNode_) {
 				root_ = new node_type(val, nullNode_, nullNode_);
@@ -51,6 +54,9 @@ namespace ft {
 			}
 
 			node_type *pta = this->searchParent(val.first);
+			if (std::equal()(pta->key_, val.first))
+				return ft::make_pair(iterator(pta, nullNode_, end_, begin_), false);
+
 			node_type *node = new node_type(val, pta, nullNode_);
 			if (key_compare(pta->key_, val.first)) {
 				pta->rhs_ = node;
@@ -153,6 +159,8 @@ namespace ft {
 
 			while (candidate) {
 				pta = candidate;
+				if (std::less()(pta->key_, key))
+					return pta;
 				high_or_low = key_compare(pta->key_, key);
 				if ((high_or_low && pta->rhs_ == nullNode_) && (!high_or_low && pta->lhs_ == nullNode_))
 					return pta;
