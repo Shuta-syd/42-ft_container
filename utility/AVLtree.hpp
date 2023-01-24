@@ -124,6 +124,15 @@ namespace ft {
 			return 1;
 		}
 
+		void swap(AVLtree &other) {
+			std::swap(root_, other.root_);
+			std::swap(nullNode_, other.nullNode_);
+			std::swap(begin_, other.begin_);
+			std::swap(end_, other.end_);
+			std::swap(size_, other.size_);
+			std::swap(key_compare, other.key_compare);
+		}
+
 		node_type *getNullNode() const { return nullNode_; }
 		iterator begin() { return iterator(begin_, nullNode_, end_, begin_); }
 		const_iterator begin() const { return const_iterator(begin_, nullNode_, end_, begin_); }

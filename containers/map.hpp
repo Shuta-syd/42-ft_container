@@ -141,9 +141,7 @@ namespace ft {
 
 			void clear() {}
 
-			void swap (map& x) {
-
-			}
+			void swap (map& x) { tree_.swap(x.tree_); }
 
 			/*----------------------------------------
 			[Look up]
