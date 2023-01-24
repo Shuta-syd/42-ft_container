@@ -68,11 +68,11 @@ void tester_capacity() {
 	print_time_cmp(ft_time, std_time, equal);
 
 
-	print_white("========================= resize2 test =========================");
+	print_white("========================= reserve test =========================");
 	ft_start = clock();
 	for (size_t i = 0; i < 100; i++) {
-		ft::vector<int> ft_vec(10, 100);
-		ft_vec.resize(100, 42);
+		ft::vector<int> ft_vec;
+		ft_vec.reserve(1000);
 	}
 	ft_end = clock();
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
@@ -80,16 +80,16 @@ void tester_capacity() {
 	std_start = clock();
 	for (size_t i = 0; i < 100; i++){
 		std::vector<int> std_vec(10, 100);
-		std_vec.resize(100, 42);
+		std_vec.reserve(1000);
 	}
 	std_end = clock();
 	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
-	ft::vector<int> ft_vec2(10, 100);
-	std::vector<int> std_vec2(10, 100);
-	ft_vec2.resize(100, 42);
-	std_vec2.resize(100, 42);
-	equal = ft::equal(ft_vec2.begin(), ft_vec2.end(), std_vec2.begin());
+	ft::vector<int> ft_vec3(10, 100);
+	std::vector<int> std_vec3(10, 100);
+	ft_vec3.reserve(1000);
+	std_vec3.reserve(1000);
+	equal = ft_vec3.capacity() == std_vec3.capacity() ? true : false;
 
 	print_time_cmp(ft_time, std_time, equal);
 }

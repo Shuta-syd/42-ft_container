@@ -128,15 +128,13 @@ namespace ft
 		const_reference back() const { return this->at(this->size() - 1); }
 
 		/** @brief Returns a direct pointer to the memory array used internally by the vector to store its owned elements */
-		T *data()
-		{
+		T *data() {
 			if (this->size() == 0)
 				return NULL;
 			return begin_;
 		}
 
-		const T *data() const
-		{
+		const T *data() const {
 			if (this->size() == 0)
 				return NULL;
 			return begin_;
