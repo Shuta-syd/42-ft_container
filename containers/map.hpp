@@ -22,7 +22,7 @@ namespace ft {
 			typedef Allocator allocator_type;
 			typedef value_type& reference;
 			typedef const value_type& const_reference;
-			typedef AVLtree<value_type, key_compare> tree_type;
+			typedef AVLtree<value_type, key_compare, allocator_type> tree_type;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
 			typedef typename tree_type::iterator iterator;
@@ -139,7 +139,7 @@ namespace ft {
 					tree_.erase(first.base()->key_);
 			}
 
-			void clear() {}
+			void clear() { this->erase(this->begin(), this->end()); }
 
 			void swap (map& x) { tree_.swap(x.tree_); }
 

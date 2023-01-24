@@ -20,7 +20,7 @@ namespace ft {
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef std::size_t size_type;
 
-		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()) {
+		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(new node_type()), key_compare(Comp()), alloc_(allocator_type()) {
 			root_ = nullNode_;
 		}
 
@@ -33,6 +33,7 @@ namespace ft {
 			begin_ = rhs.begin_;
 			end_ = rhs.end_;
 			key_compare = rhs.key_compare;
+			alloc_ = rhs.alloc_;
 			return *this;
 		}
 
@@ -131,6 +132,7 @@ namespace ft {
 			std::swap(end_, other.end_);
 			std::swap(size_, other.size_);
 			std::swap(key_compare, other.key_compare);
+			std::swap(alloc_, other.alloc_);
 		}
 
 		node_type *getNullNode() const { return nullNode_; }
@@ -153,13 +155,14 @@ namespace ft {
 				printAVL(node->rhs_, i + 1);
 		}
 
+	private:
 		node_type *root_;
 		size_type size_;
 		node_type *begin_;
 		node_type *end_;
-	private:
 		node_type *nullNode_;
 		Comp key_compare;
+		allocator_type alloc_;
 
 		/** @brief Search for appropriate parent node of val to insert by traversing from root */
 		node_type *searchParent(const key_type &key) {
