@@ -23,7 +23,7 @@ namespace ft {
 			typedef Allocator allocator_type;
 			typedef value_type& reference;
 			typedef const value_type& const_reference;
-			typedef AVLtree<value_type, key_compare, allocator_type> tree_type;
+			typedef AVLtree<value_type, key_compare, node_type> tree_type;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
 			typedef typename tree_type::iterator iterator;
@@ -96,7 +96,7 @@ namespace ft {
 			----------------------------------------*/
 			bool empty() const { return tree_.size() == 0; }
 			size_type size() const { return tree_.size(); }
-			size_type max_size() const {}
+			size_type max_size() const { return tree_.max_size(); }
 
 			/*----------------------------------------
 			[Element access]
@@ -208,7 +208,6 @@ namespace ft {
 		tree_type tree_;
 		key_compare key_compare_;
 		allocator_type alloc_;
-
 
 	};
 	template< class Key, class T, class Compare, class Alloc >

@@ -8,13 +8,13 @@
 #include <bidirectional_iterator.hpp>
 
 namespace ft {
-	template <class T, class Comp, class Allocator = std::allocator<T> >
+	template <class T, class Comp, class N = node<T>, class Allocator = std::allocator<N> >
 	class AVLtree {
 	public:
 		typedef T value_type;
 		typedef typename value_type::first_type key_type;
 		typedef Allocator allocator_type;
-		typedef node<T> node_type;
+		typedef N node_type;
 		typedef typename std::equal_to<key_type> equal_to;
 		typedef bidirectional_iterator<T, node_type> iterator;
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
@@ -141,6 +141,7 @@ namespace ft {
 		iterator end() { return iterator(nullNode_, nullNode_, end_, begin_); }
 		const_iterator end() const { return const_iterator(nullNode_, nullNode_, end_, begin_); }
 		size_type size() const { return size_; }
+		size_type max_size() const { return alloc_.max_size(); }
 
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
@@ -296,6 +297,11 @@ namespace ft {
 				node = node->rhs_;
 			}
 			return node;
+		}
+
+		/** @brief  */
+		node_type *createNode() {
+
 		}
 
 		/** @brief  */
