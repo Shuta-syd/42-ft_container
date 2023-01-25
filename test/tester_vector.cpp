@@ -39,6 +39,8 @@ void tester_modifiers() {
 	ft_vec1.assign(1000, 42);
 	std_vec1.assign(1000, 42);
 	bool equal = ft::equal(ft_vec1.begin(), ft_vec1.end(), std_vec1.begin());
+	if (ft_vec1.size() != std_vec1.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 
@@ -67,6 +69,8 @@ void tester_modifiers() {
 	ft_vec3.assign(ft_vec2.begin(), ft_vec2.end());
 	std_vec3.assign(std_vec2.begin(), std_vec2.end());
 	equal = ft::equal(ft_vec3.begin(), ft_vec3.end(), std_vec3.begin());
+	if (ft_vec3.size() != std_vec3.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 
@@ -97,7 +101,8 @@ void tester_modifiers() {
 	for (size_t i = 0; i < 100; i++)
 			std_vec4.push_back("42");
 	equal = ft::equal(ft_vec4.begin(), ft_vec4.end(), std_vec4.begin());
-
+	if (ft_vec4.size() != std_vec4.size())
+		equal = false;
 	print_time_cmp(ft_time, std_time, equal);
 
 
@@ -127,6 +132,8 @@ void tester_modifiers() {
 	for (size_t i = 0; i < 100; i++)
 			std_vec5.pop_back();
 	equal = ft::equal(ft_vec5.begin(), ft_vec5.end(), std_vec5.begin());
+	if (ft_vec5.size() != std_vec5.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 
@@ -157,6 +164,8 @@ void tester_modifiers() {
 	for (size_t i = 0; i < 100; i++)
 			std_vec6.insert(std_vec6.begin() + 3, "42");
 	equal = ft::equal(ft_vec6.begin(), ft_vec6.end(), std_vec6.begin());
+	if (ft_vec6.size() != std_vec6.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 
@@ -183,6 +192,8 @@ void tester_modifiers() {
 	std::vector<std::string> std_vec7(5, "tokyo");
 	std_vec7.insert(std_vec7.begin() + 3, 100, "42");
 	equal = ft::equal(ft_vec7.begin(), ft_vec7.end(), std_vec7.begin());
+	if (ft_vec7.size() != std_vec7.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 
@@ -210,6 +221,10 @@ void tester_modifiers() {
 	ft_vec9.insert(ft_vec9.begin(), ft_vec8.begin(), ft_vec8.end());
 	std::vector<std::string> std_vec9(5, "tokyo");
 	std_vec9.insert(std_vec9.begin(), std_vec8.begin(), std_vec8.end());
+
+	equal = ft::equal(ft_vec9.begin(), ft_vec9.end(), std_vec9.begin());
+	if (ft_vec9.size() != std_vec9.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 
@@ -240,9 +255,11 @@ void tester_modifiers() {
 		for (size_t i = 0; i < 50; i++)
 		std_vec10.erase(std_vec10.begin());
 
+	equal = ft::equal(ft_vec10.begin(), ft_vec10.end(), std_vec10.begin());
+	if (ft_vec10.size() != std_vec10.size())
+		equal = false;
 	print_time_cmp(ft_time, std_time, equal);
 
-	//segv
 	print_white("=========================== erase2 test =========================");
 	ft_start = clock();
 	for (size_t i = 0; i < 100; i++) {
@@ -264,6 +281,9 @@ void tester_modifiers() {
 	ft_vec11.erase(ft_vec11.begin(), ft_vec11.end() - 10);
 	std::vector<std::string> std_vec11(100, "tokyo");
 	std_vec11.erase(std_vec11.begin(), std_vec11.end() - 10);
+	equal = ft::equal(ft_vec11.begin(), ft_vec11.end(), std_vec11.begin());
+	if (ft_vec11.size() != std_vec11.size())
+		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
 }
