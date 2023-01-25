@@ -14,6 +14,8 @@ void print_time_cmp(double ft, double std, bool ok) {
 
 	if (ok && perf < 20.0)
 		print_white("FT: " + std::to_string(ft) + " [s] | STD: " + std::to_string(std) + " [s] | PERF: " + std::to_string(perf) + " | PASS \e[32mOK\e[m");
+	else if (perf > 20.0)
+	print_white("FT: " + std::to_string(ft) + " [s] | STD: " + std::to_string(std) + " [s] | PERF: " + std::to_string(perf) + " | PASS \e[33mTIMEOUT\e[m");
 	else
 		print_white("FT: " + std::to_string(ft) + " [s] | STD: " + std::to_string(std) + " [s] | PERF: " + std::to_string(perf) + " | PASS \e[31mKO\e[m");
 }

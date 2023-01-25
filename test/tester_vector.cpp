@@ -252,20 +252,20 @@ void tester_modifiers() {
 	ft_end = clock();
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
-	// std_start = clock();
-	// for (size_t i = 0; i < 100; i++){
-	// 	std::vector<std::string> std_vec(100, "tokyo");
-	// 	std_vec.erase(std_vec.begin(), std_vec.end() - 10);
-	// }
-	// std_end = clock();
-	// std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<std::string> std_vec(100, "tokyo");
+		std_vec.erase(std_vec.begin(), std_vec.end() - 10);
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
 	ft::vector<std::string> ft_vec11(100, "tokyo");
 	ft_vec11.erase(ft_vec11.begin(), ft_vec11.end() - 10);
-	// std::vector<std::string> std_vec11(100, "tokyo");
-	// std_vec11.erase(std_vec11.begin(), std_vec11.end() - 10);
+	std::vector<std::string> std_vec11(100, "tokyo");
+	std_vec11.erase(std_vec11.begin(), std_vec11.end() - 10);
 
-	// print_time_cmp(ft_time, std_time, equal);
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 
@@ -436,4 +436,25 @@ void tester_constructor() {
 	equal = ft::equal(ft_vec5.begin(), ft_vec5.end(), std_vec5.begin());
 
 	print_time_cmp(ft_time, std_time, equal);
+}
+
+
+template <typename T>
+void print_std_vector(std::vector<T> vec) {
+	typename std::vector<T>::iterator begin = vec.begin();
+	typename std::vector<T>::iterator end = vec.end();
+	std::cout << "std: ";
+	for (; begin != end; begin++)
+		std::cout << "[" << *begin << "]";
+	std::cout << std::endl;
+}
+
+template <typename T>
+void print_ft_vector(ft::vector<T> vec) {
+	typename ft::vector<T>::iterator begin = vec.begin();
+	typename ft::vector<T>::iterator end = vec.end();
+	std::cout << "ft : ";
+	for (; begin != end; begin++)
+		std::cout << "[" << *begin << "]";
+	std::cout << std::endl;
 }

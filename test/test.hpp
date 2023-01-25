@@ -9,7 +9,6 @@
 #include <vector.hpp>
 
 /* test funcs */
-void vector_test();
 void stack_test();
 void test_type_traits();
 void test_node();
@@ -26,12 +25,12 @@ void print_std_vector(std::vector<T> vec);
 template <typename T>
 void print_ft_vector(ft::vector<T> vec);
 /* color code */
-#define RED "\e[31m"
-#define GRN "\e[32m"
-#define YEL "\e[33m"
-#define BLU "\e[34m"
-#define MGN "\e[35m"
-#define CYN "\e[36m"
-#define RES "\e[m"
+#define RED "\033[31m"
+#define GRN "\033[32m"
+#define YEL "\033[33m"
+#define BLU "\033[34m"
+#define MGN "\033[35m"
+#define CYN "\033[36m"
+#define RES "\033[m"
 
 #endif

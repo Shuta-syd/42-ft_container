@@ -6,7 +6,7 @@ objs_dir += test/
 deps_dir += test/
 
 srcs += $(addprefix test/, \
-  	AVLtree.cpp main.cpp vector.cpp stack.cpp type_traits.cpp map.cpp\
+  	AVLtree.cpp main.cpp stack.cpp type_traits.cpp map.cpp\
 		utils.cpp tester_vector.cpp \
     )
 
@@ -21,7 +21,7 @@ deps_dir := $(addsuffix .keep, $(deps_dir))
 
 debugflags := -g3 -fsanitize=address
 headerflags := -MMD -MP
-CXXFLAGS := -g #-Wall -Werror -Wextra -std=c++98 -pedantic
+CXXFLAGS := -g #-Wall -Werror -Wextra -std=c++98
 INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
 ############# basic rules ##############

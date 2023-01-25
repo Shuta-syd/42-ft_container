@@ -387,15 +387,17 @@ namespace ft
 		}
 
 		iterator erase(iterator first, iterator last) {
-			pointer last_next = &(*last) == end_ ? end_ : &(*last) + 1;
-			for (; first != last; first++) {
+			iterator last_next = last == this->end() ? this->end() : last + 1;
+			difference_type len = last_next - first;
+			for (; first != last_next; first++) {
 				alloc_.destroy(&(*(first)));
-				if (last_next != end_) {
+				if (&(*last_next) != end_) {
 					alloc_.construct(&(*first), *last_next);
+					alloc_.destroy(&(*last_next));
 					last_next++;
 				}
-				end_ -= 1;
 			}
+			end_ -= len;
 			return first;
 		}
 

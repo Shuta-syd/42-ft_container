@@ -98,6 +98,6 @@ namespace ft {
 			node_type *end_;
 			node_type *begin_;
 	};
-};
+}
 
 #endif

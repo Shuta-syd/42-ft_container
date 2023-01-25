@@ -73,7 +73,10 @@ namespace ft {
 
 			// copy operator
 			map& operator=( const map& rhs ) {
-					tree_ = rhs.tree_;
+					if (rhs == this)
+						return *this;
+					this->clear();
+					this->insert(rhs.begin(), rhs.end());
 					return *this;
 			}
 

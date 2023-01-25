@@ -20,7 +20,7 @@ namespace ft {
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef std::size_t size_type;
 
-		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(), key_compare(Comp()), alloc_(allocator_type()) {
+		AVLtree() :  root_(), size_(0), begin_(), end_(), nullNode_(), key_compare(Comp()), alloc_(allocator_type()) {
 			nullNode_ = alloc_.allocate(1);
 			alloc_.construct(nullNode_, node_type());
 			begin_ = nullNode_;
@@ -30,16 +30,6 @@ namespace ft {
 
 		AVLtree(const AVLtree &rhs) { *this = rhs; }
 
-		AVLtree &operator=(const AVLtree &rhs) {
-			size_ = rhs.size_;
-			root_ = rhs.root_;
-			nullNode_ = rhs.nullNode_;
-			begin_ = rhs.begin_;
-			end_ = rhs.end_;
-			key_compare = rhs.key_compare;
-			alloc_ = rhs.alloc_;
-			return *this;
-		}
 
 		~AVLtree() {
 			this->destroyTree(root_);
