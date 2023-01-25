@@ -183,22 +183,22 @@ namespace ft
 		void reserve(size_type n) {
 			if (this->max_size() < n)
 				throw std::length_error("Size required is too long\n");
-			else if (capacity() >= n)
+			size_type old_capacity = this->capacity();
+			if (old_capacity >= n)
 				return;
 
 			pointer old_begin = begin_;
 			pointer old_end = end_;
-			size_type old_capacity = this->capacity();
+			size_type old_size = this->size();
 
 			begin_ = alloc_.allocate(n);
 			end_ = begin_;
 			reserved_end_ = begin_ + n;
-			for (size_t i = 0; (old_begin + i) != old_end; i++) {
-				alloc_.construct(end_, *(old_begin + i)); // copy old val to new ptr
-				alloc_.destroy(&(*(old_begin + i)));			// destroy object in memory
+			for (; old_begin != old_end; old_begin++) {
+				alloc_.construct(end_, *old_begin);
 				end_++;
 			}
-			alloc_.deallocate(old_begin, old_capacity); // release memory
+			alloc_.deallocate(old_begin - old_size, old_capacity);
 		}
 
 		/*----------------------------------------
@@ -241,7 +241,14 @@ namespace ft
 
 		/** @brief Appends the given element value to the end of the container */
 		void push_back(const value_type &val) {
-			insert(this->end(), val);
+			size_type size = this->size();
+			size_type capacity = this->capacity();
+			if (capacity - size < size + 1) {
+				size_type new_capacity = size > 0 ? size * 2 : 1;
+				this->reserve(new_capacity);
+			}
+			alloc_.construct(end_, val);
+			end_++;
 		}
 
 		/** @brief Removes the last element in the vector */
@@ -253,12 +260,11 @@ namespace ft
 		}
 
 		/** @brief inserts value before pos */
-		iterator insert(iterator pos, const value_type &val)
-		{
+		iterator insert(iterator pos, const value_type &val) {
 			size_type size = this->size();
 			size_type capacity = this->capacity();
 			size_type pos_len = &(*pos) - begin_;
-			if (capacity - size >= this->size() + 1) {
+			if (capacity - size >= size + 1) {
 				iterator it = this->end();
 				iterator new_it = pos - 1;
 				for (; it != new_it; it--)

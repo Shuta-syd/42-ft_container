@@ -21,7 +21,7 @@ deps_dir := $(addsuffix .keep, $(deps_dir))
 
 debugflags := -g3 -fsanitize=address
 headerflags := -MMD -MP
-CXXFLAGS := -g #-Wall -Werror -Wextra -std=c++98
+CXXFLAGS := -g -Wall -Werror -Wextra -std=c++98
 INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
 ############# basic rules ##############

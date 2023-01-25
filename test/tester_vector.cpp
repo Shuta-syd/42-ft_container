@@ -79,7 +79,7 @@ void tester_modifiers() {
 	ft_start = clock();
 	for (size_t i = 0; i < 100; i++) {
 		ft::vector<std::string> ft_vec;
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			ft_vec.push_back("42");
 	}
 	ft_end = clock();
@@ -88,7 +88,7 @@ void tester_modifiers() {
 	std_start = clock();
 	for (size_t i = 0; i < 100; i++){
 		std::vector<std::string> std_vec;
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			std_vec.push_back("42");
 	}
 	std_end = clock();
@@ -231,8 +231,8 @@ void tester_modifiers() {
 	print_white("=========================== erase test ==========================");
 	ft_start = clock();
 	for (size_t i = 0; i < 100; i++) {
-		ft::vector<std::string> ft_vec(100, "tokyo");
-		for (size_t i = 0; i < 100; i++) {
+		ft::vector<std::string> ft_vec(1000, "tokyo");
+		for (size_t i = 0; i < 1000; i++) {
 			ft_vec.erase(ft_vec.begin());
 		}
 	}
@@ -241,8 +241,8 @@ void tester_modifiers() {
 
 	std_start = clock();
 	for (size_t i = 0; i < 100; i++){
-		std::vector<std::string> std_vec(100, "tokyo");
-		for (size_t i = 0; i < 100; i++)
+		std::vector<std::string> std_vec(1000, "tokyo");
+		for (size_t i = 0; i < 1000; i++)
 			std_vec.erase(std_vec.begin());
 	}
 	std_end = clock();
