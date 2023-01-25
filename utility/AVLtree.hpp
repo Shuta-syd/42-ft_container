@@ -68,7 +68,7 @@ namespace ft {
 				begin_ = pta->lhs_;
 				balanceInsert(pta->lhs_);
 			}
-			size_ += 1;
+			size_ += 1;;
 			return ft::make_pair(iterator(node, nullNode_, end_, begin_), true);
 		}
 
@@ -227,12 +227,11 @@ namespace ft {
 
 			beforeRoot->rhs_ = pivot;
 			if (pivot != nullNode_)
-				pivot->pta_ = afterRoot;
-			afterRoot->lhs_ = beforeRoot;
-			beforeRoot->pta_ = afterRoot;
+				pivot->pta_ = beforeRoot;
 
-			if (beforeRoot == root_)
-				root_ = afterRoot;
+			afterRoot->lhs_ = beforeRoot;
+			this->Replace(beforeRoot, afterRoot);
+			beforeRoot->pta_ = afterRoot;
 
 			updateHeight(beforeRoot);
 			updateHeight(afterRoot);
@@ -248,12 +247,11 @@ namespace ft {
 
 			beforeRoot->lhs_ = pivot;
 			if (pivot != nullNode_)
-				pivot->pta_ = afterRoot;
-			afterRoot->rhs_ = beforeRoot;
-			beforeRoot->pta_ = afterRoot;
+				pivot->pta_ = beforeRoot;
 
-			if (beforeRoot == root_)
-				root_ = afterRoot;
+			afterRoot->rhs_ = beforeRoot;
+			this->Replace(beforeRoot, afterRoot);
+			beforeRoot->pta_ = afterRoot;
 
 			updateHeight(beforeRoot);
 			updateHeight(afterRoot);
@@ -287,6 +285,19 @@ namespace ft {
 			int right_height = node->rhs_->height_;
 
 			node->height_ = 1 + (left_height > right_height ? left_height : right_height);
+		}
+
+		void Replace(node_type *before, node_type *after) {
+			node_type *pta = before->pta_;
+
+			if (before == root_)
+				root_ = after;
+			else if (pta->lhs_ == before)
+				pta->lhs_ = after;
+			else
+				pta->rhs_ = after;
+
+			after->pta_ = pta;
 		}
 
 		/** @brief Search for the maximum value from the left-branch tree of a specific node */

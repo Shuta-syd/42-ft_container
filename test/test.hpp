@@ -13,6 +13,7 @@
 /* test funcs */
 void tester_map();
 void tester_vector();
+void test_avl_tree();
 
 void print_time_cmp(double ft, double std, bool ok);
 void print_mgn(std::string str);
