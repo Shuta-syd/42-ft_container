@@ -11,7 +11,7 @@ int main(int argc, char const *argv[]) {
 	if (stl == "vector")
 		tester_vector();
 	else if (stl == "map")
-		; // map_test();
+		tester_map();
 	else if (stl == "stack")
 		; // stack_test();
 	return 0;

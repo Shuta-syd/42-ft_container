@@ -6,8 +6,8 @@ objs_dir += test/
 deps_dir += test/
 
 srcs += $(addprefix test/, \
-  	AVLtree.cpp main.cpp stack.cpp type_traits.cpp map.cpp\
-		utils.cpp tester_vector.cpp \
+  	AVLtree.cpp main.cpp utils.cpp tester_vector.cpp \
+		tester_map.cpp \
     )
 
 objs := $(srcs:%.cpp=objs/%.o)
@@ -65,6 +65,9 @@ debug: re
 
 vector: all
 	@./$(NAME) vector
+
+map: all
+	@./$(NAME) map
 
 leaks: $(NAME)
 	@leaks -q --atExit -- ./$(NAME) vector

@@ -1,19 +1,19 @@
 #include "test.hpp"
-void tester_constructor();
-void tester_capacity();
-void tester_modifiers();
+void tester_constructor_vec();
+void tester_capacity_vec();
+void tester_modifiers_vec();
 
 void tester_vector() {
 	print_white("--------------------------------------------------");
 	print_white("|                   Vector Test                  |");
 	print_white("--------------------------------------------------");
 
-	tester_constructor();
-	tester_capacity();
-	tester_modifiers();
+	tester_constructor_vec();
+	tester_capacity_vec();
+	tester_modifiers_vec();
 }
 
-void tester_modifiers() {
+void tester_modifiers_vec() {
 	print_white("--------------------------------------------------");
 	print_white("|                 Modifiers Test                 |");
 	print_white("--------------------------------------------------");
@@ -289,7 +289,7 @@ void tester_modifiers() {
 }
 
 
-void tester_capacity() {
+void tester_capacity_vec() {
 	print_white("--------------------------------------------------");
 	print_white("|                  Capacity Test                 |");
 	print_white("--------------------------------------------------");
@@ -372,7 +372,7 @@ void tester_capacity() {
 }
 
 
-void tester_constructor() {
+void tester_constructor_vec() {
 	print_white("--------------------------------------------------");
 	print_white("|                Constructor Test                |");
 	print_white("--------------------------------------------------");

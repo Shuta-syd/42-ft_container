@@ -1,6 +1,10 @@
 #ifndef AVLTREE_HPP_
 #define AVLTREE_HPP_
 
+
+/* color code */
+#define YEL "\033[33m"
+#define RES "\033[m"
 #include <memory>
 #include <iomanip>
 #include <node.hpp>
@@ -302,6 +306,8 @@ namespace ft {
 		}
 
 		void destroyTree(node_type *node) {
+			if (node == nullNode_)
+				return;
 			if (node->lhs_ != nullNode_)
 				destroyTree(node->lhs_);
 			if (node->rhs_ != nullNode_)
