@@ -16,8 +16,12 @@ namespace ft {
 	template <class InputIterator1, class InputIterator2>
 		bool equal_map ( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )
 	{
+		int i = 1;
 		while (first1 != last1) {
+			i++;
 			if (!(first1->first == first2->first)) {
+				std::cout << i << std::endl;
+				std::cout << first1->first << " " << first2->first << std::endl;
 				return false;
 			}
 			++first1; ++first2;
