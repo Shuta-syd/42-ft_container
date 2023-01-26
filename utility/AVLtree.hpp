@@ -84,8 +84,9 @@ namespace ft {
 		/** @brief Delete a specific node */
 		size_type erase(const key_type &key) {
 			node_type *target = this->search(key);
-			if (target == begin_)
+			if (target == begin_) {
 				begin_ = this->searchNextNode(begin_);
+			}
 			else if (target == end_)
 				end_ = this->searchPrevNode(end_);
 			else if (target == nullNode_)
@@ -103,6 +104,11 @@ namespace ft {
 			}
 			else {
 				node_type *maxNode = this->searchMaxNode(target->lhs_);
+				if (maxNode == begin_)
+					begin_ = this->searchNextNode(begin_);
+				else if (target == end_)
+					end_ = this->searchPrevNode(end_);
+
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;
 				this->Replace(maxNode, maxNode->lhs_);
@@ -134,6 +140,8 @@ namespace ft {
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
 				node = root_;
+			else if (node == nullNode_)
+				return;
 			std::cout << YEL << "[ " << i << " ]" << RES << ": ";
 			std::cout << " [ " << std::setw(3) << std::right << std::setfill(' ') << node->key_ << " ] ";
 			std::cout << " | lhs :[ " << std::setw(3) << std::right << std::setfill(' ') << node->lhs_->key_ << " ] ";

@@ -18,18 +18,39 @@ void tester_map()
 }
 
 void test_map() {
-	ft::map<int, std::string> ft_map;
+	print_white("========================= erase2 test ========================");
+	ft::map<int, std::string> ft_map7;
+	std::map<int, std::string> std_map7;
+	for (size_t i = 0; i < 8; i++) {
+		ft_map7.insert(FT_PAIR(i, "42tokyo"));
+		std_map7.insert(STD_PAIR(i, "42tokyo"));
+	}
 
-	ft_map.insert(FT_PAIR(1, "42"));
-	ft_map.insert(FT_PAIR(2, "42"));
-	ft_map.insert(FT_PAIR(3, "42"));
-	ft_map.insert(FT_PAIR(4, "42"));
-	ft_map.insert(FT_PAIR(5, "42"));
-	ft_map.insert(FT_PAIR(6, "42"));
-	ft_map.insert(FT_PAIR(7, "42"));
+	// ft_start = clock();
+	// for (size_t i = 0; i < 100; i++) {
+	// ft::map<int, std::string> ft_map(ft_map7.begin(), ft_map7.end());
+	// 	for (size_t i = 0; i < 200; i++)
+	// 		ft_map.erase(ft_map.begin());
+	// }
+	// ft_end = clock();
+	// ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
-	// ft_map.erase(1);
-	ft_map.erase(4);
+	// std_start = clock();
+	// for (size_t i = 0; i < 100; i++){
+	// 	std::map<int, std::string> std_map(std_map7.begin(), std_map7.end());
+	// 	for (size_t i = 0; i < 500; i++)
+	// 		std_map.erase(std_map.begin());
+	// }
+	// std_end = clock();
+	// std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map8;
+	for (size_t i = 1; i < 8; i++)
+		ft_map8.insert(FT_PAIR(i, "42Tokyo"));
+	for (size_t i = 1; i < 5; i++) {
+		std::cout << "begin: " <<  ft_map8.begin()->first << " pre inc: " << ++ft_map8.begin()->first << std::endl;
+		ft_map8.erase(++ft_map8.begin());
+	}
 }
 
 void tester_modifiers_map()
@@ -78,7 +99,7 @@ void tester_modifiers_map()
 		}
 	}
 	ft_end = clock();
-	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+	ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
 	for (size_t i = 0; i < 100; i++){
@@ -117,7 +138,7 @@ void tester_modifiers_map()
 		ft_map.insert(ft_map3.begin(), ft_map3.end());
 	}
 	ft_end = clock();
-	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+	ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
 	for (size_t i = 0; i < 100; i++){
@@ -153,7 +174,7 @@ void tester_modifiers_map()
 			ft_map.erase(i);
 	}
 	ft_end = clock();
-	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+	ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
 	for (size_t i = 0; i < 100; i++){
@@ -175,6 +196,45 @@ void tester_modifiers_map()
 		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("========================= erase2 test ========================");
+	ft::map<int, std::string> ft_map7;
+	std::map<int, std::string> std_map7;
+	for (size_t i = 0; i < 500; i++) {
+		ft_map7.insert(FT_PAIR(i, "42tokyo"));
+		std_map7.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+	ft::map<int, std::string> ft_map(ft_map7.begin(), ft_map7.end());
+		for (size_t i = 0; i < 200; i++)
+			ft_map.erase(ft_map.begin());
+	}
+	ft_end = clock();
+	ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::map<int, std::string> std_map(std_map7.begin(), std_map7.end());
+		for (size_t i = 0; i < 500; i++)
+			std_map.erase(std_map.begin());
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map8(ft_map7.begin(), ft_map7.end());
+	for (size_t i = 0; i < 50; i++)
+		ft_map8.erase(++ft_map8.begin());
+	std::map<int, std::string> std_map8(std_map7.begin(), std_map7.end());
+	for (size_t i = 0; i < 50; i++)
+		std_map8.erase(++std_map8.begin());
+	equal = ft::equal_map(ft_map8.begin(), ft_map8.end(), std_map8.begin());
+	if (ft_map8.size() != std_map8.size())
+		equal = false;
+
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 
@@ -188,7 +248,7 @@ void tester_constructor_map()
 	for (size_t i = 0; i < 100; i++)
 		ft::map<int, std::string> ft_map;
 	clock_t ft_end = clock();
-	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+	double ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	clock_t std_start = clock();
 	for (size_t i = 0; i < 100; i++)

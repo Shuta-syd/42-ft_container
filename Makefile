@@ -63,9 +63,10 @@ re: fclean all
 debug: CXXFLAGS += $(debugflags)
 debug: re
 
+test: all
+	@./$(NAME) test
 vector: all
 	@./$(NAME) vector
-
 map: all
 	@./$(NAME) map
 

@@ -8,7 +8,11 @@ int main(int argc, char const *argv[]) {
 	}
 
 	std::string stl(argv[1]);
-	if (stl == "vector")
+	if (stl == "test") {
+		tester_vector();
+		tester_map();
+	}
+	else if (stl == "vector")
 		tester_vector();
 	else if (stl == "map")
 		tester_map();

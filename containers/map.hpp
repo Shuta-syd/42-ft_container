@@ -132,8 +132,8 @@ namespace ft {
 			}
 
 			void erase (iterator pos) {
-				key_type key = pos.base()->key_;
-				tree_.erase(key);
+				const key_type &key = pos->first;
+				this->erase(key);
 			}
 
 			size_type erase (const key_type& key) {
