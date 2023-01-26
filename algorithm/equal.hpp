@@ -20,8 +20,6 @@ namespace ft {
 		while (first1 != last1) {
 			i++;
 			if (!(first1->first == first2->first)) {
-				std::cout << i << std::endl;
-				std::cout << first1->first << " " << first2->first << std::endl;
 				return false;
 			}
 			++first1; ++first2;

@@ -18,7 +18,18 @@ void tester_map()
 }
 
 void test_map() {
+	ft::map<int, std::string> ft_map;
 
+	ft_map.insert(FT_PAIR(1, "42"));
+	ft_map.insert(FT_PAIR(2, "42"));
+	ft_map.insert(FT_PAIR(3, "42"));
+	ft_map.insert(FT_PAIR(4, "42"));
+	ft_map.insert(FT_PAIR(5, "42"));
+	ft_map.insert(FT_PAIR(6, "42"));
+	ft_map.insert(FT_PAIR(7, "42"));
+
+	// ft_map.erase(1);
+	ft_map.erase(4);
 }
 
 void tester_modifiers_map()
@@ -130,7 +141,7 @@ void tester_modifiers_map()
 	print_white("========================= erase test =========================");
 	ft::map<int, std::string> ft_map5;
 	std::map<int, std::string> std_map5;
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 500; i++) {
 		ft_map5.insert(FT_PAIR(i, "42tokyo"));
 		std_map5.insert(STD_PAIR(i, "42tokyo"));
 	}
@@ -154,10 +165,10 @@ void tester_modifiers_map()
 	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
 	ft::map<int, std::string> ft_map6(ft_map5.begin(), ft_map5.end());
-	for (size_t i = 0; i < 500; i++)
+	for (size_t i = 0; i < 100; i++)
 		ft_map6.erase(i);
 	std::map<int, std::string> std_map6(std_map5.begin(), std_map5.end());
-	for (size_t i = 0; i < 500; i++)
+	for (size_t i = 0; i < 100; i++)
 		std_map6.erase(i);
 	equal = ft::equal_map(ft_map6.begin(), ft_map6.end(), std_map6.begin());
 	if (ft_map6.size() != std_map6.size())

@@ -84,7 +84,11 @@ namespace ft {
 		/** @brief Delete a specific node */
 		size_type erase(const key_type &key) {
 			node_type *target = this->search(key);
-			if (target == nullNode_)
+			if (target == begin_)
+				begin_ = this->searchNextNode(begin_);
+			else if (target == end_)
+				end_ = this->searchPrevNode(end_);
+			else if (target == nullNode_)
 				return 0;
 			size_ -= 1;
 			/**
@@ -93,31 +97,16 @@ namespace ft {
 			 * 3. The node to be deleted is replaced by the node with the largest value in the left subtree, and the node with the largest value is deleted.
 			 */
 			if (target->lhs_ == nullNode_) {
-				// All patterns of equilibrium binary tree collapse are on this side.
-				node_type *pta = target->pta_;
-				if (root_ == target)
-					root_ = target->rhs_;
-				else if (pta->lhs_ == target)
-					pta->lhs_ = target->rhs_;
-				else
-					pta->rhs_ = target->rhs_;
-				target->rhs_->pta_ = pta;
+				this->Replace(target, target->rhs_);
 				balanceErase(target->rhs_);
 				this->destroyNode(target);
 			}
 			else {
 				node_type *maxNode = this->searchMaxNode(target->lhs_);
-				node_type *pta = maxNode->pta_;
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;
-				if (pta->lhs_ == maxNode)
-					pta->lhs_ = maxNode->lhs_;
-				else
-					pta->rhs_ = maxNode->lhs_;
-				maxNode->lhs_->pta_ = pta;
-				balanceErase(target->lhs_);
-				if (maxNode->lhs_ == nullNode_)
-					maxNode->lhs_->pta_ = nullNode_;
+				this->Replace(maxNode, maxNode->lhs_);
+				this->balanceErase(maxNode->lhs_);
 				this->destroyNode(maxNode);
 			}
 			return 1;
@@ -305,6 +294,41 @@ namespace ft {
 		node_type *searchMaxNode(node_type *node) {
 			while (node->rhs_ != nullNode_) {
 				node = node->rhs_;
+			}
+			return node;
+		}
+
+		node_type *searchNextNode(node_type *node) {
+			if (node == end_)
+					node = nullNode_;
+				else if (node == nullNode_)
+					node = begin_;
+				else if (node->rhs_ != nullNode_) {
+					node = node->rhs_;
+					while (node->lhs_ != nullNode_)
+						node = node->lhs_;
+				} else {
+					while (node->pta_->lhs_ != node)
+						node = node->pta_;
+					node = node->pta_;
+				}
+			return node;
+		}
+
+		node_type *searchPrevNode(node_type *node) {
+			if (node == begin_)
+				node = nullNode_;
+			else if (node == nullNode_)
+				node = end_;
+			else if (node->lhs_ != nullNode_) {
+				node = node->lhs_;
+				while (node->rhs_ != nullNode_)
+					node = node->rhs_;
+			}
+			else {
+				while (node->pta_->rhs_ != node)
+					node = node->pta_;
+				node = node->pta_;
 			}
 			return node;
 		}

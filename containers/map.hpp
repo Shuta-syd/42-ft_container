@@ -136,7 +136,9 @@ namespace ft {
 				tree_.erase(key);
 			}
 
-			size_type erase (const key_type& key) { return tree_.erase(key); }
+			size_type erase (const key_type& key) {
+				return tree_.erase(key);
+			}
 
 			void erase (iterator first, iterator last) {
 				for (; first != last; first++)
