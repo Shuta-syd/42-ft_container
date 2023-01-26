@@ -9,6 +9,10 @@ void print_mgn(std::string str) {
 	std::cout << MGN << str << RES << std::endl;
 }
 
+void print_yel(std::string str) {
+	std::cout << YEL << str << RES << std::endl;
+}
+
 void print_time_cmp(double ft, double std, bool ok) {
 	double perf = ft / std;
 

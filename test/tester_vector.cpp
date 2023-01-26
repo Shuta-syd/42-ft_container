@@ -4,9 +4,9 @@ void tester_capacity_vec();
 void tester_modifiers_vec();
 
 void tester_vector() {
-	print_white("--------------------------------------------------");
-	print_white("|                   Vector Test                  |");
-	print_white("--------------------------------------------------");
+	print_yel("--------------------------------------------------");
+	print_yel("|                   Vector Test                  |");
+	print_yel("--------------------------------------------------");
 
 	tester_constructor_vec();
 	tester_capacity_vec();

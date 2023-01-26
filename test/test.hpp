@@ -17,6 +17,7 @@ void test_avl_tree();
 
 void print_time_cmp(double ft, double std, bool ok);
 void print_mgn(std::string str);
+void print_yel(std::string str);
 void print_white(std::string str);
 template <typename T>
 void print_std_vector(std::vector<T> vec);
