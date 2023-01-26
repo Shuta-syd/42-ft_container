@@ -18,39 +18,7 @@ void tester_map()
 }
 
 void test_map() {
-	print_white("========================= erase2 test ========================");
-	ft::map<int, std::string> ft_map7;
-	std::map<int, std::string> std_map7;
-	for (size_t i = 0; i < 8; i++) {
-		ft_map7.insert(FT_PAIR(i, "42tokyo"));
-		std_map7.insert(STD_PAIR(i, "42tokyo"));
-	}
 
-	// ft_start = clock();
-	// for (size_t i = 0; i < 100; i++) {
-	// ft::map<int, std::string> ft_map(ft_map7.begin(), ft_map7.end());
-	// 	for (size_t i = 0; i < 200; i++)
-	// 		ft_map.erase(ft_map.begin());
-	// }
-	// ft_end = clock();
-	// ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
-
-	// std_start = clock();
-	// for (size_t i = 0; i < 100; i++){
-	// 	std::map<int, std::string> std_map(std_map7.begin(), std_map7.end());
-	// 	for (size_t i = 0; i < 500; i++)
-	// 		std_map.erase(std_map.begin());
-	// }
-	// std_end = clock();
-	// std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
-
-	ft::map<int, std::string> ft_map8;
-	for (size_t i = 1; i < 8; i++)
-		ft_map8.insert(FT_PAIR(i, "42Tokyo"));
-	for (size_t i = 1; i < 5; i++) {
-		std::cout << "begin: " <<  ft_map8.begin()->first << " pre inc: " << ++ft_map8.begin()->first << std::endl;
-		ft_map8.erase(++ft_map8.begin());
-	}
 }
 
 void tester_modifiers_map()
@@ -235,6 +203,41 @@ void tester_modifiers_map()
 		equal = false;
 
 	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("========================= erase3 test ========================");
+	ft::map<int, std::string> ft_map9;
+	std::map<int, std::string> std_map9;
+	for (size_t i = 1; i < 1000; i++) {
+		ft_map9.insert(FT_PAIR(i, "42tokyo"));
+		std_map9.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map(ft_map9.begin(), ft_map9.end());
+		ft_map.erase(ft_map.begin(), ft_map.end());
+	}
+	ft_end = clock();
+	ft_time = (double)difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map(std_map9.begin(), std_map9.end());
+		std_map.erase(std_map.begin(), std_map.end());
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map10(ft_map9.begin(), ft_map9.end());
+	ft_map10.erase(ft_map10.begin(), --ft_map10.end());
+	std::map<int, std::string> std_map10(std_map9.begin(), std_map9.end());
+	std_map10.erase(std_map10.begin(), --std_map10.end());
+	equal = ft::equal_map(ft_map10.begin(), ft_map10.end(), std_map10.begin());
+	if (ft_map10.size() != std_map10.size())
+		equal = false;
+
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 
@@ -318,7 +321,7 @@ void tester_constructor_map()
 
 template <class T1, class T2>
 void print_std_map(std::map<T1, T2> test) {
-	std::cout << "ft :";
+	std::cout << "std :";
 	typename std::map<T1, T2>::iterator it = test.begin();
 	for (; it != test.end(); it++) {
 		std::cout << "[" << std::setw(1) << std::right << std::setfill(' ') << it->first << "]";
@@ -328,7 +331,7 @@ void print_std_map(std::map<T1, T2> test) {
 
 template <class T1, class T2>
 void print_ft_map(ft::map<T1, T2> test) {
-	std::cout << "std:";
+	std::cout << "ft  :";
 	typename ft::map<T1, T2>::iterator it = test.begin();
 	for (; it != test.end(); it++) {
 		std::cout << "[" << std::setw(1) << std::right << std::setfill(' ') << it->first << "]";

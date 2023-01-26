@@ -84,9 +84,8 @@ namespace ft {
 		/** @brief Delete a specific node */
 		size_type erase(const key_type &key) {
 			node_type *target = this->search(key);
-			if (target == begin_) {
+			if (target == begin_)
 				begin_ = this->searchNextNode(begin_);
-			}
 			else if (target == end_)
 				end_ = this->searchPrevNode(end_);
 			else if (target == nullNode_)
@@ -105,9 +104,9 @@ namespace ft {
 			else {
 				node_type *maxNode = this->searchMaxNode(target->lhs_);
 				if (maxNode == begin_)
-					begin_ = this->searchNextNode(begin_);
+					begin_ = target;
 				else if (target == end_)
-					end_ = this->searchPrevNode(end_);
+					end_ = target;
 
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;
@@ -115,7 +114,44 @@ namespace ft {
 				this->balanceErase(maxNode->lhs_);
 				this->destroyNode(maxNode);
 			}
+			// printAVL(root_, 1);
 			return 1;
+		}
+
+		/** @brief Delete a specific node */
+		void erase(iterator first, iterator last) {
+			while (first != last) {
+				const key_type &key = first->first;
+				first++;
+
+				node_type *target = this->search(key);
+				if (target == begin_)
+					begin_ = this->searchNextNode(begin_);
+				else if (target == end_)
+					end_ = this->searchPrevNode(end_);
+				else if (target == nullNode_)
+					return;
+				size_ -= 1;
+
+				if (target->lhs_ == nullNode_) {
+					this->Replace(target, target->rhs_);
+					balanceErase(target->rhs_);
+					this->destroyNode(target);
+				}
+				else {
+					node_type *maxNode = this->searchMaxNode(target->lhs_);
+					if (maxNode == begin_)
+						begin_ = target;
+					else if (target == end_)
+						end_ = target;
+
+					target->key_ = maxNode->key_;
+					target->val_ = maxNode->val_;
+					this->Replace(maxNode, maxNode->lhs_);
+					this->balanceErase(maxNode->lhs_);
+					this->destroyNode(maxNode);
+				}
+			}
 		}
 
 

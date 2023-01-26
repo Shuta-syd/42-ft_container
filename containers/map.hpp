@@ -141,8 +141,7 @@ namespace ft {
 			}
 
 			void erase (iterator first, iterator last) {
-				for (; first != last; first++)
-					tree_.erase(first.base()->key_);
+				tree_.erase(first, last);
 			}
 
 			void clear() { this->erase(this->begin(), this->end()); }
