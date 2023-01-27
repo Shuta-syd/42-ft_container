@@ -19,6 +19,14 @@ namespace ft {
 		 */
 		explicit stack (const container_type& ctnr = container_type()): ctnr_(ctnr) {}
 
+		/** @brief copy constructor */
+		stack( const stack& other ) { *this = other; }
+
+		stack& operator=( const stack& other ) {
+			this->ctnr_ = other.ctnr_;
+			return *this;
+		}
+
 		/** @brief Returns whether the stack is empty: i.e. whether its size is zero */
 		bool empty() const { return ctnr_.empty(); }
 

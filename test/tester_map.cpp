@@ -1,9 +1,10 @@
 #include "test.hpp"
 void tester_constructor_map();
-void tester_element_access();
+void tester_element_access_map();
 void tester_modifiers_map();
-void test_map();
 void tester_lookup();
+void test_map();
+void tester_operator_map();
 
 #define FT_PAIR(a, b) ft::pair<int, std::string>(a, b)
 #define STD_PAIR(a, b) std::pair<int, std::string>(a, b)
@@ -15,55 +16,218 @@ void tester_map()
 	print_yel("--------------------------------------------------");
 
 	tester_constructor_map();
-	tester_element_access();
+	tester_operator_map();
+	tester_element_access_map();
 	tester_modifiers_map();
 	tester_lookup();
-	// test_map();
 }
 
-void test_map() {
-	print_white("====================== upper_bound test ========================");
-	ft::map<int, std::string> ft_map9;
-	std::map<int, std::string> std_map9;
-	for (size_t i = 0; i < 100; i++) {
-		ft_map9.insert(FT_PAIR(i, "42tokyo"));
-		std_map9.insert(STD_PAIR(i, "42tokyo"));
+void tester_operator_map() {
+	print_white("--------------------------------------------------");
+	print_white("|                  operator Test                 |");
+	print_white("--------------------------------------------------");
+	print_white("======================= operator== test ========================");
+	ft::map<int, std::string> ft_map;
+	std::map<int, std::string> std_map;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map.insert(FT_PAIR(i, "42tokyo"));
+		std_map.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	clock_t ft_start = clock();
-	for (size_t i = 0; i < 10; i++) {
-		ft::map<int, std::string> ft_map(ft_map9.begin(), ft_map9.end());
-		for (size_t i = 0; i < 10; i++)
-			ft_map.upper_bound(i);
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map_(ft_map.begin(), ft_map.end());
+		if (ft_map_ == ft_map)
+			continue;
 	}
 	clock_t ft_end = clock();
 	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
-	double std_start = clock();
-	for (size_t i = 0; i < 10; i++){
-		std::map<int, std::string> std_map(std_map9.begin(), std_map9.end());
-		for (size_t i = 0; i < 10; i++)
-			std_map.upper_bound(i);
+	clock_t std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map_(std_map.begin(), std_map.end());
+		if (std_map_ == std_map)
+			continue;
 	}
 	clock_t std_end = clock();
 	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
-	ft::map<int, std::string> ft_map10(ft_map9.begin(), ft_map9.end());
-	std::map<int, std::string> std_map10(std_map9.begin(), std_map9.end());
-	bool equal = true;
-	for (size_t i = 0; i < 99; i++){
-		if (ft_map10.upper_bound(i)->first != std_map10.upper_bound(i)->first ) {
-			std::cout << "i :" << i << std::endl;
-			std::cout << "ft: " << ft_map10.upper_bound(i)->first << std::endl;
-			std::cout << "std: " << std_map10.upper_bound(i)->first << std::endl;
-			equal = false;
-		}
+	ft::map<int, std::string> ft_map2(ft_map.begin(), ft_map.end());
+	bool equal = false;
+	if (ft_map2 == ft_map)
+			equal = true;
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("======================= operator!= test ========================");
+	ft::map<int, std::string> ft_map3;
+	std::map<int, std::string> std_map3;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map3.insert(FT_PAIR(i, "42tokyo"));
+		std_map3.insert(STD_PAIR(i, "42tokyo"));
 	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map3_(ft_map3.begin(), --ft_map3.end());
+		if (ft_map3_ != ft_map3)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map3_(std_map3.begin(), --std_map3.end());
+		if (std_map3_ != std_map3)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map4(ft_map3.begin(), --ft_map3.end());
+	equal = false;
+	if (ft_map4 != ft_map3)
+			equal = true;
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("======================= operator < test ========================");
+	ft::map<int, std::string> ft_map5;
+	std::map<int, std::string> std_map5;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map5.insert(FT_PAIR(i, "42tokyo"));
+		std_map5.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map5_(ft_map5.begin(), --ft_map5.end());
+		if (ft_map5_ < ft_map5)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map5_(std_map5.begin(), --std_map5.end());
+		if (std_map5_ < std_map5)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map6(ft_map5.begin(), --ft_map5.end());
+	equal = false;
+	if (ft_map6 < ft_map5)
+			equal = true;
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("======================= operator <= test ========================");
+	ft::map<int, std::string> ft_map7;
+	std::map<int, std::string> std_map7;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map7.insert(FT_PAIR(i, "42tokyo"));
+		std_map7.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map7_(ft_map7.begin(), ft_map7.end());
+		if (ft_map7_ <= ft_map7)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map7_(std_map7.begin(), std_map7.end());
+		if (std_map7_ <= std_map7)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map8(ft_map7.begin(), ft_map7.end());
+	equal = false;
+	if (ft_map8 <= ft_map7)
+			equal = true;
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("======================= operator > test ========================");
+	ft::map<int, std::string> ft_map9;
+	std::map<int, std::string> std_map9;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map9.insert(FT_PAIR(i, "42tokyo"));
+		std_map9.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map9_(ft_map9.begin(), ft_map9.end());
+		ft_map9_.insert(FT_PAIR(1001, "42"));
+		if (ft_map9_ > ft_map9)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map9_(std_map9.begin(), std_map9.end());
+		std_map9_.insert(STD_PAIR(1001, "42"));
+		if (std_map9_ > std_map9)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map10(ft_map9.begin(), ft_map9.end());
+	ft_map10.insert(FT_PAIR(1001, "42"));
+	equal = false;
+	if (ft_map10 > ft_map9)
+			equal = true;
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("======================= operator >= test ========================");
+	ft::map<int, std::string> ft_map11;
+	std::map<int, std::string> std_map11;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map11.insert(FT_PAIR(i, "42tokyo"));
+		std_map11.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map11_(ft_map11.begin(), ft_map11.end());
+		if (ft_map11_ >= ft_map11)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map11_(std_map11.begin(), std_map11.end());
+		if (std_map11_ >= std_map11)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map12(ft_map11.begin(), ft_map11.end());
+	equal = false;
+	if (ft_map12 >= ft_map11)
+			equal = true;
 	print_time_cmp(ft_time, std_time, equal);
 }
 
 
-void tester_element_access() {
+void tester_element_access_map() {
 	print_white("--------------------------------------------------");
 	print_white("|              element_access Test               |");
 	print_white("--------------------------------------------------");

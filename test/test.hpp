@@ -9,10 +9,13 @@
 #include <vector>
 #include <map.hpp>
 #include <vector.hpp>
+#include <stack>
+#include <stack.hpp>
 
 /* test funcs */
 void tester_map();
 void tester_vector();
+void tester_stack();
 void test_avl_tree();
 
 void print_time_cmp(double ft, double std, bool ok);
@@ -26,7 +29,11 @@ void print_ft_vector(ft::vector<T> vec);
 template <class T1, class T2>
 void print_std_map(std::map<T1, T2> test);
 template <class T1, class T2>
-void print_ft_map(ft::map<T1, T2> test) ;
+void print_ft_map(ft::map<T1, T2> test);
+template <typename T>
+void print_std_stack(std::stack<T> vec);
+template <typename T>
+void print_ft_stack(ft::stack<T> vec);
 
 /* color code */
 #define RED "\033[31m"
