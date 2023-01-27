@@ -108,7 +108,7 @@ namespace ft {
 				node_type *node = tree_.search(k);
 				if (node == tree_.getNullNode()) {
 					tree_.insert(ft::make_pair<key_type, mapped_type>(k, mapped_type()));
-					node_type *node = tree_.search(k);
+					node = tree_.search(k);
 				}
 				return node->val_.second;
 			}
@@ -154,9 +154,10 @@ namespace ft {
 			/**  @brief Returns the number of elements with key that compares equivalent to the specified argument */
 			size_type count(const Key &key) const { return tree_.search(key) != tree_.getNullNode(); }
 
-			iterator find(const Key &key) { return iterator(tree_.search(key), tree_.getNullNode()); }
-			const_iterator find(const Key &key) const { return const_iterator(tree_.search(key), tree_.getNullNode()); }
+			iterator find(const Key &key) { return tree_.find(key); }
+			const_iterator find(const Key &key) const { return tree_.const_find(key); }
 
+			/** @brief Returns a range containing all elements with the given key in the container */
 			ft::pair<iterator,iterator> equal_range( const Key& key ) {
 				return ft::make_pair<iterator, iterator>(this->lower_bound(key), this->upper_bound(key));
 			}

@@ -173,6 +173,9 @@ namespace ft {
 		size_type size() const { return size_; }
 		size_type max_size() const { return alloc_.max_size(); }
 
+		iterator find(const key_type &key) { return iterator(this->search(key), nullNode_, end_, begin_);}
+		const_iterator const_find(const key_type &key) {return const_iterator(this->search(key), nullNode_, end_, begin_);}
+
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
 				node = root_;
