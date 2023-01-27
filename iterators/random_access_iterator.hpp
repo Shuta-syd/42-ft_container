@@ -92,9 +92,9 @@ namespace ft {
 		bool operator==(const random_access_iterator &rhs) const { return this->current_pos_ == rhs.current_pos_; }
 		bool operator!=(const random_access_iterator &rhs) const { return !(*this == rhs); }
 		bool operator>(const random_access_iterator &rhs) const { return this->current_pos_ > rhs.current_pos_; }
-		bool operator<(const random_access_iterator &rhs) const { return this->current_pos_ < rhs; }
+		bool operator<(const random_access_iterator &rhs) const { return this->current_pos_ < rhs.current_pos_; }
 		bool operator>=(const random_access_iterator &rhs) const { return this->current_pos_ >= rhs.current_pos_; }
-		bool operator<=(const random_access_iterator &rhs) const { return this->current_pos_ <= rhs; }
+		bool operator<=(const random_access_iterator &rhs) const { return this->current_pos_ <= rhs.current_pos_; }
 
 	private:
 		pointer current_pos_;

@@ -448,9 +448,9 @@ namespace ft
 	bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
 		if (lhs.size() != rhs.size())
 			return false;
-		typename vector<T>::iterator it_lhs = lhs.begin();
-		typename vector<T>::iterator end_lhs = lhs.end();
-		typename vector<T>::iterator it_rhs = rhs.begin();
+		typename vector<T>::const_iterator it_lhs = lhs.begin();
+		typename vector<T>::const_iterator end_lhs = lhs.end();
+		typename vector<T>::const_iterator it_rhs = rhs.begin();
 
 		for (; it_lhs < end_lhs; it_lhs++) {
 			if (*it_lhs != *it_rhs)

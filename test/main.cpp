@@ -10,8 +10,8 @@ int main(int argc, char const *argv[]) {
 	std::string stl(argv[1]);
 	if (stl == "test") {
 		tester_vector();
-		tester_map();
 		tester_stack();
+		tester_map();
 	}
 	else if (stl == "vector")
 		tester_vector();
