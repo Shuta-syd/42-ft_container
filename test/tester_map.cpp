@@ -18,50 +18,7 @@ void tester_map()
 	tester_element_access();
 	tester_modifiers_map();
 	tester_lookup();
-	// test_map();
 }
-
-void test_map() {
-	print_white("====================== upper_bound test ========================");
-	ft::map<int, std::string> ft_map9;
-	std::map<int, std::string> std_map9;
-	for (size_t i = 0; i < 100; i++) {
-		ft_map9.insert(FT_PAIR(i, "42tokyo"));
-		std_map9.insert(STD_PAIR(i, "42tokyo"));
-	}
-
-	clock_t ft_start = clock();
-	for (size_t i = 0; i < 10; i++) {
-		ft::map<int, std::string> ft_map(ft_map9.begin(), ft_map9.end());
-		for (size_t i = 0; i < 10; i++)
-			ft_map.upper_bound(i);
-	}
-	clock_t ft_end = clock();
-	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
-
-	double std_start = clock();
-	for (size_t i = 0; i < 10; i++){
-		std::map<int, std::string> std_map(std_map9.begin(), std_map9.end());
-		for (size_t i = 0; i < 10; i++)
-			std_map.upper_bound(i);
-	}
-	clock_t std_end = clock();
-	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
-
-	ft::map<int, std::string> ft_map10(ft_map9.begin(), ft_map9.end());
-	std::map<int, std::string> std_map10(std_map9.begin(), std_map9.end());
-	bool equal = true;
-	for (size_t i = 0; i < 99; i++){
-		if (ft_map10.upper_bound(i)->first != std_map10.upper_bound(i)->first ) {
-			std::cout << "i :" << i << std::endl;
-			std::cout << "ft: " << ft_map10.upper_bound(i)->first << std::endl;
-			std::cout << "std: " << std_map10.upper_bound(i)->first << std::endl;
-			equal = false;
-		}
-	}
-	print_time_cmp(ft_time, std_time, equal);
-}
-
 
 void tester_element_access() {
 	print_white("--------------------------------------------------");

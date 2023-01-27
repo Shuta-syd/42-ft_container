@@ -1,7 +1,9 @@
 #include "test.hpp"
 void tester_constructor_vec();
+void tester_element_access_vec();
 void tester_capacity_vec();
 void tester_modifiers_vec();
+void tester_operator();
 
 void tester_vector() {
 	print_yel("--------------------------------------------------");
@@ -9,8 +11,218 @@ void tester_vector() {
 	print_yel("--------------------------------------------------");
 
 	tester_constructor_vec();
+	tester_element_access_vec();
 	tester_capacity_vec();
 	tester_modifiers_vec();
+	tester_operator();
+}
+
+void tester_operator() {
+	
+}
+
+
+void tester_element_access_vec() {
+	print_white("--------------------------------------------------");
+	print_white("|              element_access Test               |");
+	print_white("--------------------------------------------------");
+	print_white("======================= operator[] test ========================");
+	ft::vector<int> ft_vec2;
+	std::vector<int> std_vec2;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec2.push_back(i);
+		std_vec2.push_back(i);
+	}
+
+	clock_t ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec2);
+		for (size_t i = 0; i < 1000; i++) {
+			ft_vec[i];
+		}
+	}
+	clock_t ft_end = clock();
+	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	clock_t std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec2);
+		for (size_t i = 0; i < 1000; i++)
+			std_vec[i];
+	}
+	clock_t std_end = clock();
+	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec3(ft_vec2);
+	std::vector<int> std_vec3(std_vec2);
+	bool equal = true;
+	for (size_t i = 0; i < 1000; i++) {
+		if (ft_vec3[i] != std_vec3[i])
+			equal = false;
+	}
+	if (ft_vec3.size() != std_vec3.size())
+		equal = false;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("=========================== at test ============================");
+	ft::vector<int> ft_vec4;
+	std::vector<int> std_vec4;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec4.push_back(i);
+		std_vec4.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec4);
+		for (size_t i = 0; i < 1000; i++) {
+			ft_vec.at(i);
+		}
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec4);
+		for (size_t i = 0; i < 1000; i++)
+			std_vec.at(i);
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec5(ft_vec4);
+	std::vector<int> std_vec5(std_vec4);
+	equal = true;
+	for (size_t i = 0; i < 1000; i++) {
+		if (ft_vec5.at(i) != std_vec5.at(i))
+			equal = false;
+	}
+	if (ft_vec5.size() != std_vec5.size())
+		equal = false;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("========================= front test ===========================");
+	ft::vector<int> ft_vec6;
+	std::vector<int> std_vec6;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec6.push_back(i);
+		std_vec6.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec6);
+		for (size_t i = 0; i < 1000; i++) {
+			ft_vec.front();
+		}
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec6);
+		for (size_t i = 0; i < 1000; i++)
+			std_vec.front();
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec7(ft_vec6);
+	std::vector<int> std_vec7(std_vec6);
+	equal = true;
+	for (size_t i = 0; i < 1000; i++) {
+		if (ft_vec7.front() != std_vec7.front())
+			equal = false;
+		ft_vec7.pop_back();
+		std_vec7.pop_back();
+	}
+
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("========================== back test ===========================");
+	ft::vector<int> ft_vec8;
+	std::vector<int> std_vec8;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec8.push_back(i);
+		std_vec8.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec8);
+		for (size_t i = 0; i < 1000; i++) {
+			ft_vec.back();
+		}
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec8);
+		for (size_t i = 0; i < 1000; i++)
+			std_vec.back();
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec9(ft_vec8);
+	std::vector<int> std_vec9(std_vec8);
+	equal = true;
+	for (size_t i = 0; i < 1000; i++) {
+		if (ft_vec9.back() != std_vec9.back())
+			equal = false;
+		ft_vec9.pop_back();
+		std_vec9.pop_back();
+	}
+
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("========================== data test ===========================");
+	ft::vector<int> ft_vec10;
+	std::vector<int> std_vec10;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec10.push_back(i);
+		std_vec10.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec10);
+		for (size_t i = 0; i < 1000; i++) {
+			ft_vec.data();
+		}
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec10);
+		for (size_t i = 0; i < 1000; i++)
+			std_vec.data();
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec11(ft_vec10);
+	std::vector<int> std_vec11(std_vec10);
+	equal = true;
+	for (size_t i = 0; i < 1000; i++) {
+		if (ft_vec11.data()[i] != std_vec11.data()[i])
+			equal = false;
+		ft_vec11.pop_back();
+		std_vec11.pop_back();
+	}
+
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 void tester_modifiers_vec() {
@@ -285,6 +497,72 @@ void tester_modifiers_vec() {
 	if (ft_vec11.size() != std_vec11.size())
 		equal = false;
 
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("========================== clear test ==========================");
+	ft::vector<int> ft_vec12;
+	std::vector<int> std_vec12;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec12.push_back(i);
+		std_vec12.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec12);
+			ft_vec.clear();
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec12);
+		std_vec.clear();
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec13(ft_vec12);
+	std::vector<int> std_vec13(std_vec12);
+	equal = true;
+	ft_vec13.clear();
+	std_vec13.clear();
+	if (ft_vec13.empty() != std_vec13.empty())
+		equal = false;
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("========================== swap test ==========================");
+	ft::vector<int> ft_vec14;
+	std::vector<int> std_vec14;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_vec14.push_back(i);
+		std_vec14.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 100; i++) {
+		ft::vector<int> ft_vec(ft_vec14);
+			ft_vec.swap(ft_vec14);
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<int> std_vec(std_vec14);
+		std_vec.swap(std_vec14);
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_vec15(ft_vec14);
+	std::vector<int> std_vec15(std_vec14);
+	equal = true;
+	ft_vec15.swap(ft_vec14);
+	std_vec15.swap(std_vec14);
+	if (ft_vec15.size() != std_vec15.size())
+		equal = false;
 	print_time_cmp(ft_time, std_time, equal);
 }
 
