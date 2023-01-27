@@ -10,6 +10,7 @@
 #include <node.hpp>
 #include <pair.hpp>
 #include <bidirectional_iterator.hpp>
+#include <reverse_iterator.hpp>
 
 namespace ft {
 	template <class T, class Comp, class N = node<T>, class Allocator = std::allocator<N> >
@@ -22,6 +23,8 @@ namespace ft {
 		typedef typename std::equal_to<key_type> equal_to;
 		typedef bidirectional_iterator<T, node_type> iterator;
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
+		typedef ft::reverse_iterator<iterator> reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		typedef std::size_t size_type;
 
 		AVLtree() :  root_(), size_(0), begin_(), end_(), nullNode_(), key_compare(Comp()), alloc_(allocator_type()) {
@@ -170,6 +173,10 @@ namespace ft {
 		const_iterator begin() const { return const_iterator(begin_, nullNode_, end_, begin_); }
 		iterator end() { return iterator(nullNode_, nullNode_, end_, begin_); }
 		const_iterator end() const { return const_iterator(nullNode_, nullNode_, end_, begin_); }
+		reverse_iterator rbegin() { return reverse_iterator(iterator(end_, nullNode_, end_, begin_)); }
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(const_iterator(end_, nullNode_, end_, begin_)); }
+		reverse_iterator rend() { return reverse_iterator(iterator(nullNode_, nullNode_, end_, begin_)); }
+		const_reverse_iterator rend() const { return const_reverse_iterator(const_iterator(nullNode_, nullNode_, end_, begin_)); }
 		size_type size() const { return size_; }
 		size_type max_size() const { return alloc_.max_size(); }
 

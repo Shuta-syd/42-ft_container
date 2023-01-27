@@ -88,10 +88,10 @@ namespace ft {
 			const_iterator begin() const { return tree_.begin(); }
 			iterator end() { return tree_.end(); }
 			const_iterator end() const { return tree_.end(); }
-			reverse_iterator rbegin() { return tree_.end(); }
-			const_reverse_iterator rbegin() const { return tree_.end(); }
-			reverse_iterator rend() { return tree_.begin(); }
-			const_reverse_iterator rend() const { return tree_.begin(); }
+			reverse_iterator rbegin() { return tree_.rbegin(); }
+			const_reverse_iterator rbegin() const { return tree_.rbegin(); }
+			reverse_iterator rend() { return tree_.rend(); }
+			const_reverse_iterator rend() const { return tree_.rend(); }
 
 			/*----------------------------------------
 			[Capacity]
@@ -223,6 +223,9 @@ namespace ft {
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator>=(const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) { return !(lhs > rhs); }
+
+	template <class Key, class T, class Compare, class Alloc>
+	void swap(std::map<Key, T, Compare, Alloc> &lhs, std::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
 }
 
 #endif

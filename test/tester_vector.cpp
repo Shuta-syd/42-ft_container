@@ -4,6 +4,7 @@ void tester_element_access_vec();
 void tester_capacity_vec();
 void tester_modifiers_vec();
 void tester_operator();
+void tester_iterator_vec();
 
 void tester_vector() {
 	print_yel("--------------------------------------------------");
@@ -11,10 +12,83 @@ void tester_vector() {
 	print_yel("--------------------------------------------------");
 
 	tester_constructor_vec();
+	tester_iterator_vec();
 	tester_element_access_vec();
 	tester_capacity_vec();
 	tester_modifiers_vec();
 	tester_operator();
+}
+
+void tester_iterator_vec() {
+	print_white("--------------------------------------------------");
+	print_white("|                  iterator Test                 |");
+	print_white("--------------------------------------------------");
+	print_white("================== random access iterator test ==================");
+	ft::vector<int> ft_map;
+	std::vector<int> std_map;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map.push_back(i);
+		std_map.push_back(i);
+	}
+
+	clock_t ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::vector<int> ft_map_(ft_map.begin(), ft_map.end());
+		ft::vector<int>::iterator rit = ft_map_.begin();
+		ft::vector<int>::iterator rit_end = ft_map_.end();
+		for (; rit != rit_end; rit++) ;
+	}
+	clock_t ft_end = clock();
+	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	clock_t std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::vector<int> std_map_(std_map.begin(), std_map.end());
+		std::vector<int>::iterator rit = std_map_.begin();
+		std::vector<int>::iterator rit_end = std_map_.end();
+		for (; rit != rit_end; rit++) ;
+	}
+	clock_t std_end = clock();
+	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_map2(ft_map.begin(), ft_map.end());
+	std::vector<int> std_map2(std_map.begin(), std_map.end());
+	bool equal = ft::equal(ft_map2.begin(), ft_map2.end(), std_map2.begin());
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("===================== reverse iterator test =====================");
+	ft::vector<int> ft_map4;
+	std::vector<int> std_map4;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map4.push_back(i);
+		std_map4.push_back(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::vector<int> ft_map4_(ft_map4.begin(), ft_map4.end());
+		ft::vector<int>::reverse_iterator rit = ft_map4_.rbegin();
+		ft::vector<int>::reverse_iterator rit_end = ft_map4_.rend();
+		for (; rit != rit_end; rit++) ;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::vector<int> std_map4_(std_map4.begin(), std_map4.end());
+		std::vector<int>::reverse_iterator rit = std_map4_.rbegin();
+		std::vector<int>::reverse_iterator rit_end = std_map4_.rend();
+		for (; rit != rit_end; rit++) ;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::vector<int> ft_map3(ft_map4.begin(), ft_map4.end());
+	std::vector<int> std_map3(std_map.begin(), std_map.end());
+	equal = ft::equal(ft_map3.rbegin(), ft_map3.rend(), std_map3.rbegin());
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 void tester_operator() {

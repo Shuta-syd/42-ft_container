@@ -73,7 +73,7 @@ stack: all
 	@./$(NAME) stack
 
 leaks: $(NAME)
-	@leaks -q --atExit -- ./$(NAME) vector
+	@leaks -q --atExit -- ./$(NAME) test
 
 
 RED = \033[31m
