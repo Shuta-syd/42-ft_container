@@ -29,7 +29,7 @@ void print_ft_vector(ft::vector<T> vec);
 template <class T1, class T2>
 void print_std_map(std::map<T1, T2> test);
 template <class T1, class T2>
-void print_ft_map(ft::map<T1, T2> test) ;
+void print_ft_map(ft::map<T1, T2> test);
 template <typename T>
 void print_std_stack(std::stack<T> vec);
 template <typename T>

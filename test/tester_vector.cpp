@@ -55,7 +55,7 @@ void tester_operator() {
 
 	print_time_cmp(ft_time, std_time, equal);
 
-	print_white("======================= operator== test ========================");
+	print_white("======================= operator!= test ========================");
 	ft::vector<int> ft_vec4;
 	std::vector<int> std_vec4;
 	for (size_t i = 0; i < 1001; i++) {

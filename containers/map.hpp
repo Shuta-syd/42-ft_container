@@ -206,7 +206,7 @@ namespace ft {
 	bool operator==( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
 		if (lhs.size() != rhs.size())
 			return false;
-		return ft::equal<iterator, iterator>(lhs.begin(), lhs.end(), rhs.begin());
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
