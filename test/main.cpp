@@ -11,12 +11,13 @@ int main(int argc, char const *argv[]) {
 	if (stl == "test") {
 		tester_vector();
 		tester_map();
+		tester_stack();
 	}
 	else if (stl == "vector")
 		tester_vector();
 	else if (stl == "map")
 		tester_map();
 	else if (stl == "stack")
-		; // stack_test();
+		tester_stack();
 	return 0;
 }
