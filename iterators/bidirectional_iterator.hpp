@@ -3,7 +3,7 @@
 
 #include <node.hpp>
 #include <iterator.hpp>
-#include <iterator_trait.hpp>
+#include <iterator_traits.hpp>
 
 namespace ft {
 	template <class T, class N>

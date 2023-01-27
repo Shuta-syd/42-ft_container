@@ -1,7 +1,7 @@
 #ifndef REVERSE_ITERATOR_HPP_
 #define REVERSE_ITERATOR_HPP_
 
-#include <iterator_trait.hpp>
+#include <iterator_traits.hpp>
 
 namespace ft {
 	template <class Iterator>
