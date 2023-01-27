@@ -19,7 +19,6 @@ namespace ft {
 			typedef std::size_t size_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef Compare key_compare;
-			typedef typename std::equal_to<Key> equal_to;
 			typedef Allocator allocator_type;
 			typedef value_type& reference;
 			typedef const value_type& const_reference;
@@ -170,40 +169,28 @@ namespace ft {
 				iterator begin = this->begin();
 				iterator end = this->end();
 				for (; begin != end; begin++) {
-					if (equal_to()(key, begin->first) || key_compare_(key, begin->first))
+					if (key_compare_(begin->first, key) == false)
 						return begin;
 				}
-				return this->end();
+				return end;
 			}
 
 			const_iterator lower_bound( const Key& key ) const {
-				const_iterator begin = this->begin();
-				const_iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (equal_to()(key, begin->first) || key_compare_(key, begin->first))
-						return begin;
-				}
-				return this->end();
+				return const_iterator(this->lower_bound(key));
 			}
 
 			iterator upper_bound( const Key& key ) {
 				iterator begin = this->begin();
 				iterator end = this->end();
 				for (; begin != end; begin++) {
-					if (key_compare_(key, begin->first))
+					if (key_compare_(key, begin->first) == true)
 						return begin;
 				}
-				return this->end();
+				return end;
 			}
 
 			const_iterator upper_bound( const Key& key ) const {
-				const_iterator begin = this->begin();
-				const_iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (key_compare_(key, begin->first))
-						return begin;
-				}
-				return this->end();
+				return const_iterator(this->upper_bound(key));
 			}
 
 			value_compare value_comp() const { return value_compare(key_compare_); }

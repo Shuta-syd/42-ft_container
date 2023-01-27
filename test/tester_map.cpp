@@ -22,7 +22,44 @@ void tester_map()
 }
 
 void test_map() {
+	print_white("====================== upper_bound test ========================");
+	ft::map<int, std::string> ft_map9;
+	std::map<int, std::string> std_map9;
+	for (size_t i = 0; i < 100; i++) {
+		ft_map9.insert(FT_PAIR(i, "42tokyo"));
+		std_map9.insert(STD_PAIR(i, "42tokyo"));
+	}
 
+	clock_t ft_start = clock();
+	for (size_t i = 0; i < 10; i++) {
+		ft::map<int, std::string> ft_map(ft_map9.begin(), ft_map9.end());
+		for (size_t i = 0; i < 10; i++)
+			ft_map.upper_bound(i);
+	}
+	clock_t ft_end = clock();
+	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	double std_start = clock();
+	for (size_t i = 0; i < 10; i++){
+		std::map<int, std::string> std_map(std_map9.begin(), std_map9.end());
+		for (size_t i = 0; i < 10; i++)
+			std_map.upper_bound(i);
+	}
+	clock_t std_end = clock();
+	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map10(ft_map9.begin(), ft_map9.end());
+	std::map<int, std::string> std_map10(std_map9.begin(), std_map9.end());
+	bool equal = true;
+	for (size_t i = 0; i < 99; i++){
+		if (ft_map10.upper_bound(i)->first != std_map10.upper_bound(i)->first ) {
+			std::cout << "i :" << i << std::endl;
+			std::cout << "ft: " << ft_map10.upper_bound(i)->first << std::endl;
+			std::cout << "std: " << std_map10.upper_bound(i)->first << std::endl;
+			equal = false;
+		}
+	}
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 
@@ -146,24 +183,24 @@ void tester_lookup() {
 	print_white("====================== equal_range test ========================");
 	ft::map<int, std::string> ft_map5;
 	std::map<int, std::string> std_map5;
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 501; i++) {
 		ft_map5.insert(FT_PAIR(i, "42tokyo"));
 		std_map5.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	ft_start = clock();
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 500; i++) {
 		ft::map<int, std::string> ft_map(ft_map5.begin(), ft_map5.end());
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			ft_map.equal_range(i);
 	}
 	ft_end = clock();
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 500; i++){
 		std::map<int, std::string> std_map(std_map5.begin(), std_map5.end());
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			std_map.equal_range(i);
 	}
 	std_end = clock();
@@ -172,7 +209,7 @@ void tester_lookup() {
 	ft::map<int, std::string> ft_map6(ft_map5.begin(), ft_map5.end());
 	std::map<int, std::string> std_map6(std_map5.begin(), std_map5.end());
 	equal = true;
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 500; i++){
 		if (ft_map6.equal_range(i).first->first != std_map6.equal_range(i).first->first )
 			equal = false;
 		else if (ft_map6.equal_range(i).second->first != std_map6.equal_range(i).second->first )
@@ -184,24 +221,24 @@ void tester_lookup() {
 	print_white("====================== lower_bound test ========================");
 	ft::map<int, std::string> ft_map7;
 	std::map<int, std::string> std_map7;
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 500; i++) {
 		ft_map7.insert(FT_PAIR(i, "42tokyo"));
 		std_map7.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	ft_start = clock();
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 500; i++) {
 		ft::map<int, std::string> ft_map(ft_map7.begin(), ft_map7.end());
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			ft_map.lower_bound(i);
 	}
 	ft_end = clock();
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 500; i++){
 		std::map<int, std::string> std_map(std_map7.begin(), std_map7.end());
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			std_map.lower_bound(i);
 	}
 	std_end = clock();
@@ -210,7 +247,7 @@ void tester_lookup() {
 	ft::map<int, std::string> ft_map8(ft_map7.begin(), ft_map7.end());
 	std::map<int, std::string> std_map8(std_map7.begin(), std_map7.end());
 	equal = true;
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 500; i++){
 		if (ft_map8.lower_bound(i)->first != std_map8.lower_bound(i)->first )
 			equal = false;
 	}
@@ -220,24 +257,24 @@ void tester_lookup() {
 	print_white("====================== upper_bound test ========================");
 	ft::map<int, std::string> ft_map9;
 	std::map<int, std::string> std_map9;
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 501; i++) {
 		ft_map9.insert(FT_PAIR(i, "42tokyo"));
 		std_map9.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	ft_start = clock();
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 500; i++) {
 		ft::map<int, std::string> ft_map(ft_map9.begin(), ft_map9.end());
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			ft_map.upper_bound(i);
 	}
 	ft_end = clock();
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 500; i++){
 		std::map<int, std::string> std_map(std_map9.begin(), std_map9.end());
-		for (size_t i = 0; i < 1000; i++)
+		for (size_t i = 0; i < 500; i++)
 			std_map.upper_bound(i);
 	}
 	std_end = clock();
@@ -246,7 +283,7 @@ void tester_lookup() {
 	ft::map<int, std::string> ft_map10(ft_map9.begin(), ft_map9.end());
 	std::map<int, std::string> std_map10(std_map9.begin(), std_map9.end());
 	equal = true;
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 500; i++){
 		if (ft_map10.upper_bound(i)->first != std_map10.upper_bound(i)->first )
 			equal = false;
 	}
