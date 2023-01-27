@@ -114,6 +114,6 @@ namespace ft {
 		else
 			return rhs.base() - lhs.base();
 	}
-};
+}
 
 #endif

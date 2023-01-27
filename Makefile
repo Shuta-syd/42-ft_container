@@ -6,7 +6,8 @@ objs_dir += test/
 deps_dir += test/
 
 srcs += $(addprefix test/, \
-  	AVLtree.cpp main.cpp vector.cpp stack.cpp type_traits.cpp map.cpp\
+  	AVLtree.cpp main.cpp utils.cpp tester_vector.cpp \
+		tester_map.cpp \
     )
 
 objs := $(srcs:%.cpp=objs/%.o)
@@ -20,7 +21,7 @@ deps_dir := $(addsuffix .keep, $(deps_dir))
 
 debugflags := -g3 -fsanitize=address
 headerflags := -MMD -MP
-CXXFLAGS := #-Wall -Werror -Wextra -std=c++98 -pedantic
+CXXFLAGS := -g -Wall -Werror -Wextra -std=c++98
 INC = -I./containers -I./iterators -I./type_traits -I./algorithm -I./utility
 
 ############# basic rules ##############
@@ -62,11 +63,15 @@ re: fclean all
 debug: CXXFLAGS += $(debugflags)
 debug: re
 
-run: all
-	@./$(NAME)
+test: all
+	@./$(NAME) test
+vector: all
+	@./$(NAME) vector
+map: all
+	@./$(NAME) map
 
 leaks: $(NAME)
-	@leaks -q --atExit -- ./$(NAME)
+	@leaks -q --atExit -- ./$(NAME) vector
 
 
 RED = \033[31m

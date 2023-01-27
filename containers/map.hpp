@@ -9,17 +9,16 @@
 #include <algorithm.hpp>
 
 namespace ft {
-	template <class Key, class T , class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
+	template <class Key, class T , class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<Key, T> > >
 	class map {
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
-			typedef pair<const Key, T> value_type;
+			typedef pair<Key, T> value_type;
 			typedef node<value_type> node_type;
 			typedef std::size_t size_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef Compare key_compare;
-			typedef typename std::equal_to<Key> equal_to;
 			typedef Allocator allocator_type;
 			typedef value_type& reference;
 			typedef const value_type& const_reference;
@@ -73,7 +72,10 @@ namespace ft {
 
 			// copy operator
 			map& operator=( const map& rhs ) {
-					tree_ = rhs.tree_;
+					if (rhs == this)
+						return *this;
+					this->clear();
+					this->insert(rhs.begin(), rhs.end());
 					return *this;
 			}
 
@@ -105,7 +107,7 @@ namespace ft {
 				node_type *node = tree_.search(k);
 				if (node == tree_.getNullNode()) {
 					tree_.insert(ft::make_pair<key_type, mapped_type>(k, mapped_type()));
-					node_type *node = tree_.search(k);
+					node = tree_.search(k);
 				}
 				return node->val_.second;
 			}
@@ -129,15 +131,16 @@ namespace ft {
 			}
 
 			void erase (iterator pos) {
-				key_type key = pos.base()->key_;
-				tree_.erase(key);
+				const key_type &key = pos->first;
+				this->erase(key);
 			}
 
-			size_type erase (const key_type& key) { return tree_.erase(key); }
+			size_type erase (const key_type& key) {
+				return tree_.erase(key);
+			}
 
 			void erase (iterator first, iterator last) {
-				for (; first != last; first++)
-					tree_.erase(first.base()->key_);
+				tree_.erase(first, last);
 			}
 
 			void clear() { this->erase(this->begin(), this->end()); }
@@ -150,9 +153,10 @@ namespace ft {
 			/**  @brief Returns the number of elements with key that compares equivalent to the specified argument */
 			size_type count(const Key &key) const { return tree_.search(key) != tree_.getNullNode(); }
 
-			iterator find(const Key &key) { return iterator(tree_.search(key), tree_.getNullNode()); }
-			const_iterator find(const Key &key) const { return const_iterator(tree_.search(key), tree_.getNullNode()); }
+			iterator find(const Key &key) { return tree_.find(key); }
+			const_iterator find(const Key &key) const { return tree_.const_find(key); }
 
+			/** @brief Returns a range containing all elements with the given key in the container */
 			ft::pair<iterator,iterator> equal_range( const Key& key ) {
 				return ft::make_pair<iterator, iterator>(this->lower_bound(key), this->upper_bound(key));
 			}
@@ -165,40 +169,28 @@ namespace ft {
 				iterator begin = this->begin();
 				iterator end = this->end();
 				for (; begin != end; begin++) {
-					if (equal_to()(key, begin->first) || key_compare_(key, begin->first))
+					if (key_compare_(begin->first, key) == false)
 						return begin;
 				}
-				return this->end();
+				return end;
 			}
 
 			const_iterator lower_bound( const Key& key ) const {
-				const_iterator begin = this->begin();
-				const_iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (equal_to()(key, begin->first) || key_compare_(key, begin->first))
-						return begin;
-				}
-				return this->end();
+				return const_iterator(this->lower_bound(key));
 			}
 
 			iterator upper_bound( const Key& key ) {
 				iterator begin = this->begin();
 				iterator end = this->end();
 				for (; begin != end; begin++) {
-					if (key_compare_(key, begin->first))
+					if (key_compare_(key, begin->first) == true)
 						return begin;
 				}
-				return this->end();
+				return end;
 			}
 
 			const_iterator upper_bound( const Key& key ) const {
-				const_iterator begin = this->begin();
-				const_iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (key_compare_(key, begin->first))
-						return begin;
-				}
-				return this->end();
+				return const_iterator(this->upper_bound(key));
 			}
 
 			value_compare value_comp() const { return value_compare(key_compare_); }

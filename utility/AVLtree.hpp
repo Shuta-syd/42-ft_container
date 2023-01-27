@@ -1,6 +1,10 @@
 #ifndef AVLTREE_HPP_
 #define AVLTREE_HPP_
 
+
+/* color code */
+#define YEL "\033[33m"
+#define RES "\033[m"
 #include <memory>
 #include <iomanip>
 #include <node.hpp>
@@ -20,7 +24,7 @@ namespace ft {
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef std::size_t size_type;
 
-		AVLtree() : size_(0) ,root_(), begin_(), end_(), nullNode_(), key_compare(Comp()), alloc_(allocator_type()) {
+		AVLtree() :  root_(), size_(0), begin_(), end_(), nullNode_(), key_compare(Comp()), alloc_(allocator_type()) {
 			nullNode_ = alloc_.allocate(1);
 			alloc_.construct(nullNode_, node_type());
 			begin_ = nullNode_;
@@ -30,16 +34,6 @@ namespace ft {
 
 		AVLtree(const AVLtree &rhs) { *this = rhs; }
 
-		AVLtree &operator=(const AVLtree &rhs) {
-			size_ = rhs.size_;
-			root_ = rhs.root_;
-			nullNode_ = rhs.nullNode_;
-			begin_ = rhs.begin_;
-			end_ = rhs.end_;
-			key_compare = rhs.key_compare;
-			alloc_ = rhs.alloc_;
-			return *this;
-		}
 
 		~AVLtree() {
 			this->destroyTree(root_);
@@ -74,7 +68,7 @@ namespace ft {
 				begin_ = pta->lhs_;
 				balanceInsert(pta->lhs_);
 			}
-			size_ += 1;
+			size_ += 1;;
 			return ft::make_pair(iterator(node, nullNode_, end_, begin_), true);
 		}
 
@@ -90,7 +84,11 @@ namespace ft {
 		/** @brief Delete a specific node */
 		size_type erase(const key_type &key) {
 			node_type *target = this->search(key);
-			if (target == nullNode_)
+			if (target == begin_)
+				begin_ = this->searchNextNode(begin_);
+			else if (target == end_)
+				end_ = this->searchPrevNode(end_);
+			else if (target == nullNode_)
 				return 0;
 			size_ -= 1;
 			/**
@@ -99,35 +97,63 @@ namespace ft {
 			 * 3. The node to be deleted is replaced by the node with the largest value in the left subtree, and the node with the largest value is deleted.
 			 */
 			if (target->lhs_ == nullNode_) {
-				// All patterns of equilibrium binary tree collapse are on this side.
-				node_type *pta = target->pta_;
-				if (root_ == target)
-					root_ = target->rhs_;
-				else if (pta->lhs_ == target)
-					pta->lhs_ = target->rhs_;
-				else
-					pta->rhs_ = target->rhs_;
-				target->rhs_->pta_ = pta;
+				this->Replace(target, target->rhs_);
 				balanceErase(target->rhs_);
 				this->destroyNode(target);
 			}
 			else {
 				node_type *maxNode = this->searchMaxNode(target->lhs_);
-				node_type *pta = maxNode->pta_;
+				if (maxNode == begin_)
+					begin_ = target;
+				else if (target == end_)
+					end_ = target;
+
 				target->key_ = maxNode->key_;
 				target->val_ = maxNode->val_;
-				if (pta->lhs_ == maxNode)
-					pta->lhs_ = maxNode->lhs_;
-				else
-					pta->rhs_ = maxNode->lhs_;
-				maxNode->lhs_->pta_ = pta;
-				balanceErase(target->lhs_);
-				if (maxNode->lhs_ == nullNode_)
-					maxNode->lhs_->pta_ = nullNode_;
+				this->Replace(maxNode, maxNode->lhs_);
+				this->balanceErase(maxNode->lhs_);
 				this->destroyNode(maxNode);
 			}
+			// printAVL(root_, 1);
 			return 1;
 		}
+
+		/** @brief Delete a specific node */
+		void erase(iterator first, iterator last) {
+			while (first != last) {
+				const key_type &key = first->first;
+				first++;
+
+				node_type *target = this->search(key);
+				if (target == begin_)
+					begin_ = this->searchNextNode(begin_);
+				else if (target == end_)
+					end_ = this->searchPrevNode(end_);
+				else if (target == nullNode_)
+					return;
+				size_ -= 1;
+
+				if (target->lhs_ == nullNode_) {
+					this->Replace(target, target->rhs_);
+					balanceErase(target->rhs_);
+					this->destroyNode(target);
+				}
+				else {
+					node_type *maxNode = this->searchMaxNode(target->lhs_);
+					if (maxNode == begin_)
+						begin_ = target;
+					else if (target == end_)
+						end_ = target;
+
+					target->key_ = maxNode->key_;
+					target->val_ = maxNode->val_;
+					this->Replace(maxNode, maxNode->lhs_);
+					this->balanceErase(maxNode->lhs_);
+					this->destroyNode(maxNode);
+				}
+			}
+		}
+
 
 		void swap(AVLtree &other) {
 			std::swap(root_, other.root_);
@@ -147,9 +173,14 @@ namespace ft {
 		size_type size() const { return size_; }
 		size_type max_size() const { return alloc_.max_size(); }
 
+		iterator find(const key_type &key) { return iterator(this->search(key), nullNode_, end_, begin_);}
+		const_iterator const_find(const key_type &key) {return const_iterator(this->search(key), nullNode_, end_, begin_);}
+
 		void printAVL(node_type *node, int i) {
 			if (node == NULL)
 				node = root_;
+			else if (node == nullNode_)
+				return;
 			std::cout << YEL << "[ " << i << " ]" << RES << ": ";
 			std::cout << " [ " << std::setw(3) << std::right << std::setfill(' ') << node->key_ << " ] ";
 			std::cout << " | lhs :[ " << std::setw(3) << std::right << std::setfill(' ') << node->lhs_->key_ << " ] ";
@@ -233,12 +264,11 @@ namespace ft {
 
 			beforeRoot->rhs_ = pivot;
 			if (pivot != nullNode_)
-				pivot->pta_ = afterRoot;
-			afterRoot->lhs_ = beforeRoot;
-			beforeRoot->pta_ = afterRoot;
+				pivot->pta_ = beforeRoot;
 
-			if (beforeRoot == root_)
-				root_ = afterRoot;
+			afterRoot->lhs_ = beforeRoot;
+			this->Replace(beforeRoot, afterRoot);
+			beforeRoot->pta_ = afterRoot;
 
 			updateHeight(beforeRoot);
 			updateHeight(afterRoot);
@@ -254,12 +284,11 @@ namespace ft {
 
 			beforeRoot->lhs_ = pivot;
 			if (pivot != nullNode_)
-				pivot->pta_ = afterRoot;
-			afterRoot->rhs_ = beforeRoot;
-			beforeRoot->pta_ = afterRoot;
+				pivot->pta_ = beforeRoot;
 
-			if (beforeRoot == root_)
-				root_ = afterRoot;
+			afterRoot->rhs_ = beforeRoot;
+			this->Replace(beforeRoot, afterRoot);
+			beforeRoot->pta_ = afterRoot;
 
 			updateHeight(beforeRoot);
 			updateHeight(afterRoot);
@@ -295,10 +324,58 @@ namespace ft {
 			node->height_ = 1 + (left_height > right_height ? left_height : right_height);
 		}
 
+		void Replace(node_type *before, node_type *after) {
+			node_type *pta = before->pta_;
+
+			if (before == root_)
+				root_ = after;
+			else if (pta->lhs_ == before)
+				pta->lhs_ = after;
+			else
+				pta->rhs_ = after;
+
+			after->pta_ = pta;
+		}
+
 		/** @brief Search for the maximum value from the left-branch tree of a specific node */
 		node_type *searchMaxNode(node_type *node) {
 			while (node->rhs_ != nullNode_) {
 				node = node->rhs_;
+			}
+			return node;
+		}
+
+		node_type *searchNextNode(node_type *node) {
+			if (node == end_)
+					node = nullNode_;
+				else if (node == nullNode_)
+					node = begin_;
+				else if (node->rhs_ != nullNode_) {
+					node = node->rhs_;
+					while (node->lhs_ != nullNode_)
+						node = node->lhs_;
+				} else {
+					while (node->pta_->lhs_ != node)
+						node = node->pta_;
+					node = node->pta_;
+				}
+			return node;
+		}
+
+		node_type *searchPrevNode(node_type *node) {
+			if (node == begin_)
+				node = nullNode_;
+			else if (node == nullNode_)
+				node = end_;
+			else if (node->lhs_ != nullNode_) {
+				node = node->lhs_;
+				while (node->rhs_ != nullNode_)
+					node = node->rhs_;
+			}
+			else {
+				while (node->pta_->rhs_ != node)
+					node = node->pta_;
+				node = node->pta_;
 			}
 			return node;
 		}
@@ -312,6 +389,8 @@ namespace ft {
 		}
 
 		void destroyTree(node_type *node) {
+			if (node == nullNode_)
+				return;
 			if (node->lhs_ != nullNode_)
 				destroyTree(node->lhs_);
 			if (node->rhs_ != nullNode_)

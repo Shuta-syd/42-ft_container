@@ -63,9 +63,9 @@ namespace ft {
 		}
 
 		bidirectional_iterator operator++(int) { // postfix increment
-			bidirectional_iterator tmp(*this);
-			++(*this);
-			return tmp;
+				bidirectional_iterator tmp(*this);
+				++(*this);
+				return tmp;
 		}
 
 		bidirectional_iterator &operator--() {
@@ -98,6 +98,6 @@ namespace ft {
 			node_type *end_;
 			node_type *begin_;
 	};
-};
+}
 
 #endif
