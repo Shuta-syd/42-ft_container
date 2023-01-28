@@ -265,13 +265,13 @@ namespace ft
 			size_type size = this->size();
 			size_type capacity = this->capacity();
 			size_type pos_len = &(*pos) - begin_;
-			if (capacity - size >= size + 1) {//!!!!!!!!!!!!!!!!
-				iterator it = this->end();
-				iterator new_it = pos - 1;
-				for (; it != new_it; it--)
-					alloc_.construct(&(*it), *it);
+			if (capacity - size > 1) {
+					iterator it = pos + 1;
+					size_type len = end_ - &(*pos);
+					for (size_t i = 0; i < len; it++, i++)
+					alloc_.construct(&(*it), *(pos + i));
 				end_ += 1;
-				alloc_.construct(&(*new_it), val);
+				alloc_.construct(&(*pos), val);
 			}
 			else {
 				size_type new_capacity = size > 0 ? size * 2 : 1;
@@ -411,8 +411,8 @@ namespace ft
 		void clear() {
 			size_type size = this->size();
 			for (size_t i = 0; i < size; i++) {
-				alloc_.destroy(end_);
 				end_--;
+				alloc_.destroy(end_);
 			}
 		}
 

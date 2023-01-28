@@ -23,16 +23,42 @@ void tester_vector() {
 }
 
 void mini_vec_test() {
-	print_white("========================= assign2 test =========================");
-	ft::vector<std::string> ft_vec2(1000, "42Tokyo");
+	print_white("========================== insert test ==========================");
+	clock_t ft_start = clock();
+	std::cout << "1" << std::endl;
+	for (size_t i = 0; i < 100; i++) {
+	ft::vector<std::string> ft_vec(5, "tokyo");
+		for (size_t i = 0; i < 1000; i++)
+			ft_vec.insert(ft_vec.begin() + 3, "42");
+	}
+	std::cout << "2" << std::endl;
+	clock_t ft_end = clock();
+	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
-	// ft::vector<std::string> ft_vec3;
-	// ft_vec3.assign(ft_vec2.begin(), ft_vec2.end());
-	// bool equal = ft::equal(ft_vec3.begin(), ft_vec3.end(), std_vec3.begin());
-	// if (ft_vec3.size() != std_vec3.size())
-		// equal = false;
+	std::cout << "3" << std::endl;
+	clock_t std_start = clock();
+	for (size_t i = 0; i < 100; i++){
+		std::vector<std::string> std_vec(5, "tokyo");
+		for (size_t i = 0; i < 1000; i++)
+			std_vec.insert(std_vec.begin() + 3, "42");
+	}
+	clock_t std_end = clock();
+	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
-	// print_time_cmp(ft_time, std_time, equal);
+	std::cout << "4" << std::endl;
+	ft::vector<std::string> ft_vec6(5, "tokyo");
+	for (size_t i = 0; i < 100; i++)
+			ft_vec6.insert(ft_vec6.begin() + 3, "42");
+	std::cout << "5" << std::endl;
+	std::vector<std::string> std_vec6(5, "tokyo");
+	for (size_t i = 0; i < 100; i++)
+			std_vec6.insert(std_vec6.begin() + 3, "42");
+	std::cout << "6" << std::endl;
+	bool equal = ft::equal(ft_vec6.begin(), ft_vec6.end(), std_vec6.begin());
+	if (ft_vec6.size() != std_vec6.size())
+		equal = false;
+
+	print_time_cmp(ft_time, std_time, equal);
 }
 
 void tester_iterator_vec() {
@@ -649,7 +675,7 @@ void tester_modifiers_vec() {
 	print_white("========================== insert test ==========================");
 	ft_start = clock();
 	for (size_t i = 0; i < 100; i++) {
-		ft::vector<std::string> ft_vec(5, "tokyo");
+	ft::vector<std::string> ft_vec(5, "tokyo");
 		for (size_t i = 0; i < 1000; i++)
 			ft_vec.insert(ft_vec.begin() + 3, "42");
 	}
