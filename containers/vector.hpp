@@ -76,8 +76,7 @@ namespace ft
 		}
 
 		/** @brief Copies all the elements from x into the container */
-		vector &operator=(const vector &rhs)
-		{
+		vector &operator=(const vector &rhs) {
 			if (rhs == *this)
 					return (*this);
 			this->clear();

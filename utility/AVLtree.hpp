@@ -13,14 +13,14 @@
 #include <reverse_iterator.hpp>
 
 namespace ft {
-	template <class T, class Comp, class N = node<T>, class Allocator = std::allocator<N> >
+	template <class T, class Comp, class N = node<T>, class Allocator = std::allocator<T> >
 	class AVLtree {
 	public:
 		typedef T value_type;
 		typedef typename value_type::first_type key_type;
-		typedef Allocator allocator_type;
 		typedef N node_type;
-		typedef typename std::equal_to<key_type> equal_to; //!!!!!!!!!!!!!!
+		typedef typename Allocator::template rebind<N>::other  allocator_type;
+		typedef typename std::equal_to<key_type> equal_to;
 		typedef bidirectional_iterator<T, node_type> iterator;
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
