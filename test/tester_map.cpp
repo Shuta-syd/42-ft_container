@@ -440,7 +440,7 @@ void tester_lookup() {
 	print_white("====================== equal_range test ========================");
 	ft::map<int, std::string> ft_map5;
 	std::map<int, std::string> std_map5;
-	for (size_t i = 0; i < 251; i++) {
+	for (size_t i = 0; i < 1005; i++) {
 		ft_map5.insert(FT_PAIR(i, "42tokyo"));
 		std_map5.insert(STD_PAIR(i, "42tokyo"));
 	}
