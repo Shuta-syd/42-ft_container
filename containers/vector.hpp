@@ -378,14 +378,14 @@ namespace ft
 		iterator erase(iterator pos) {
 			size_type pos_len = end_ - &(*pos) - 1;
 			if (pos_len == 0) {
-				pop_back();
+				alloc_.destroy(&(*(pos)));
+				end_ -= 1;
 				return pos;
 			}
 			iterator pos_next = pos + 1;
 			for (size_type i = 0; i < pos_len; i++) {
-				alloc_.destroy(&(*(pos + i)));
-				alloc_.construct(&(*pos), *pos_next);
-				pos_next++;
+				alloc_.construct(&(*(pos)) + i, *(pos_next + i));
+				alloc_.destroy(&(*(pos_next + i)));
 			}
 			end_ -= 1;
 			return pos;
