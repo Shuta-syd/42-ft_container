@@ -265,11 +265,9 @@ namespace ft
 			size_type size = this->size();
 			size_type capacity = this->capacity();
 			size_type pos_len = &(*pos) - begin_;
-			if (capacity - size > 1) {
-					iterator it = pos + 1;
-					size_type len = end_ - &(*pos);
-					for (size_t i = 0; i < len; it++, i++)
-					alloc_.construct(&(*it), *(pos + i));
+			if (capacity - size >  1) {
+					for (size_t i = 0; i < pos_len; i++)
+						alloc_.construct(end_ - i, *(end_ - i - 1));
 				end_ += 1;
 				alloc_.construct(&(*pos), val);
 			}

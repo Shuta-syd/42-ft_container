@@ -26,10 +26,11 @@ void mini_vec_test() {
 	print_white("========================== insert test ==========================");
 	clock_t ft_start = clock();
 	std::cout << "1" << std::endl;
-	for (size_t i = 0; i < 100; i++) {
+	for (size_t i = 0; i < 1; i++) {
 	ft::vector<std::string> ft_vec(5, "tokyo");
 		for (size_t i = 0; i < 1000; i++)
 			ft_vec.insert(ft_vec.begin() + 3, "42");
+		print_ft_vector(ft_vec);
 	}
 	std::cout << "2" << std::endl;
 	clock_t ft_end = clock();
@@ -37,10 +38,11 @@ void mini_vec_test() {
 
 	std::cout << "3" << std::endl;
 	clock_t std_start = clock();
-	for (size_t i = 0; i < 100; i++){
+	for (size_t i = 0; i < 1; i++){
 		std::vector<std::string> std_vec(5, "tokyo");
 		for (size_t i = 0; i < 1000; i++)
 			std_vec.insert(std_vec.begin() + 3, "42");
+		print_std_vector(std_vec);
 	}
 	clock_t std_end = clock();
 	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
