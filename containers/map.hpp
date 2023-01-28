@@ -72,7 +72,7 @@ namespace ft {
 
 			// copy operator
 			map& operator=( const map& rhs ) {
-					if (rhs == this)
+					if (rhs == *this)
 						return *this;
 					this->clear();
 					this->insert(rhs.begin(), rhs.end());
@@ -116,7 +116,7 @@ namespace ft {
 			[Modifiers]
 			----------------------------------------*/
 			/** @brief Inserts value */
-			pair<iterator,bool> insert (const value_type& val) { return tree_.insert(val); }
+			pair<iterator,bool> insert (const value_type& val) { return tree_.insert(val); } // segv
 
 			/** @brief Inserts value in the position as close as possible to the position just prior to pos */
 			iterator insert (iterator pos, const value_type& val) {
@@ -225,7 +225,7 @@ namespace ft {
 	bool operator>=(const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) { return !(lhs > rhs); }
 
 	template <class Key, class T, class Compare, class Alloc>
-	void swap(std::map<Key, T, Compare, Alloc> &lhs, std::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
+	void swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
 }
 
 #endif

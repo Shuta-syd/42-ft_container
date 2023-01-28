@@ -34,7 +34,7 @@ namespace ft {
 
 		reference operator*() const { return *current_pos_; }
 		pointer operator->() const { return &(*current_pos_); }
-		reference operator[](difference_type n) { return current_pos_ + n; }
+		reference operator[](difference_type n) const { return *(current_pos_ + n); }
 		random_access_iterator &operator++() { // prefix increment
 			current_pos_++;
 			return *this;

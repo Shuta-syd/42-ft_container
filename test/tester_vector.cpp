@@ -87,6 +87,8 @@ void tester_iterator_vec() {
 
 	ft::vector<int> ft_map3(ft_map4.begin(), ft_map4.end());
 	std::vector<int> std_map3(std_map.begin(), std_map.end());
+	// std::cout << *ft_map3.rend() << std::endl;
+	// std::cout << *_map3.rend() << std::endl;
 	equal = ft::equal(ft_map3.rbegin(), ft_map3.rend(), std_map3.rbegin());
 	print_time_cmp(ft_time, std_time, equal);
 }
