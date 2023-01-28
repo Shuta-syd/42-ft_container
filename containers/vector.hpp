@@ -411,8 +411,8 @@ namespace ft
 		void clear() {
 			size_type size = this->size();
 			for (size_t i = 0; i < size; i++) {
+				alloc_.destroy(end_);
 				end_--;
-				alloc_.destroy(end_ - i);
 			}
 		}
 

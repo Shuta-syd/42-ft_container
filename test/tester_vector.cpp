@@ -5,6 +5,7 @@ void tester_capacity_vec();
 void tester_modifiers_vec();
 void tester_operator();
 void tester_iterator_vec();
+void mini_vec_test();
 
 void tester_vector() {
 	print_yel("--------------------------------------------------");
@@ -17,6 +18,21 @@ void tester_vector() {
 	tester_capacity_vec();
 	tester_modifiers_vec();
 	tester_operator();
+
+	// mini_vec_test();
+}
+
+void mini_vec_test() {
+	print_white("========================= assign2 test =========================");
+	ft::vector<std::string> ft_vec2(1000, "42Tokyo");
+
+	// ft::vector<std::string> ft_vec3;
+	// ft_vec3.assign(ft_vec2.begin(), ft_vec2.end());
+	// bool equal = ft::equal(ft_vec3.begin(), ft_vec3.end(), std_vec3.begin());
+	// if (ft_vec3.size() != std_vec3.size())
+		// equal = false;
+
+	// print_time_cmp(ft_time, std_time, equal);
 }
 
 void tester_iterator_vec() {
