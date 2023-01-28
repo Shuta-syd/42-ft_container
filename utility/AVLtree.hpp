@@ -168,6 +168,38 @@ namespace ft {
 			std::swap(alloc_, other.alloc_);
 		}
 
+	iterator upper_bound(const key_type &key) {
+		node_type *node = root_;
+		node_type *ret = nullNode_;
+
+		while (node != nullNode_) {
+			if (key_compare(key, node->key_)) {
+				ret = node;
+				node = node->lhs_;
+			}
+			else
+				node = node->rhs_;
+		}
+		return iterator(ret, nullNode_, begin_, end_) ;
+	}
+
+	iterator lower_bound(const key_type &key) {
+		node_type *node = root_;
+		node_type *ret = nullNode_;
+
+		while (node != nullNode_) {
+			if (key_compare(node->key_, key) == false) {
+				ret = node;
+				node = node->lhs_;
+			}
+			else
+				node = node->rhs_;
+		}
+		return iterator(ret, nullNode_, begin_, end_) ;
+	}
+
+
+		node_type *getRoot() const { return root_; }
 		node_type *getNullNode() const { return nullNode_; }
 		iterator begin() { return iterator(begin_, nullNode_, end_, begin_); }
 		const_iterator begin() const { return const_iterator(begin_, nullNode_, end_, begin_); }

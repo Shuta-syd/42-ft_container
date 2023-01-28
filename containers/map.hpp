@@ -72,11 +72,11 @@ namespace ft {
 
 			// copy operator
 			map& operator=( const map& rhs ) {
-					if (rhs == *this)
-						return *this;
-					this->clear();
-					this->insert(rhs.begin(), rhs.end());
+				if (*this == rhs)
 					return *this;
+					this->clear();
+				this->insert(rhs.begin(), rhs.end());
+				return *this;
 			}
 
 			allocator_type get_allocator() const { return alloc_; }
@@ -166,13 +166,7 @@ namespace ft {
 			}
 
 			iterator lower_bound( const Key& key ) {
-				iterator begin = this->begin();
-				iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (key_compare_(begin->first, key) == false)
-						return begin;
-				}
-				return end;
+				return tree_.lower_bound(key);
 			}
 
 			const_iterator lower_bound( const Key& key ) const {
@@ -180,13 +174,7 @@ namespace ft {
 			}
 
 			iterator upper_bound( const Key& key ) {
-				iterator begin = this->begin();
-				iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (key_compare_(key, begin->first) == true)
-						return begin;
-				}
-				return end;
+				return tree_.upper_bound(key);
 			}
 
 			const_iterator upper_bound( const Key& key ) const {
