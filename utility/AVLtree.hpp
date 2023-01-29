@@ -338,14 +338,12 @@ namespace ft {
 		/** @brief single RR rotate + LL rotate */
 		node_type *rotateRL(node_type *beforeRoot) {
 			rotateR(beforeRoot->rhs_);
-			beforeRoot->rhs_ = beforeRoot->rhs_->pta_;
 			return rotateL(beforeRoot);
 		}
 
 		/** @brief single LL rotate + RR rotate rotate */
 		node_type *rotateLR(node_type *beforeRoot) {
 			rotateL(beforeRoot->lhs_);
-			beforeRoot->lhs_ = beforeRoot->lhs_->pta_;
 			return rotateR(beforeRoot);
 		}
 
