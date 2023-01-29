@@ -23,43 +23,37 @@ void tester_vector() {
 }
 
 void mini_vec_test() {
-	print_white("========================== insert test ==========================");
-	clock_t ft_start = clock();
-	std::cout << "1" << std::endl;
-	for (size_t i = 0; i < 1; i++) {
-	ft::vector<std::string> ft_vec(5, "tokyo");
-		for (size_t i = 0; i < 1000; i++)
-			ft_vec.insert(ft_vec.begin() + 3, "42");
-		print_ft_vector(ft_vec);
+	print_white("===================== reverse iterator test =====================");
+	ft::vector<int> ft_map4;
+	std::vector<int> std_map4;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map4.push_back(i);
+		std_map4.push_back(i);
 	}
-	std::cout << "2" << std::endl;
+
+	clock_t ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::vector<int> ft_map4_(ft_map4.begin(), ft_map4.end());
+		ft::vector<int>::reverse_iterator rit = ft_map4_.rbegin();
+		ft::vector<int>::reverse_iterator rit_end = ft_map4_.rend();
+		for (; rit != rit_end; rit++) ;
+	}
 	clock_t ft_end = clock();
 	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
-	std::cout << "3" << std::endl;
 	clock_t std_start = clock();
-	for (size_t i = 0; i < 1; i++){
-		std::vector<std::string> std_vec(5, "tokyo");
-		for (size_t i = 0; i < 1000; i++)
-			std_vec.insert(std_vec.begin() + 3, "42");
-		print_std_vector(std_vec);
+	for (size_t i = 0; i < 1000; i++){
+		std::vector<int> std_map4_(std_map4.begin(), std_map4.end());
+		std::vector<int>::reverse_iterator rit = std_map4_.rbegin();
+		std::vector<int>::reverse_iterator rit_end = std_map4_.rend();
+		for (; rit != rit_end; rit++) ;
 	}
 	clock_t std_end = clock();
 	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
-	std::cout << "4" << std::endl;
-	ft::vector<std::string> ft_vec6(5, "tokyo");
-	for (size_t i = 0; i < 100; i++)
-			ft_vec6.insert(ft_vec6.begin() + 3, "42");
-	std::cout << "5" << std::endl;
-	std::vector<std::string> std_vec6(5, "tokyo");
-	for (size_t i = 0; i < 100; i++)
-			std_vec6.insert(std_vec6.begin() + 3, "42");
-	std::cout << "6" << std::endl;
-	bool equal = ft::equal(ft_vec6.begin(), ft_vec6.end(), std_vec6.begin());
-	if (ft_vec6.size() != std_vec6.size())
-		equal = false;
-
+	ft::vector<int> ft_map3(ft_map4.begin(), ft_map4.end());
+	std::vector<int> std_map3(std_map4.begin(), std_map4.end());
+	bool equal = ft::equal(ft_map3.rbegin(), ft_map3.rend(), std_map3.rbegin());
 	print_time_cmp(ft_time, std_time, equal);
 }
 

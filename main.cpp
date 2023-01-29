@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+#if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -31,7 +31,7 @@ class MutantStack : public ft::stack<T>
 public:
 	MutantStack() {}
 	MutantStack(const MutantStack<T>& src) { *this = src; }
-	MutantStack<T>& operator=(const MutantStack<T>& rhs) 
+	MutantStack<T>& operator=(const MutantStack<T>& rhs)
 	{
 		this->c = rhs.c;
 		return *this;
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
 	{
 		//NORMAL ! :P
 	}
-	
+
 	for (int i = 0; i < COUNT; ++i)
 	{
 		map_int.insert(ft::make_pair(rand(), rand()));

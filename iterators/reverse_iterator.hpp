@@ -36,8 +36,7 @@ namespace ft {
 			}
 
 			reference operator*() const { // !!!!
-				iterator_type tmp(current_pos_);
-				return *(--tmp);
+				return *(current_pos_);
 			}
 
 			pointer operator->() const { return &(*current_pos_); }

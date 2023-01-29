@@ -71,6 +71,8 @@ map: all
 	@./$(NAME) map
 stack: all
 	@./$(NAME) stack
+subject:
+	@$(CXX) $(CXXFLAGS) $(INC) main.cpp
 
 leaks: $(NAME)
 	@leaks -q --atExit -- ./$(NAME) test

@@ -5,13 +5,9 @@ namespace ft {
 	template <class InputIterator1, class InputIterator2>
 		bool equal ( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )
 	{
-		int i = 0;
 		while (first1 != last1) {
 			if (!(*first1 == *first2))
-			{
-				std::cout << i << std::endl;
 				return false;
-			}
 			++first1; ++first2;
 		}
 		return true;
