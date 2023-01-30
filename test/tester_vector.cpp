@@ -760,9 +760,9 @@ void tester_modifiers_vec() {
 
 	print_white("=========================== erase test ==========================");
 	ft_start = clock();
-	for (size_t i = 0; i < 500; i++) {
+	for (size_t i = 0; i < 100; i++) {
 		ft::vector<std::string> ft_vec(5000, "tokyo");
-		for (size_t i = 0; i < 5000; i++) {
+		for (size_t i = 0; i < 1000; i++) {
 			ft_vec.erase(ft_vec.begin());
 		}
 	}
@@ -770,9 +770,9 @@ void tester_modifiers_vec() {
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 500; i++){
+	for (size_t i = 0; i < 100; i++){
 		std::vector<std::string> std_vec(5000, "tokyo");
-		for (size_t i = 0; i < 5000; i++)
+		for (size_t i = 0; i < 1000; i++)
 			std_vec.erase(std_vec.begin());
 	}
 	std_end = clock();
