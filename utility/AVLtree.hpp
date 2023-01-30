@@ -117,7 +117,6 @@ namespace ft {
 				this->balanceErase(maxNode->lhs_);
 				this->destroyNode(maxNode);
 			}
-			// printAVL(root_, 1);
 			return 1;
 		}
 
@@ -233,8 +232,8 @@ namespace ft {
 	private:
 		node_type *root_;
 		size_type size_;
-		node_type *begin_;
-		node_type *end_;
+		node_type *begin_; // smallest key
+		node_type *end_; // largest key
 		node_type *nullNode_;
 		Comp key_compare;
 		allocator_type alloc_;

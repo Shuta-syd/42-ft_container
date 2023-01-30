@@ -20,7 +20,7 @@ namespace ft {
 			key_type key_;
 			int height_;
 
-			
+
 	};
 }
 

@@ -75,7 +75,7 @@ namespace ft {
 				current_ = end_;
 			else if (current_->lhs_ != nullNode_) {
 				current_ = current_->lhs_;
-				while (current_->rhs_ != nullNode_)
+				while (current_->rhs_ != nullNode_ )
 					current_ = current_->rhs_;
 			}
 			else {

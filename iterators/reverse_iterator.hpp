@@ -35,7 +35,7 @@ namespace ft {
 				return *this;
 			}
 
-			reference operator*() const { // !!!!
+			reference operator*() const {
 				return *(current_pos_);
 			}
 
