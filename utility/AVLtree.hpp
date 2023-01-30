@@ -13,13 +13,13 @@
 #include <reverse_iterator.hpp>
 
 namespace ft {
-	template <class T, class Comp, class N = node<T>, class Allocator = std::allocator<N> >
+	template <class T, class Comp, class N = node<T>, class Allocator = std::allocator<T> >
 	class AVLtree {
 	public:
 		typedef T value_type;
 		typedef typename value_type::first_type key_type;
-		typedef Allocator allocator_type;
 		typedef N node_type;
+		typedef typename Allocator::template rebind<N>::other  allocator_type;
 		typedef typename std::equal_to<key_type> equal_to;
 		typedef bidirectional_iterator<T, node_type> iterator;
 		typedef bidirectional_iterator<const T, node_type> const_iterator;
@@ -117,7 +117,6 @@ namespace ft {
 				this->balanceErase(maxNode->lhs_);
 				this->destroyNode(maxNode);
 			}
-			// printAVL(root_, 1);
 			return 1;
 		}
 
@@ -168,6 +167,38 @@ namespace ft {
 			std::swap(alloc_, other.alloc_);
 		}
 
+	iterator upper_bound(const key_type &key) {
+		node_type *node = root_;
+		node_type *ret = nullNode_;
+
+		while (node != nullNode_) {
+			if (key_compare(key, node->key_)) {
+				ret = node;
+				node = node->lhs_;
+			}
+			else
+				node = node->rhs_;
+		}
+		return iterator(ret, nullNode_, begin_, end_) ;
+	}
+
+	iterator lower_bound(const key_type &key) {
+		node_type *node = root_;
+		node_type *ret = nullNode_;
+
+		while (node != nullNode_) {
+			if (key_compare(node->key_, key) == false) {
+				ret = node;
+				node = node->lhs_;
+			}
+			else
+				node = node->rhs_;
+		}
+		return iterator(ret, nullNode_, begin_, end_) ;
+	}
+
+
+		node_type *getRoot() const { return root_; }
 		node_type *getNullNode() const { return nullNode_; }
 		iterator begin() { return iterator(begin_, nullNode_, end_, begin_); }
 		const_iterator begin() const { return const_iterator(begin_, nullNode_, end_, begin_); }
@@ -201,8 +232,8 @@ namespace ft {
 	private:
 		node_type *root_;
 		size_type size_;
-		node_type *begin_;
-		node_type *end_;
+		node_type *begin_; // smallest key
+		node_type *end_; // largest key
 		node_type *nullNode_;
 		Comp key_compare;
 		allocator_type alloc_;
@@ -306,14 +337,12 @@ namespace ft {
 		/** @brief single RR rotate + LL rotate */
 		node_type *rotateRL(node_type *beforeRoot) {
 			rotateR(beforeRoot->rhs_);
-			beforeRoot->rhs_ = beforeRoot->rhs_->pta_;
 			return rotateL(beforeRoot);
 		}
 
 		/** @brief single LL rotate + RR rotate rotate */
 		node_type *rotateLR(node_type *beforeRoot) {
 			rotateL(beforeRoot->lhs_);
-			beforeRoot->lhs_ = beforeRoot->lhs_->pta_;
 			return rotateR(beforeRoot);
 		}
 

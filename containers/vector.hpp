@@ -58,7 +58,7 @@ namespace ft
 		template <class InputIterator>
 		vector(
 				InputIterator begin,
-				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type end,
+				typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type end,
 				const allocator_type &alloc = allocator_type())
 				: alloc_(alloc), begin_(NULL), end_(NULL), reserved_end_(NULL)
 		{
@@ -76,8 +76,9 @@ namespace ft
 		}
 
 		/** @brief Copies all the elements from x into the container */
-		vector &operator=(const vector &rhs)
-		{
+		vector &operator=(const vector &rhs) {
+			if (rhs == *this)
+					return (*this);
 			this->clear();
 			this->insert(this->begin(), rhs.begin(), rhs.end());
 			return *this;
@@ -90,10 +91,10 @@ namespace ft
 		const_iterator begin() const { return const_iterator(begin_); }
 		iterator end() { return iterator(end_); }
 		const_iterator end() const { return const_iterator(end_); }
-		reverse_iterator rbegin() { return reverse_iterator(this->end()); }
-		const_reverse_iterator rbegin() const { return const_reverse_iterator(this->end()); }
-		reverse_iterator rend() { return reverse_iterator(this->begin()); }
-		const_reverse_iterator rend() const { return const_reverse_iterator(this->begin()); }
+		reverse_iterator rbegin() { return reverse_iterator(this->end() - 1); }
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(this->end() - 1); }
+		reverse_iterator rend() { return reverse_iterator(this->begin() + 1); }
+		const_reverse_iterator rend() const { return const_reverse_iterator(this->begin() + 1); }
 
 		/*----------------------------------------
 		[Element access]
@@ -208,7 +209,7 @@ namespace ft
 		template <class InputIterator>
 		void assign(
 				InputIterator first,
-				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type last) {
+				typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last) {
 			this->clear();
 			size_type length = last - first;
 			size_type capacity = this->capacity();
@@ -243,7 +244,7 @@ namespace ft
 		void push_back(const value_type &val) {
 			size_type size = this->size();
 			size_type capacity = this->capacity();
-			if (capacity - size < size + 1) {
+			if (capacity - size < 1) {
 				size_type new_capacity = size > 0 ? size * 2 : 1;
 				this->reserve(new_capacity);
 			}
@@ -264,16 +265,14 @@ namespace ft
 			size_type size = this->size();
 			size_type capacity = this->capacity();
 			size_type pos_len = &(*pos) - begin_;
-			if (capacity - size >= size + 1) {
-				iterator it = this->end();
-				iterator new_it = pos - 1;
-				for (; it != new_it; it--)
-					alloc_.construct(&(*it), *it);
+			if (capacity - size >  1) {
+					for (size_t i = 0; i < pos_len; i++)
+						alloc_.construct(end_ - i, *(end_ - i - 1));
 				end_ += 1;
-				alloc_.construct(&(*new_it), val);
+				alloc_.construct(&(*pos), val);
 			}
 			else {
-				size_type new_capacity = capacity > 0 ? size * 2 : 1;
+				size_type new_capacity = size > 0 ? size * 2 : 1;
 				iterator old_begin = this->begin();
 				iterator old_end = this->end();
 				begin_ = alloc_.allocate(new_capacity);
@@ -340,7 +339,7 @@ namespace ft
 		void insert(
 				iterator pos,
 				InputIterator first,
-				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type last)
+				typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last)
 		{
 			size_type length = last - first;
 			size_type size = this->size();
@@ -379,14 +378,14 @@ namespace ft
 		iterator erase(iterator pos) {
 			size_type pos_len = end_ - &(*pos) - 1;
 			if (pos_len == 0) {
-				pop_back();
+				alloc_.destroy(&(*(pos)));
+				end_ -= 1;
 				return pos;
 			}
 			iterator pos_next = pos + 1;
 			for (size_type i = 0; i < pos_len; i++) {
-				alloc_.destroy(&(*(pos + i)));
-				alloc_.construct(&(*pos), *pos_next);
-				pos_next++;
+				alloc_.construct(&(*(pos)) + i, *(pos_next + i));
+				alloc_.destroy(&(*(pos_next + i)));
 			}
 			end_ -= 1;
 			return pos;
@@ -411,7 +410,7 @@ namespace ft
 			size_type size = this->size();
 			for (size_t i = 0; i < size; i++) {
 				end_--;
-				alloc_.destroy(begin_ + i);
+				alloc_.destroy(end_);
 			}
 		}
 
@@ -452,7 +451,7 @@ namespace ft
 		typename vector<T>::const_iterator end_lhs = lhs.end();
 		typename vector<T>::const_iterator it_rhs = rhs.begin();
 
-		for (; it_lhs < end_lhs; it_lhs++) {
+		for (; it_lhs != end_lhs; it_lhs++) {
 			if (*it_lhs != *it_rhs)
 				return false;
 			it_rhs++;

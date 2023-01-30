@@ -72,11 +72,11 @@ namespace ft {
 
 			// copy operator
 			map& operator=( const map& rhs ) {
-					if (rhs == this)
-						return *this;
-					this->clear();
-					this->insert(rhs.begin(), rhs.end());
+				if (*this == rhs)
 					return *this;
+					this->clear();
+				this->insert(rhs.begin(), rhs.end());
+				return *this;
 			}
 
 			allocator_type get_allocator() const { return alloc_; }
@@ -116,7 +116,7 @@ namespace ft {
 			[Modifiers]
 			----------------------------------------*/
 			/** @brief Inserts value */
-			pair<iterator,bool> insert (const value_type& val) { return tree_.insert(val); }
+			pair<iterator,bool> insert (const value_type& val) { return tree_.insert(val); } // segv
 
 			/** @brief Inserts value in the position as close as possible to the position just prior to pos */
 			iterator insert (iterator pos, const value_type& val) {
@@ -166,13 +166,7 @@ namespace ft {
 			}
 
 			iterator lower_bound( const Key& key ) {
-				iterator begin = this->begin();
-				iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (key_compare_(begin->first, key) == false)
-						return begin;
-				}
-				return end;
+				return tree_.lower_bound(key);
 			}
 
 			const_iterator lower_bound( const Key& key ) const {
@@ -180,13 +174,7 @@ namespace ft {
 			}
 
 			iterator upper_bound( const Key& key ) {
-				iterator begin = this->begin();
-				iterator end = this->end();
-				for (; begin != end; begin++) {
-					if (key_compare_(key, begin->first) == true)
-						return begin;
-				}
-				return end;
+				return tree_.upper_bound(key);
 			}
 
 			const_iterator upper_bound( const Key& key ) const {
@@ -225,7 +213,7 @@ namespace ft {
 	bool operator>=(const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) { return !(lhs > rhs); }
 
 	template <class Key, class T, class Compare, class Alloc>
-	void swap(std::map<Key, T, Compare, Alloc> &lhs, std::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
+	void swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
 }
 
 #endif

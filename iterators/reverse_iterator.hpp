@@ -36,12 +36,11 @@ namespace ft {
 			}
 
 			reference operator*() const {
-				iterator_type tmp(current_pos_);
-				return *(--tmp);
+				return *(current_pos_);
 			}
 
 			pointer operator->() const { return &(*current_pos_); }
-			reference operator[](difference_type n) { return current_pos_ + n; }
+			reference operator[](difference_type n) const { return *(current_pos_ - n); }
 
 			reverse_iterator &operator++() { // prefix increment
 				--current_pos_;
