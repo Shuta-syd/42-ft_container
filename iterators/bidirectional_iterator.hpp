@@ -22,6 +22,10 @@ namespace ft {
 				*this = rhs;
 			}
 
+			operator bidirectional_iterator<const value_type, node_type>() const {
+				return bidirectional_iterator<const value_type, node_type>(current_, nullNode_, end_, begin_);
+			}
+
 			~bidirectional_iterator() {}
 
 			bidirectional_iterator &operator=(const bidirectional_iterator &rhs) {
