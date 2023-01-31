@@ -4,23 +4,26 @@
 #include <iterator.hpp>
 
 namespace ft {
-	template <class Iterator>
-	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, Iterator> {
+	template <class T>
+	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T> {
 	public:
-		typedef Iterator iterator_type;																																								// What type of information this iterator has
-		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::value_type value_type;								// not pointer or reference
-		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::difference_type difference_type;			// Signed integer type for the difference of iterators
-		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::pointer pointer;											// pointer type
-		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::reference reference;									// reference type
-		typedef typename ft::iterator<ft::random_access_iterator_tag, Iterator>::iterator_category iterator_category; // iterator category (random, forward ...etc)
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type value_type;								// not pointer or reference
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type difference_type;			// Signed integer type for the difference of iterators
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::pointer pointer;											// pointer type
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::reference reference;									// reference type
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category iterator_category; // iterator category (random, forward ...etc)
 
 		/* Constructor & Destructor */
 		random_access_iterator() : current_pos_(NULL){}
-		explicit random_access_iterator(pointer pos) : current_pos_(pos) {}
+		random_access_iterator(pointer pos) : current_pos_(pos) {}
 		~random_access_iterator(){};
 		random_access_iterator(const random_access_iterator &rhs) {
 			*this = rhs;
 		};
+
+		operator random_access_iterator<const value_type>() const {
+			return random_access_iterator<const value_type>(current_pos_);
+		}
 
 		/* operators */
 		random_access_iterator &operator=(const random_access_iterator &rhs) {
@@ -100,15 +103,15 @@ namespace ft {
 		pointer current_pos_;
 	};
 
-	template <class Iterator>
-	typename ft::random_access_iterator<Iterator>::difference_type operator+ (typename ft::random_access_iterator<Iterator>::difference_type n, const ft::random_access_iterator<Iterator>& rev_it) {
-		ft::random_access_iterator<Iterator> tmp(rev_it);
+	template <class T>
+	typename ft::random_access_iterator<T>::difference_type operator+ (typename ft::random_access_iterator<T>::difference_type n, const ft::random_access_iterator<T>& rev_it) {
+		ft::random_access_iterator<T> tmp(rev_it);
 			tmp.current_pos_ += n;
 			return tmp;
 	}
 
-	template <class Iterator>
-	typename ft::random_access_iterator<Iterator>::difference_type operator- (const ft::random_access_iterator<Iterator>& lhs,    const ft::random_access_iterator<Iterator>& rhs) {
+	template <class T>
+	typename ft::random_access_iterator<T>::difference_type operator- (const ft::random_access_iterator<T>& lhs,    const ft::random_access_iterator<T>& rhs) {
 		if (lhs.base() > rhs.base())
 			return lhs.base() - rhs.base();
 		else

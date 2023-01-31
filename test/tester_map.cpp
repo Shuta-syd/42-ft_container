@@ -46,8 +46,6 @@ void mini_test() {
 				std::cout << RED << "IN" << RES << std::endl;
 		};
 	}
-
-	// ft::map<int, std::string> ft_map3(ft_map4.begin(), ft_map4.end());
 }
 
 void tester_iterator_map() {

@@ -24,14 +24,14 @@ namespace ft {
 				*this = rhs;
 			};
 
+
 			iterator_type base() const { return current_pos_; };
 
 			/* operators */
 			template <class Iter>
 			reverse_iterator &operator=(const reverse_iterator<Iter> &rhs) {
-				if (*this == rhs)
-					return *this;
-				this->current_pos_ = rhs.base();
+				if (this->base() != rhs.base())
+					this->current_pos_ = rhs.base();
 				return *this;
 			}
 
