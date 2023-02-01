@@ -919,11 +919,11 @@ void tester_modifiers_vec() {
 	std_end = clock();
 	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
 
-	ft::vector<int> ft_vec15(ft_vec14);
-	std::vector<int> std_vec15(std_vec14);
-	equal = true;
+	ft::vector<int> ft_vec15(5, 14);
+	std::vector<int> std_vec15(5, 14);
 	ft_vec15.swap(ft_vec14);
 	std_vec15.swap(std_vec14);
+	equal = ft::equal(ft_vec15.begin(), ft_vec15.end(), std_vec15.begin());
 	if (ft_vec15.size() != std_vec15.size())
 		equal = false;
 	print_time_cmp(ft_time, std_time, equal);
