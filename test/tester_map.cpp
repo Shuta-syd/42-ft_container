@@ -55,9 +55,9 @@ void tester_other() {
 	equal = true;
 	ft::map<int, std::string>::value_compare comp = ft_map.value_comp();
 	ft::map<int, std::string>::iterator it = ft_map.begin();
-	if (comp(*ft_map.find(1), FT_PAIR(1, "42Tokyo")) == false)
+	if (comp(*ft_map.find(1), FT_PAIR(2, "42Tokyo")) == false)
 		equal = false;
-	if (comp(*ft_map.find(2), FT_PAIR(2, "Hello")) == false)
+	if (comp(*ft_map.find(2), FT_PAIR(1, "Hello")))
 		equal = false;
 	print_time_cmp(1.0, 1.0, equal);
 }
