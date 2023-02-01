@@ -46,8 +46,6 @@ void mini_test() {
 				std::cout << RED << "IN" << RES << std::endl;
 		};
 	}
-
-	// ft::map<int, std::string> ft_map3(ft_map4.begin(), ft_map4.end());
 }
 
 void tester_iterator_map() {
@@ -87,17 +85,50 @@ void tester_iterator_map() {
 	bool equal = ft::equal_map(ft_map2.begin(), ft_map2.end(), std_map2.begin());
 	print_time_cmp(ft_time, std_time, equal);
 
+	print_white("=============== const bidirectional iterator test ===============");
+	ft::map<int, std::string> ft_map42;
+	std::map<int, std::string> std_map42;
+	for (size_t i = 0; i < 1001; i++) {
+		ft_map42.insert(FT_PAIR(i, "42tokyo"));
+		std_map42.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 1000; i++) {
+		ft::map<int, std::string> ft_map42_(ft_map42.begin(), ft_map42.end());
+		ft::map<int, std::string>::const_iterator rit = ft_map42_.begin();
+		ft::map<int, std::string>::const_iterator rit_end = ft_map42_.end();
+		for (; rit != rit_end; rit++) ;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 1000; i++){
+		std::map<int, std::string> std_map42_(std_map42.begin(), std_map42.end());
+		std::map<int, std::string>::const_iterator rit = std_map42_.begin();
+		std::map<int, std::string>::const_iterator rit_end = std_map42_.end();
+		for (; rit != rit_end; rit++) ;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map43(ft_map42.begin(), ft_map42.end());
+	std::map<int, std::string> std_map43(std_map42.begin(), std_map42.end());
+	equal = ft::equal_map(ft_map43.begin(), ft_map43.end(), std_map43.begin());
+	print_time_cmp(ft_time, std_time, equal);
+
 
 	print_white("===================== reverse iterator test =====================");
 	ft::map<int, std::string> ft_map4;
 	std::map<int, std::string> std_map4;
-	for (size_t i = 0; i < 1001; i++) {
+	for (size_t i = 0; i < 10001; i++) {
 		ft_map4.insert(FT_PAIR(i, "42tokyo"));
 		std_map4.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	ft_start = clock();
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 10000; i++) {
 		ft::map<int, std::string> ft_map4_(ft_map4.begin(), ft_map4.end());
 		ft::map<int, std::string>::reverse_iterator rit = ft_map4_.rbegin();
 		ft::map<int, std::string>::reverse_iterator rit_end = ft_map4_.rend();
@@ -107,7 +138,7 @@ void tester_iterator_map() {
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 10000; i++){
 		std::map<int, std::string> std_map4_(std_map4.begin(), std_map4.end());
 		std::map<int, std::string>::reverse_iterator rit = std_map4_.rbegin();
 		std::map<int, std::string>::reverse_iterator rit_end = std_map4_.rend();
@@ -119,6 +150,40 @@ void tester_iterator_map() {
 	ft::map<int, std::string> ft_map3(ft_map4.begin(), ft_map4.end());
 	std::map<int, std::string> std_map3(std_map4.begin(), std_map4.end());
 	equal = ft::equal_map(ft_map3.rbegin(), ft_map3.rend(), std_map3.rbegin());
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("================= const reverse iterator test ===================");
+	ft::map<int, std::string> ft_map5;
+	std::map<int, std::string> std_map5;
+	for (size_t i = 0; i < 10001; i++) {
+		ft_map5.insert(FT_PAIR(i, "42tokyo"));
+		std_map5.insert(STD_PAIR(i, "42tokyo"));
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 10000; i++) {
+		ft::map<int, std::string> ft_map5_(ft_map5.begin(), ft_map5.end());
+		ft::map<int, std::string>::const_reverse_iterator rit = ft_map5_.rbegin();
+		ft::map<int, std::string>::const_reverse_iterator rit_end = ft_map5_.rend();
+		for (; rit != rit_end; rit++) ;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 10000; i++){
+		std::map<int, std::string> std_map5_(std_map5.begin(), std_map5.end());
+		std::map<int, std::string>::const_reverse_iterator rit = std_map5_.rbegin();
+		std::map<int, std::string>::const_reverse_iterator rit_end = std_map5_.rend();
+		for (; rit != rit_end; rit++) ;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::map<int, std::string> ft_map6(ft_map5.begin(), ft_map5.end());
+	std::map<int, std::string> std_map6(std_map5.begin(), std_map5.end());
+	equal = ft::equal_map(ft_map6.rbegin(), ft_map6.rend(), std_map6.rbegin());
 	print_time_cmp(ft_time, std_time, equal);
 }
 

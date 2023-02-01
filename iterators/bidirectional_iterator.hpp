@@ -22,6 +22,10 @@ namespace ft {
 				*this = rhs;
 			}
 
+			operator bidirectional_iterator<const value_type, node_type>() const {
+				return bidirectional_iterator<const value_type, node_type>(current_, nullNode_, end_, begin_);
+			}
+
 			~bidirectional_iterator() {}
 
 			bidirectional_iterator &operator=(const bidirectional_iterator &rhs) {
@@ -50,15 +54,8 @@ namespace ft {
 					current_ = nullNode_;
 				else if (current_ == nullNode_)
 					current_ = begin_;
-				else if (current_->rhs_ != nullNode_) {
-					current_ = current_->rhs_;
-					while (current_->lhs_ != nullNode_)
-						current_ = current_->lhs_;
-				} else {
-					while (current_->pta_->lhs_ != current_)
-						current_ = current_->pta_;
-					current_ = current_->pta_;
-				}
+				else
+					current_ = this->get_next_node(current_);
 				return *this;
 		}
 
@@ -73,16 +70,8 @@ namespace ft {
 				current_ = nullNode_;
 			else if (current_ == nullNode_)
 				current_ = end_;
-			else if (current_->lhs_ != nullNode_) {
-				current_ = current_->lhs_;
-				while (current_->rhs_ != nullNode_ )
-					current_ = current_->rhs_;
-			}
-			else {
-				while (current_->pta_->rhs_ != current_)
-					current_ = current_->pta_;
-				current_ = current_->pta_;
-			}
+			else
+				current_ = this->get_prev_node(current_);
 			return *this;
 		}
 
@@ -97,6 +86,50 @@ namespace ft {
 			node_type *nullNode_;
 			node_type *end_;
 			node_type *begin_;
+
+			bool is_right(node_type *node) {
+			return node->pta_ && node->pta_ != nullNode_ && node == node->pta_->rhs_;
+			}
+
+			bool is_left(node_type *node) {
+			return node->pta_ && node->pta_ != nullNode_ && node == node->pta_->lhs_;
+			}
+
+			node_type *get_min_node(node_type *node) {
+			while (node->lhs_ != nullNode_ && node->lhs_) {
+				node = node->lhs_;
+			}
+			return node;
+		}
+
+		node_type *get_max_node(node_type *node) {
+			while (node->rhs_ != nullNode_ && node->rhs_) {
+				node = node->rhs_;
+			}
+			return node;
+		}
+
+			node_type *get_next_node(node_type *node) {
+			if (node->rhs_ != nullNode_)
+					return this->get_min_node(node->rhs_);
+			else {
+				while (this->is_right(node)) {
+					node = node->pta_;
+				}
+			}
+			return node->pta_;
+		}
+
+		node_type *get_prev_node(node_type *node) {
+			if (node->lhs_ != nullNode_)
+					return this->get_max_node(node->lhs_);
+			else {
+				while (this->is_left(node)) {
+					node = node->pta_;
+				}
+			}
+			return node->pta_;
+		}
 	};
 }
 
