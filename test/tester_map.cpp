@@ -6,7 +6,7 @@ void tester_modifiers_map();
 void tester_lookup();
 void tester_operator_map();
 void mini_test();
-void tester_makepair();
+void tester_other();
 
 #define FT_PAIR(a, b) ft::pair<int, std::string>(a, b)
 #define STD_PAIR(a, b) std::pair<int, std::string>(a, b)
@@ -23,10 +23,10 @@ void tester_map()
 	tester_element_access_map();
 	tester_modifiers_map();
 	tester_lookup();
-	tester_makepair();
+	tester_other();
 }
 
-void tester_makepair() {
+void tester_other() {
 	print_white("========================= make pair test ========================");
 	bool equal = true;
 	ft::pair<int, int> var1  = ft::make_pair<int, int>(5, 16);
@@ -43,6 +43,21 @@ void tester_makepair() {
 		equal = false;
 	ft::pair<int, int> var5  = ft::make_pair<int, int>(100000, 16);
 	if (!(var5.first == 100000 && var5.second == 16))
+		equal = false;
+	print_time_cmp(1.0, 1.0, equal);
+
+
+	print_white("======================= value_compare test ======================");
+	ft::map<int, std::string> ft_map;
+	ft_map.insert(FT_PAIR(1, "42Tokyo"));
+	ft_map.insert(FT_PAIR(2, "Hello"));
+
+	equal = true;
+	ft::map<int, std::string>::value_compare comp = ft_map.value_comp();
+	ft::map<int, std::string>::iterator it = ft_map.begin();
+	if (comp(*ft_map.find(1), FT_PAIR(1, "42Tokyo")) == false)
+		equal = false;
+	if (comp(*ft_map.find(2), FT_PAIR(1, "Hello")) == false)
 		equal = false;
 	print_time_cmp(1.0, 1.0, equal);
 }
