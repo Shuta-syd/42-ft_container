@@ -88,9 +88,9 @@ namespace ft {
 		size_type erase(const key_type &key) {
 			node_type *target = this->search(key);
 			if (target == begin_)
-				begin_ = this->searchNextNode(begin_);
+				begin_ = this->get_next_node(begin_);
 			else if (target == end_)
-				end_ = this->searchPrevNode(end_);
+				end_ = this->get_prev_node(end_);
 			else if (target == nullNode_)
 				return 0;
 			size_ -= 1;
@@ -105,7 +105,7 @@ namespace ft {
 				this->destroyNode(target);
 			}
 			else {
-				node_type *maxNode = this->searchMaxNode(target->lhs_);
+				node_type *maxNode = this->get_max_node(target->lhs_);
 				if (maxNode == begin_)
 					begin_ = target;
 				else if (target == end_)
@@ -128,9 +128,9 @@ namespace ft {
 
 				node_type *target = this->search(key);
 				if (target == begin_)
-					begin_ = this->searchNextNode(begin_);
+					begin_ = this->get_next_node(begin_);
 				else if (target == end_)
-					end_ = this->searchPrevNode(end_);
+					end_ = this->get_prev_node(end_);
 				else if (target == nullNode_)
 					return;
 				size_ -= 1;
@@ -141,7 +141,7 @@ namespace ft {
 					this->destroyNode(target);
 				}
 				else {
-					node_type *maxNode = this->searchMaxNode(target->lhs_);
+					node_type *maxNode = this->get_max_node(target->lhs_);
 					if (maxNode == begin_)
 						begin_ = target;
 					else if (target == end_)
@@ -373,47 +373,49 @@ namespace ft {
 			after->pta_ = pta;
 		}
 
-		/** @brief Search for the maximum value from the left-branch tree of a specific node */
-		node_type *searchMaxNode(node_type *node) {
-			while (node->rhs_ != nullNode_) {
+
+	node_type *get_min_node(node_type *node) {
+			while (node->lhs_ != nullNode_ && node->lhs_) {
+				node = node->lhs_;
+			}
+			return node;
+	}
+
+	node_type *get_max_node(node_type *node) {
+			while (node->rhs_ != nullNode_ && node->rhs_) {
 				node = node->rhs_;
 			}
 			return node;
-		}
+	}
 
-		node_type *searchNextNode(node_type *node) {
-			if (node == end_)
-					node = nullNode_;
-				else if (node == nullNode_)
-					node = begin_;
-				else if (node->rhs_ != nullNode_) {
-					node = node->rhs_;
-					while (node->lhs_ != nullNode_)
-						node = node->lhs_;
-				} else {
-					while (node->pta_->lhs_ != node)
-						node = node->pta_;
+	bool is_right(node_type *node) {
+			return node->pta_ && node->pta_ != nullNode_ && node == node->pta_->rhs_;
+	}
+
+	bool is_left(node_type *node) {
+			return node->pta_ && node->pta_ != nullNode_ && node == node->pta_->lhs_;
+	}
+
+		node_type *get_next_node(node_type *node) {
+			if (node->rhs_ != nullNode_)
+					return this->get_min_node(node->rhs_);
+			else {
+				while (this->is_right(node)) {
 					node = node->pta_;
 				}
-			return node;
+			}
+			return node->pta_;
 		}
 
-		node_type *searchPrevNode(node_type *node) {
-			if (node == begin_)
-				node = nullNode_;
-			else if (node == nullNode_)
-				node = end_;
-			else if (node->lhs_ != nullNode_) {
-				node = node->lhs_;
-				while (node->rhs_ != nullNode_)
-					node = node->rhs_;
-			}
+		node_type *get_prev_node(node_type *node) {
+			if (node->lhs_ != nullNode_)
+					return this->get_max_node(node->lhs_);
 			else {
-				while (node->pta_->rhs_ != node)
+				while (this->is_left(node)) {
 					node = node->pta_;
-				node = node->pta_;
+				}
 			}
-			return node;
+			return node->pta_;
 		}
 
 		/** @brief  Create node and allocate memory*/

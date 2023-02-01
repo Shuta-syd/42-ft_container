@@ -122,13 +122,13 @@ void tester_iterator_map() {
 	print_white("===================== reverse iterator test =====================");
 	ft::map<int, std::string> ft_map4;
 	std::map<int, std::string> std_map4;
-	for (size_t i = 0; i < 1001; i++) {
+	for (size_t i = 0; i < 10001; i++) {
 		ft_map4.insert(FT_PAIR(i, "42tokyo"));
 		std_map4.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	ft_start = clock();
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 10000; i++) {
 		ft::map<int, std::string> ft_map4_(ft_map4.begin(), ft_map4.end());
 		ft::map<int, std::string>::reverse_iterator rit = ft_map4_.rbegin();
 		ft::map<int, std::string>::reverse_iterator rit_end = ft_map4_.rend();
@@ -138,7 +138,7 @@ void tester_iterator_map() {
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 10000; i++){
 		std::map<int, std::string> std_map4_(std_map4.begin(), std_map4.end());
 		std::map<int, std::string>::reverse_iterator rit = std_map4_.rbegin();
 		std::map<int, std::string>::reverse_iterator rit_end = std_map4_.rend();
@@ -156,13 +156,13 @@ void tester_iterator_map() {
 	print_white("================= const reverse iterator test ===================");
 	ft::map<int, std::string> ft_map5;
 	std::map<int, std::string> std_map5;
-	for (size_t i = 0; i < 1001; i++) {
+	for (size_t i = 0; i < 10001; i++) {
 		ft_map5.insert(FT_PAIR(i, "42tokyo"));
 		std_map5.insert(STD_PAIR(i, "42tokyo"));
 	}
 
 	ft_start = clock();
-	for (size_t i = 0; i < 1000; i++) {
+	for (size_t i = 0; i < 10000; i++) {
 		ft::map<int, std::string> ft_map5_(ft_map5.begin(), ft_map5.end());
 		ft::map<int, std::string>::const_reverse_iterator rit = ft_map5_.rbegin();
 		ft::map<int, std::string>::const_reverse_iterator rit_end = ft_map5_.rend();
@@ -172,7 +172,7 @@ void tester_iterator_map() {
 	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
 
 	std_start = clock();
-	for (size_t i = 0; i < 1000; i++){
+	for (size_t i = 0; i < 10000; i++){
 		std::map<int, std::string> std_map5_(std_map5.begin(), std_map5.end());
 		std::map<int, std::string>::const_reverse_iterator rit = std_map5_.rbegin();
 		std::map<int, std::string>::const_reverse_iterator rit_end = std_map5_.rend();
