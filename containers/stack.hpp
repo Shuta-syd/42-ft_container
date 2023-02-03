@@ -22,6 +22,8 @@ namespace ft {
 		/** @brief copy constructor */
 		stack( const stack& other ) { *this = other; }
 
+		~stack() {}
+
 		stack& operator=( const stack& other ) {
 			this->c = other.c;
 			return *this;
