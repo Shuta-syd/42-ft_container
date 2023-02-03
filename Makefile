@@ -6,7 +6,7 @@ objs_dir += test/
 deps_dir += test/
 
 srcs += $(addprefix test/, \
-  	AVLtree.cpp main.cpp utils.cpp tester_vector.cpp \
+  	main.cpp utils.cpp tester_vector.cpp \
 		tester_map.cpp tester_stack.cpp\
     )
 
