@@ -1,4 +1,5 @@
 #include "test.hpp"
+void tester_operator_stack();
 
 void tester_stack() {
 	print_yel("--------------------------------------------------");
@@ -182,5 +183,215 @@ void tester_stack() {
 	}
 	if (ft_stack11.empty() != std_stack11.empty())
 		equal = false;
+	print_time_cmp(ft_time, std_time, equal);
+
+  tester_operator_stack();
+}
+
+void tester_operator_stack() {
+  	print_white("--------------------------------------------------");
+	print_white("|                  operator Test                 |");
+	print_white("--------------------------------------------------");
+	print_white("======================= operator== test ========================");
+	ft::stack<int> ft_vec2;
+	std::stack<int> std_vec2;
+	for (size_t i = 0; i < 5001; i++) {
+		ft_vec2.push(i);
+		std_vec2.push(i);
+	}
+
+	clock_t ft_start = clock();
+	for (size_t i = 0; i < 500; i++) {
+		ft::stack<int> ft_vec(ft_vec2);
+		if (ft_vec == ft_vec2)
+			continue;
+	}
+	clock_t ft_end = clock();
+	double ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	clock_t std_start = clock();
+	for (size_t i = 0; i < 500; i++){
+		std::stack<int> std_vec(std_vec2);
+		if (std_vec == std_vec2)
+			continue;
+	}
+	clock_t std_end = clock();
+	double std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::stack<int> ft_vec3(ft_vec2);
+	std::stack<int> std_vec3(std_vec2);
+	bool equal = false;
+	if (ft_vec2 == ft_vec3)
+			equal = true;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("======================= operator!= test ========================");
+	ft::stack<int> ft_vec4;
+	std::stack<int> std_vec4;
+	for (size_t i = 0; i < 5001; i++) {
+		ft_vec4.push(i);
+		std_vec4.push(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 500; i++) {
+		ft::stack<int> ft_vec(ft_vec4);
+		if (ft_vec != ft_vec4)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 500; i++){
+		std::stack<int> std_vec(std_vec4);
+		if (std_vec != std_vec4)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::stack<int> ft_vec5(ft_vec4);
+	std::stack<int> std_vec5(std_vec4);
+	equal = false;
+	if ((ft_vec5 != ft_vec4) == false)
+			equal = true;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+
+	print_white("====================== operator < test ========================");
+	ft::stack<int> ft_vec6;
+	std::stack<int> std_vec6;
+	for (size_t i = 0; i < 5001; i++) {
+		ft_vec6.push(i);
+		std_vec6.push(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 500; i++) {
+		ft::stack<int> ft_vec(ft_vec6);
+		if (ft_vec < ft_vec6)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 500; i++){
+		std::stack<int> std_vec(std_vec6);
+		if (std_vec < std_vec6)
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::stack<int> ft_vec7(ft_vec6);
+	std::stack<int> std_vec7(std_vec6);
+	equal = false;
+	if ((ft_vec7 < ft_vec6) == false)
+			equal = true;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("====================== operator > test ========================");
+	ft::stack<int> ft_vec8;
+	std::stack<int> std_vec8;
+	for (size_t i = 0; i < 5001; i++) {
+		ft_vec8.push(i);
+		std_vec8.push(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 500; i++) {
+		ft::stack<int> ft_vec(ft_vec8);
+		if (!(ft_vec > ft_vec8))
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 500; i++){
+		std::stack<int> std_vec(std_vec8);
+		if (!(std_vec > std_vec8))
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::stack<int> ft_vec9(ft_vec8);
+	ft_vec9.push(50000);
+	equal = false;
+	if (ft_vec9 > ft_vec8)
+			equal = true;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("====================== operator <= test ========================");
+	ft::stack<int> ft_vec10;
+	std::stack<int> std_vec10;
+	for (size_t i = 0; i < 5001; i++) {
+		ft_vec10.push(i);
+		std_vec10.push(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 500; i++) {
+		ft::stack<int> ft_vec(ft_vec10);
+		if (ft_vec <= ft_vec10)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 500; i++){
+		std::stack<int> std_vec(std_vec10);
+		if (!(std_vec <= std_vec10))
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::stack<int> ft_vec11(ft_vec10);
+	equal = false;
+	if (ft_vec11 <= ft_vec10)
+			equal = true;
+
+	print_time_cmp(ft_time, std_time, equal);
+
+	print_white("====================== operator >= test ========================");
+	ft::stack<int> ft_vec12;
+	std::stack<int> std_vec12;
+	for (size_t i = 0; i < 5001; i++) {
+		ft_vec12.push(i);
+		std_vec12.push(i);
+	}
+
+	ft_start = clock();
+	for (size_t i = 0; i < 500; i++) {
+		ft::stack<int> ft_vec(ft_vec12);
+		if (ft_vec >= ft_vec12)
+			continue;
+	}
+	ft_end = clock();
+	ft_time = difftime(ft_end, ft_start) / CLOCKS_PER_SEC;
+
+	std_start = clock();
+	for (size_t i = 0; i < 500; i++){
+		std::stack<int> std_vec(std_vec12);
+		if (!(std_vec >= std_vec12))
+			continue;
+	}
+	std_end = clock();
+	std_time = difftime(std_end, std_start) / CLOCKS_PER_SEC;
+
+	ft::stack<int> ft_vec13(ft_vec12);
+	equal = false;
+	if (ft_vec13 >= ft_vec12)
+			equal = true;
+
 	print_time_cmp(ft_time, std_time, equal);
 }
