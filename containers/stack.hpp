@@ -46,6 +46,7 @@ namespace ft {
 		void pop() { return c.pop_back(); }
 
 
+  /** The friend function is not a member function of the class, but is defined within the class. Define it in the class */
   template <class Type, class C>
 	friend bool operator==(const stack<Type, C> &lhs, const stack<Type, C> &rhs) { return lhs.c == rhs.c; }
 
